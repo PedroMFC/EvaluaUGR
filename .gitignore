@@ -15,4 +15,4 @@
 # vendor/
 
 #Others
-docs/.fuse_hidden*
+*.fuse_hidden*
