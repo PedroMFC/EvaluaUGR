@@ -68,3 +68,5 @@ Se muestran los pasos para activar la doble autenticación y que se muestra en [
 Al finalizar el proceso se observa que se ha configurado correctamente
 
 ![](./imgs/semana1/1.6.1.png)
+
+Después de la activación de la doble autenticación fue necesario seguir [este tutorial](https://medium.com/@ginnyfahs/github-error-authentication-failed-from-command-line-3a545bfd0ca8) para poder hacer *pull*.
