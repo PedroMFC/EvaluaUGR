@@ -70,3 +70,13 @@ Al finalizar el proceso se observa que se ha configurado correctamente
 ![](./imgs/semana1/1.6.1.png)
 
 Después de la activación de la doble autenticación fue necesario seguir [este tutorial](https://medium.com/@ginnyfahs/github-error-authentication-failed-from-command-line-3a545bfd0ca8) para poder hacer *pull*.
+
+### Dónde obtener recursos *cloud* gratuitos 
+
+Las investigaciones para la obtención de recursos en la nube gratuitos ha llevado a lo siguiente:
+
+* [Digital Ocean](https://www.digitalocean.com/community/questions/is-there-free-trial-available): ofrece 100$ durante 60 días para nuevas cuentas.
+* [Amazon Web Services](https://aws.amazon.com/es/free/?all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc): algunas de sus ofertas son por 12 meses y otras ilimitadas. Es necesario poner un método de pago para la cuenta.
+* [Azure](https://azure.microsoft.com/en-us/free/search/?&ef_id=CjwKCAjwlID8BRAFEiwAnUoK1Wko37VXEuLiNsfo5bkD7w_4-PYjbDpZswxb5-B9s7YA-f649bMeGxoCKGgQAvD_BwE:G:s&OCID=AID2100112_SEM_CjwKCAjwlID8BRAFEiwAnUoK1Wko37VXEuLiNsfo5bkD7w_4-PYjbDpZswxb5-B9s7YA-f649bMeGxoCKGgQAvD_BwE:G:s&dclid=CLCJhJeKp-wCFYXU3godUwwJuA): da 12 meses gratis de servicios populares (25 servicios siempre gratis) y 200$ durante los primeros 30 días.
+* [Oracle](https://www.oracle.com/es/cloud/free/): algunos servicios siempre gratuitos y 300$ durante los primeros 30 días.
+* [Google Cloud](https://cloud.google.com/free?hl=es-419): algunos productos gratuitos y 300$ (no pone nada de número de días para usarlos).
