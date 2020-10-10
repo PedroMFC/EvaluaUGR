@@ -80,3 +80,7 @@ Las investigaciones para la obtención de recursos en la nube gratuitos ha lleva
 * [Azure](https://azure.microsoft.com/en-us/free/search/?&ef_id=CjwKCAjwlID8BRAFEiwAnUoK1Wko37VXEuLiNsfo5bkD7w_4-PYjbDpZswxb5-B9s7YA-f649bMeGxoCKGgQAvD_BwE:G:s&OCID=AID2100112_SEM_CjwKCAjwlID8BRAFEiwAnUoK1Wko37VXEuLiNsfo5bkD7w_4-PYjbDpZswxb5-B9s7YA-f649bMeGxoCKGgQAvD_BwE:G:s&dclid=CLCJhJeKp-wCFYXU3godUwwJuA): da 12 meses gratis de servicios populares (25 servicios siempre gratis) y 200$ durante los primeros 30 días.
 * [Oracle](https://www.oracle.com/es/cloud/free/): algunos servicios siempre gratuitos y 300$ durante los primeros 30 días.
 * [Google Cloud](https://cloud.google.com/free?hl=es-419): algunos productos gratuitos y 300$ (no pone nada de número de días para usarlos).
+
+También tenemos los servicios en la nube facilitados por la asignatura
+
+* [Google Cloud](https://google.secure.force.com/GCPEDU?cid=%2FqDJ1JuAn9hgHtpMwyh42xRObcPkvS%2F2cW4YrpCUHWxFn6zTLlebDDcCssWOlm%2BH): se puede pedir hasta el 22/1/2021 y es válido hasta el 22/9/2021
