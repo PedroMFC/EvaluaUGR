@@ -8,11 +8,11 @@ En primer lugar, tenemos ya realizada la instalación de git.
 
 Par este proceso se ha seguido [esta guía](https://docs.github.com/es/free-pro-team@latest/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent). También se incluyen las imágenes con el proceso seguido.
 
-1. Generar la clave
+1. Generar la clave.
 
 ![](./imgs/semana1/1.1.1.png)
 
-2. Agregar clave al agente
+2. Agregar clave al agente.
 
 ![](./imgs/semana1/1.1.2.png)
 
@@ -20,7 +20,7 @@ Par este proceso se ha seguido [esta guía](https://docs.github.com/es/free-pro-
 
 ![](./imgs/semana1/1.1.3.png)
 
-4. Accedemos a nuestra cuenta de GitHub y la añadimos dentro del apartado *Settings*
+4. Accedemos a nuestra cuenta de GitHub y la añadimos dentro del apartado *Settings*.
 
 ![](./imgs/semana1/1.1.4.png)
 
@@ -35,23 +35,23 @@ Se han creado los tres repositorios necesarios tal y como se indica. No se cree 
 
 ![Fork repositorio asignatura](./imgs/semana1/1.2.3.png)
 
-En el repositorio del proyecto se han comenzado a utilizar *issues* y *milestones* para incluir la documentación inicial y seguir con esta buena práctica
+En el repositorio del proyecto se han comenzado a utilizar *issues* y *milestones* para incluir la documentación inicial y seguir con esta buena práctica.
 
 ![Fork repositorio asignatura](./imgs/semana1/1.2.4.png)
 
 ### Configuración de los remotos
 
-Para añadir el remoto en la copia local del repositorio de la asignatura se ha usado la orden especificada en la [carpeta de objetivos](https://github.com/JJ/CC-20-21/tree/master/objetivos)
+Para añadir el remoto en la copia local del repositorio de la asignatura se ha usado la orden especificada en la [carpeta de objetivos](https://github.com/JJ/CC-20-21/tree/master/objetivos).
 
 ![](./imgs/semana1/1.3.1.png)
 
 ### Configuración de git correcta
 
-Para establecer el correo y nombre en git usamos [esta guía](https://git-scm.com/book/es/v2/Inicio---Sobre-el-Control-de-Versiones-Configurando-Git-por-primera-vez)
+Para establecer el correo y nombre en git usamos [esta guía](https://git-scm.com/book/es/v2/Inicio---Sobre-el-Control-de-Versiones-Configurando-Git-por-primera-vez).
 
 ![](./imgs/semana1/1.4.1.png)
 
-Por su parte, para la configuración de la opción de *rebase* automática se ha consultado [esta página](https://coderwall.com/p/tnoiug/rebase-by-default-when-doing-git-pull)
+Por su parte, para la configuración de la opción de *rebase* automática se ha consultado [esta página](https://coderwall.com/p/tnoiug/rebase-by-default-when-doing-git-pull).
 
 ![](./imgs/semana1/1.4.2.png)
 
@@ -63,9 +63,9 @@ Se ha modificado el perfil de GitHub para que aparezca una imagen en vez del ava
 
 ### Activar la doble autenticación
 
-Se muestran los pasos para activar la doble autenticación y que se muestra en [este enlace](https://docs.github.com/es/free-pro-team@latest/github/authenticating-to-github/configuring-two-factor-authentication)
+Se muestran los pasos para activar la doble autenticación y que se muestra en [este enlace](https://docs.github.com/es/free-pro-team@latest/github/authenticating-to-github/configuring-two-factor-authentication).
 
-Al finalizar el proceso se observa que se ha configurado correctamente
+Al finalizar el proceso se observa que se ha configurado correctamente.
 
 ![](./imgs/semana1/1.6.1.png)
 
@@ -81,6 +81,6 @@ Las investigaciones para la obtención de recursos en la nube gratuitos ha lleva
 * [Oracle](https://www.oracle.com/es/cloud/free/): algunos servicios siempre gratuitos y 300$ durante los primeros 30 días.
 * [Google Cloud](https://cloud.google.com/free?hl=es-419): algunos productos gratuitos y 300$ (no pone nada de número de días para usarlos).
 
-También tenemos los servicios en la nube facilitados por la asignatura
+También tenemos los servicios en la nube facilitados por la asignatura:
 
-* [Google Cloud](https://google.secure.force.com/GCPEDU?cid=%2FqDJ1JuAn9hgHtpMwyh42xRObcPkvS%2F2cW4YrpCUHWxFn6zTLlebDDcCssWOlm%2BH): se puede pedir hasta el 22/1/2021 y es válido hasta el 22/9/2021
+* [Google Cloud](https://google.secure.force.com/GCPEDU?cid=%2FqDJ1JuAn9hgHtpMwyh42xRObcPkvS%2F2cW4YrpCUHWxFn6zTLlebDDcCssWOlm%2BH): se puede pedir hasta el 22/1/2021 y es válido hasta el 22/9/2021.
