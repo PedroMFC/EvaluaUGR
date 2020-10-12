@@ -84,3 +84,9 @@ Las investigaciones para la obtención de recursos en la nube gratuitos ha lleva
 También tenemos los servicios en la nube facilitados por la asignatura:
 
 * [Google Cloud](https://google.secure.force.com/GCPEDU?cid=%2FqDJ1JuAn9hgHtpMwyh42xRObcPkvS%2F2cW4YrpCUHWxFn6zTLlebDDcCssWOlm%2BH): se puede pedir hasta el 22/1/2021 y es válido hasta el 22/9/2021.
+
+### Añadir GitHub Pages
+
+Se ha añadido GitHub Pages al repositorio a través de esta [guía](https://pages.github.com/). En la imagen se muestra cómo ha quedado el repositorio
+
+![](./imgs/semana1/1.7.1.png)

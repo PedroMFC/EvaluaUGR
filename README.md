@@ -7,4 +7,6 @@ Los alumnos de la UGR de grado y posgrado sienten que no tienen un lugar donde p
 
 ## Documentación
 
-* La documentación sobre el trabajo realizado durante la primera semana se encuentra en el archivo [semana1.md](./docs/semana1.md)
+* La documentación sobre el trabajo realizado durante la primera semana se encuentra en el archivo [semana1.md][semana1]
+
+[semana1]: https://pedromfc.github.io/Proyecto-CC/docs/semana1
