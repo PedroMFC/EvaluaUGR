@@ -1,4 +1,4 @@
-# Trabajo realizado en la primera semana de la asignatura de CC
+# Configuración de GitHub y del repositorio: trabajo primera semana de CC
 
 Explicaremos en conjunto tanto el trabajo realizado en la sesión de laboratorio como el trabajo para el hito 0. 
 
