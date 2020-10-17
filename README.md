@@ -7,6 +7,7 @@ Los alumnos de la UGR de grado y posgrado sienten que no tienen un lugar donde p
 
 ## Documentación
 
-* La documentación sobre la configuración de GitHub y del repositorio se puede consultar [aquí][semana1]
+* La documentación sobre lel trabajo autónomo se puede conultar [aquí][semana2].
 
 [semana1]: https://pedromfc.github.io/Proyecto-CC/docs/semana1
+[semana2]: https://pedromfc.github.io/Proyecto-CC/docs/semana2
