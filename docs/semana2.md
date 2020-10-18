@@ -30,7 +30,7 @@ Este apartado guarda relación con el [ejercicio4](https://github.com/PedroMFC/A
 Este apartado guarda relación con el [ejercicio5](https://github.com/PedroMFC/Autoevaluacion-CC/blob/main/semana%202/Ejercicio5.md). Para llevar a cabo la integración continua se va a usar `Travis` que es una herramienta que ya ha usado, por ejemplo en [DatosDemograficos-curso-tdd](https://github.com/tdd-organization-afp/DatosDemograficos). También se ha consultado [este enlace]() para añadir el *badge* al `README.md`.
  
 ## Covertura
-Para la covertura de los test se va a usar `Codecov` que es una herramientos que también se usó en . Para añadir el *badge* al `README.md` se ha consultado [este enlace](https://stackoverflow.com/questions/54010651/codecov-io-badge-in-github-readme-md).
+Para la covertura de los test se va a usar `Codecov` que es una herramientos que también se usó en [DatosDemograficos-curso-tdd](https://github.com/tdd-organization-afp/DatosDemograficos). Para añadir el *badge* al `README.md` se ha consultado [este enlace](https://stackoverflow.com/questions/54010651/codecov-io-badge-in-github-readme-md).
  
 
 ## Automatización de tareas

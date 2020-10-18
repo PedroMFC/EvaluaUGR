@@ -9,5 +9,5 @@ Los alumnos de la UGR de grado y posgrado sienten que no tienen un lugar donde p
 
 * La documentación sobre lel trabajo autónomo se puede conultar [aquí][semana2].
 
-[semana1]: https://pedromfc.github.io/Proyecto-CC/docs/semana1
-[semana2]: https://pedromfc.github.io/Proyecto-CC/docs/semana2
+[semana1]: https://pedromfc.github.io/EvaluaUGR/docs/semana1
+[semana2]: https://pedromfc.github.io/EvaluaUGR/docs/semana2
