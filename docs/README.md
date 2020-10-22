@@ -6,4 +6,4 @@
 * La selección del lenguaje y las herramientas está en [herramientas].
 
 [configGitHub]: https://pedromfc.github.io/EvaluaUGR/docs/configuracion_github
-[herramientas]: https://pedromfc.github.io/EvaluaUGR/seleccion_herramientas
+[herramientas]: https://pedromfc.github.io/EvaluaUGR/docs/seleccion_herramientas
