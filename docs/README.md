@@ -1,9 +1,9 @@
 # Documentación para el proyecto de *Cloud Computing*
 
 ## Trabajo autónomo
-* La documentación sobre la configuración de GitHub y del repositorio se puede consultar [aquí][semana1].
+* La documentación sobre la configuración de GitHub y del repositorio se puede consultar [aquí][configGitHub].
 
-* La selección del lenguaje y las herramientas está en [semana2].
+* La selección del lenguaje y las herramientas está en [herramientas].
 
-[semana1]: https://pedromfc.github.io/EvaluaUGR/docs/semana1
-[semana2]: https://pedromfc.github.io/EvaluaUGR/docs/semana2
+[configGitHub]: https://pedromfc.github.io/EvaluaUGR/docs/configuracion_github
+[herramientas]: https://pedromfc.github.io/EvaluaUGR/seleccion_herramientas
