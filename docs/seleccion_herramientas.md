@@ -39,30 +39,38 @@ Para la cobertura de los test se va a usar `Codecov` que es una herramientos que
 En caso de ser necearia la automatización de tareas se usará o [Tusk](https://github.com/rliebz/tusk) o [Task](https://taskfile.dev/#/). Se ha decidio usar el segundo ya que en GitHub aparece que se ha actualizado más recientemente y tiene mayor valoración y contribuidores.
 
 ## Base de datos
-La herramientas de bases de datos barajadas han sido las usuales: MySQL, PostgreSQL, MongoDB, etc. Todas las opciones serían adecuadas para el desarrollo del proyecto. Si comparamos PostgreSQL y MongoDB:
+La herramientas de bases de datos barajadas han sido las usuales: MySQL, PostgreSQL, MongoDB, SQLite, MariaDB, etc. Todas las opciones serían adecuadas para el desarrollo del proyecto. Si comparamos PostgreSQL y MongoDB:
 * [MongoDB vs PostgreSQL I](https://www.educative.io/blog/mongodb-versus-postgresql-databases).
 * [MongoDB vs PostgreSQL II](https://www.educative.io/blog/mongodb-versus-postgresql-databases) 
   
-vemos que ambas herramientas son robustas, adecuadas y cada una de ellas tiene sus ventajas e inconvenientes. Sin embargo, en ambas consultas dice que MongoDB es adecuada en desarrollos ágiles en los que la estructura de los datos va evolucionando junto con el desarrollo. Por eso, se ha decido utilizarla como herramienta para almacenar la información. Los enlaces consultados sobre su utilización en el lenguaje y con otras herramientas han sido los siguientes:
+vemos que ambas herramientas son robustas, adecuadas y cada una de ellas tiene sus ventajas e inconvenientes. Sin embargo, se ha decidio usar PostgeSQL, ya que, aunque MongoDB es adecuada para desarrollos ágiles, PostgeSQL tiene mejor itegración con otras herramientas que usaremos después como [Gorm](https://github.com/go-gorm/gorm). Además, presenta opciones como la facilidad de identificadores con autoincremento lo que será muy útil para poder identificar sin problemas cada una de las entradas de la base de datos. Los enlaces consultados sobre su utilización en el lenguaje y con otras herramientas han sido los siguientes:
 
-* [Instalar MondgoDB](https://www.digitalocean.com/community/tutorials/how-to-install-mongodb-on-ubuntu-18-04).
-* [¿Cómo usar MongoDB driver oficial en Go?](https://blog.friendsofgo.tech/posts/driver-oficial-mongodb-golang/).
-* [MongoDB en Travis](https://docs.travis-ci.com/user/database-setup/#mongodb).
+* [Instalar PostgreSQL](https://www.digitalocean.com/community/tutorials/como-instalar-y-utilizar-postgresql-en-ubuntu-18-04-es).
+* [PostgreSQL and Golang Tutorial](https://www.enterprisedb.com/postgres-tutorials/postgresql-and-golang-tutorial).
+* [PostgreSQL en Travis](https://docs.travis-ci.com/user/database-setup/#postgresql).
 
-## Comunicación
+## Comunicación y tareas
 
-La aplicación que se va adesarrollar, va a utilizar microservicios como mostramos en al [arquitectura][arquitectura] de la misma. Para ello, es necesario una cola de tareas o un bróker de mensajería para la comunicación entre los microservicios. Sobre este tema se han consultado los siguientes enlaces con distinas herrramientas:
+La aplicación que se va adesarrollar, va a utilizar microservicios como mostramos en al [arquitectura][arquitectura] de la misma. Para ello, es necesario un sistema para la comunicación entre los microservicios. Sobre este tema se han consultado los siguientes enlaces con distinas herrramientas:
 
 * [Message Broker In Microservices](https://medium.com/@usha.dewasi/message-broker-in-microservices-c3c9dce003ef).
+* [Redis, Kafka or RabbitMQ: Which MicroServices Message Broker To Choose?](https://otonomo.io/blog/redis-kafka-or-rabbitmq-which-microservices-message-broker-to-choose/)
+* [AMQP, RabbitMQ and Celery - A Visual Guide For Dummies](https://www.abhishek-tiwari.com/amqp-rabbitmq-and-celery-a-visual-guide-for-dummies/).
 * [Empezando con Apache Kafka en Golang](https://blog.friendsofgo.tech/posts/empezando-con-apache-kafka-en-golang/).
-* [RabbitMQ I](https://www.rabbitmq.com/tutorials/tutorial-one-go.html).
-* [RabbitMQ II](https://github.com/streadway/amqp).
+* [RabbitMQ](https://www.rabbitmq.com/tutorials/tutorial-one-go.html).
+* [RabbitMQ GitHub](https://github.com/streadway/amqp).
 * [Go RabbitMQ Beginners Tutorial](https://tutorialedge.net/golang/go-rabbitmq-tutorial/).
 * [GoCelery I](https://godoc.org/github.com/taoh/gocelery).
 * [GoCelery II](https://github.com/gocelery/gocelery).
 * [Taskqueue](https://pkg.go.dev/google.golang.org/appengine/taskqueue).
+* [Redis QuickStar](https://redis.io/topics/quickstart).
+* [Redis GitHub](https://github.com/gomodule/redigo).
 
-Como se observa, las opciones son GoCelery, Kafka, RabbitMQ y Taskqueue. Si nos centramos en GoCelery y RabbitMQ, vemos en las páginas de GitHub de ambos que se actualizaron recientemente (tienen el último commit sobre mediados de julio) pero RabbitMQ tiene mayor número de estrellas y *forks* del repositorio. Por ello, se ha decidio usar esta herramienta.
+Una vez consultados estos enlaces y obtener una idea de cómo funcionan, se ha decido usar como cola de tareas para le ejecución asíncrona GoCelery. Este puede funcionar sobre Redis o AMQP(RAbbitMQ) como bróker de mensajes. Vemos que en GitHub Redis está mejor posicionado. Es cierto que presenta ciertas desventajas ya que, por ejemplo, no tiene persistencia y es más básico. Sin embargo, para nuestro aplicación puede funcionar adecuadamente. 
+
+Otros enlaces para conocer mejor estos mecanismos han sido:
+* [What is the difference between a message queue and a task queue?](https://www.quora.com/What-is-the-difference-between-a-message-queue-and-a-task-queue-Why-would-a-task-queue-require-a-message-broker-like-RabbitMQ-Redis-Celery-or-IronMQ-to-function)
+* [What is the relationship between Celery and RabbitMQ?](https://stackoverflow.com/questions/43379554/what-is-the-relationship-between-celery-and-rabbitmq)
 
 ## Configuración remota
 
@@ -83,5 +91,9 @@ las siguientes páginas:
 * [How to integrate your Go Service with ELK](https://pmihaylov.com/go-service-with-elk/).
 
 Por lo tanto se va usar `logrus` y `Logstash`. Dentro del lenguaje de programación no se han econtrado muchas alternativas a `logrus` pero aún vemos que está bien valorada en [su repositorio](https://github.com/sirupsen/logrus). [Otras alternativas](https://sematext.com/blog/logstash-alternatives/) a `Logstash` serían las mostradas pero la integración junto con `logrus` es mejor y además es [gratuito](https://www.elastic.co/es/blog/elasticsearch-free-open-limitless).
+
+## API REST Framework
+El acceso a los microservicios será mediante una API REST. Dentro del leguaje Go, tenemos [framworks](https://nordicapis.com/7-frameworks-to-build-a-rest-api-in-go/) para construirlo como Revel, Martini o Gorilla. En nuestro caso, hemos optado por usar [Gin](https://github.com/gin-gonic/gin), muy valorado en GitHub con 42.6K estrellas. Algunos ejemplos de su uso los podemos ver en [este tutorial](https://blog.logrocket.com/how-to-build-a-rest-api-with-golang-using-gin-and-gorm/).
+
 
 [arquitectura]: COMPLETARRRRRRRRRRRR
