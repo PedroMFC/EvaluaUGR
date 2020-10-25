@@ -1,0 +1,4 @@
+entidad:
+- internal/microval/modelsval/valManager.go 
+- internal/microres/modelsres/resManager.go 
+- internal/micropre/modelspre/preManager.go 
