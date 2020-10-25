@@ -17,13 +17,13 @@ En nuestro proyecto, se cuenta con tres microservicios obtenidos a partir de las
 
 * **Valoraciones**: este microservicio será el encargado de llevar el control acerca de las valoraciones "numéricas" de las asignaturas y aportar los resultados tal y como desean los usuarios.
 * **Reseñas**: por su parte, este se encargará de gestionar las opiniones/reseñas que los usuarios quieran incluir para cada una de las asignaturas.
-* **Preguntas**: para finalizar, este microservicio se encargará de controlar las preguntas y repuestas que formules los distintos usuarios.
+* **Preguntas**: para finalizar, este microservicio se encargará de controlar las preguntas y repuestas que formulen los distintos usuarios.
 
-
+Para el acceso a estos microservicios se creará una API REST. 
 
 ## Documentación
 * La documentación sobre la puesta a punto del repositorio está [aquí][configGitHub].
-* La documentación sobre lel trabajo autónomo se puede conultar [aquí][herramientas].
+* La documentación sobre la selección de herramientas se puede consultar [aquí][herramientas].
 
 [configGitHub]: https://pedromfc.github.io/EvaluaUGR/docs/configuracion_github
 [herramientas]: https://pedromfc.github.io/EvaluaUGR/docs/seleccion_herramientas
