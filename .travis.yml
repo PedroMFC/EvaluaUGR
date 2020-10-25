@@ -7,7 +7,7 @@ env:
 
 before_install:
 # Instalamos homebew para luego poder instalar Task
-- /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)" 
+- curl -sL https://taskfile.dev/install.sh | sh
 
 install:
 #Instalamos Task
