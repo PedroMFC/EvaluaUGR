@@ -5,13 +5,9 @@ go:
 env:
 - GO111MODULE=on
 
-before_install:
-# Instalamos homebew para luego poder instalar Task
-- curl -sL https://taskfile.dev/install.sh | sh
-
 install:
 #Instalamos Task
-- brew install go-task/tap/go-task
+- curl -sL https://taskfile.dev/install.sh | sh
 
 script:
 - task syntax_check
