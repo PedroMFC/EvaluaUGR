@@ -1,0 +1,15 @@
+version: '3'
+
+tasks:
+  syntax_check:
+    summary: |
+      Sirve para comporbar que la sintaxis de los archivos es correcta
+    cmds:
+      - gofmt -e .  > /dev/null
+
+  format_code:
+    summary: |
+      Al ejecutarla, modifica el código para que sea más fácil de leer dando el formato adecuado
+    cmds:
+      - gofmt -w . 
+      

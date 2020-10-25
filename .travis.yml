@@ -5,5 +5,13 @@ go:
 env:
 - GO111MODULE=on
 
+before_install:
+# Instalamos homebew para luego poder instalar Task
+- /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)" 
 
+install:
+#Instalamos Task
+- brew install go-task/tap/go-task
 
+script:
+- task syntax_check
