@@ -17,15 +17,17 @@ func (vDB *ValoracionBD) ConnectDatabase() {
 
 }
 
-//ValoracionDB implementa la interfaz IManjeValoraciones
-func (vDB *ValoracionBD) valorarAsigantura(asignatura string, opinion int) {
+//ValorarAsignatura añade a la base de datos una valoración
+func (vDB *ValoracionBD) ValorarAsignatura(asignatura string, opinion int) {
 
 }
 
-func (vDB *ValoracionBD) verValoraciones(asignatura string) {
+//VerValoraciones obtine todas las valoraciones de una asignatura
+func (vDB *ValoracionBD) VerValoraciones(asignatura string) {
 
 }
 
-func (vDB *ValoracionBD) verValoracionMedia(asignaura string) {
+//VerValoracionMedia devuelve la valoración media de una asignatura
+func (vDB *ValoracionBD) VerValoracionMedia(asignaura string) {
 
 }
