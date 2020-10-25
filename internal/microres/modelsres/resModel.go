@@ -8,3 +8,11 @@ type Resenia struct {
 	MeGusta    int    `json:"megusta"`
 	NoMeGusta  int    `json:"nomegusta"`
 }
+
+//IManejoResenias se encarga de implementar todas las operaciones sobre la base de datos con las reseñas
+type IManejoResenias interface {
+	GuardarResenia(asignatura string, resenia int)
+	VerResenias(asignatura string)
+	IndicarMeGusta(resenia int)
+	IndicarNoMeGusta(resenia int)
+}
