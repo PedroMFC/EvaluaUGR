@@ -43,7 +43,7 @@ La herramientas de bases de datos barajadas han sido las usuales: MySQL, Postgre
 * [MongoDB vs PostgreSQL I](https://www.educative.io/blog/mongodb-versus-postgresql-databases).
 * [MongoDB vs PostgreSQL II](https://www.educative.io/blog/mongodb-versus-postgresql-databases) 
   
-vemos que ambas herramientas son robustas, adecuadas y cada una de ellas tiene sus ventajas e inconvenientes. Sin embargo, se ha decidio usar PostgeSQL, ya que, aunque MongoDB es adecuada para desarrollos ágiles, PostgeSQL tiene mejor itegración con otras herramientas que usaremos después como [Gorm](https://github.com/go-gorm/gorm). Además, presenta opciones como la facilidad de identificadores con autoincremento lo que será muy útil para poder identificar sin problemas cada una de las entradas de la base de datos. Los enlaces consultados sobre su utilización en el lenguaje y con otras herramientas han sido los siguientes:
+vemos que ambas herramientas son robustas, adecuadas y cada una de ellas tiene sus ventajas e inconvenientes. Sin embargo, se ha decidio usar PostgeSQL, ya que, aunque MongoDB es adecuada para desarrollos ágiles, PostgeSQL tiene mejor itegración con otras herramientas que usaremos después como [Gorm](https://github.com/go-gorm/gorm) (una ORM que nos facilitará las operaciones en la base de datos). Además, presenta opciones como la facilidad de identificadores con autoincremento lo que será muy útil para poder identificar sin problemas cada una de las entradas de la base de datos. Los enlaces consultados sobre su utilización en el lenguaje y con otras herramientas han sido los siguientes:
 
 * [Instalar PostgreSQL](https://www.digitalocean.com/community/tutorials/como-instalar-y-utilizar-postgresql-en-ubuntu-18-04-es).
 * [PostgreSQL and Golang Tutorial](https://www.enterprisedb.com/postgres-tutorials/postgresql-and-golang-tutorial).
@@ -51,7 +51,7 @@ vemos que ambas herramientas son robustas, adecuadas y cada una de ellas tiene s
 
 ## Comunicación y tareas
 
-La aplicación que se va adesarrollar, va a utilizar microservicios como mostramos en al [arquitectura][arquitectura] de la misma. Para ello, es necesario un sistema para la comunicación entre los microservicios. Sobre este tema se han consultado los siguientes enlaces con distinas herrramientas:
+La aplicación que se va adesarrollar, va a utilizar microservicios como mostramos en al arquitectura de la misma. Para ello, es necesario un sistema para la comunicación entre los microservicios. Sobre este tema se han consultado los siguientes enlaces con distinas herrramientas:
 
 * [Message Broker In Microservices](https://medium.com/@usha.dewasi/message-broker-in-microservices-c3c9dce003ef).
 * [Redis, Kafka or RabbitMQ: Which MicroServices Message Broker To Choose?](https://otonomo.io/blog/redis-kafka-or-rabbitmq-which-microservices-message-broker-to-choose/)
@@ -93,7 +93,7 @@ las siguientes páginas:
 Por lo tanto se va usar `logrus` y `Logstash`. Dentro del lenguaje de programación no se han econtrado muchas alternativas a `logrus` pero aún vemos que está bien valorada en [su repositorio](https://github.com/sirupsen/logrus). [Otras alternativas](https://sematext.com/blog/logstash-alternatives/) a `Logstash` serían las mostradas pero la integración junto con `logrus` es mejor y además es [gratuito](https://www.elastic.co/es/blog/elasticsearch-free-open-limitless).
 
 ## API REST Framework
-El acceso a los microservicios será mediante una API REST. Dentro del leguaje Go, tenemos [framworks](https://nordicapis.com/7-frameworks-to-build-a-rest-api-in-go/) para construirlo como Revel, Martini o Gorilla. En nuestro caso, hemos optado por usar [Gin](https://github.com/gin-gonic/gin), muy valorado en GitHub con 42.6K estrellas. Algunos ejemplos de su uso los podemos ver en [este tutorial](https://blog.logrocket.com/how-to-build-a-rest-api-with-golang-using-gin-and-gorm/).
+El acceso a los microservicios será mediante una API REST. Dentro del leguaje Go, tenemos [framworks](https://nordicapis.com/7-frameworks-to-build-a-rest-api-in-go/) para construirlo como Revel, Martini o Gorilla. En nuestro caso, hemos optado por usar [Gin](https://github.com/gin-gonic/gin), muy valorado en GitHub con 42.6K estrellas. Algunos ejemplos de su uso los podemos ver en [este tutorial](https://blog.logrocket.com/how-to-build-a-rest-api-with-golang-using-gin-and-gorm/) o [en este](https://medium.com/wesionary-team/create-your-first-rest-api-with-golang-using-gin-gorm-and-mysql-d439bcc6f987) donde se observa una buena división del proyecto en carpetas.
 
 
-[arquitectura]: COMPLETARRRRRRRRRRRR
+[arquitectura]: COMPLETAR
