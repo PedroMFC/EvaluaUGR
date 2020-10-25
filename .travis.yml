@@ -5,9 +5,9 @@ go:
 env:
 - GO111MODULE=on
 
-install:
-#Instalamos Task
-- curl -sL https://taskfile.dev/install.sh | sh
+install: 
+# instalar mediante un sh Task
+- ./install-task.sh
 
 script:
 - task syntax_check
