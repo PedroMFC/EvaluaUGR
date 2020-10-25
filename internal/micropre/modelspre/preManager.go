@@ -17,3 +17,18 @@ var baseDatos PreguntasBD
 func (pDB *PreguntasBD) ConnectDatabase() {
 
 }
+
+//HacerPregunta sirve para almacenar una pregunta de una asignatura
+func (pDB *PreguntasBD) HacerPregunta(asignatura string, opinion string) {
+
+}
+
+//VerPreguntas devuelve todas las preguntas de una asignatura
+func (pDB *PreguntasBD) VerPreguntas(asignatura string) {
+
+}
+
+//ResponderPregunta almacena una respuesta de una pregunta formulada
+func (pDB *PreguntasBD) ResponderPregunta(identificadorPregunta uint, respuesta string) {
+
+}

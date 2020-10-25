@@ -13,3 +13,10 @@ type Respuesta struct {
 	PreguntaID int    `json:"preguntaid"`
 	Respuesta  string `json:"respuesta"`
 }
+
+//IManejoPreguntas se encarga de implementar todas las operaciones sobre la base de datos con las preguntas
+type IManejoPreguntas interface {
+	HacerPregunta(asignatura string, opinion string)
+	VerPreguntas(asignatura string)
+	ResponderPregunta(identificadorPregunta uint, respuesta string)
+}
