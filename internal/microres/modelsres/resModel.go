@@ -1,4 +1,4 @@
-package models
+package modelsres
 
 //Resenia contiene información acerca de los datos de una reseña de una asignatura
 type Resenia struct {

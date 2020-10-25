@@ -1,4 +1,4 @@
-package models
+package modelsres
 
 import (
 	"github.com/jinzhu/gorm"
