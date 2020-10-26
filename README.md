@@ -15,7 +15,9 @@ En nuestro proyecto, se cuenta con tres microservicios obtenidos a partir de las
 * **Reseñas**: por su parte, este se encargará de gestionar las opiniones/reseñas que los usuarios quieran incluir para cada una de las asignaturas.
 * **Preguntas**: para finalizar, este microservicio se encargará de controlar las preguntas y repuestas que formulen los distintos usuarios.
 
-Para el acceso a estos microservicios se creará una API REST. 
+Para el acceso a estos microservicios se creará una API REST. El resto de herramientas se pueden consultar en el apratado [herramientas][herramientas]. Presentamos un diagrama con la arquitectura propuesta.
+
+![](./docs/imgs/arquitectura.png)
 
 ## Issues y milestones
 
