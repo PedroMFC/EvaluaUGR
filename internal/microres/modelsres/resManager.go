@@ -13,7 +13,7 @@ type ReseniasBD struct {
 var baseDatosResenias ReseniasBD
 
 //ConnectDatabase sirve para conectarse a la base de datos de valoraciones
-func (vDB *ReseniasBD) ConnectDatabase() {
+func ConnectDatabase(DB *gorm.DB) {
 
 }
 
