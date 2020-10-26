@@ -10,10 +10,8 @@ type ValoracionBD struct {
 	DB *gorm.DB
 }
 
-var baseDatos ValoracionBD
-
 //ConnectDatabase sirve para conectarse a la base de datos de valoraciones
-func (vDB *ValoracionBD) ConnectDatabase() {
+func ConnectDatabase(DB *gorm.DB) {
 
 }
 
