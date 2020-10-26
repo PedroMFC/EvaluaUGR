@@ -14,7 +14,7 @@ type PreguntasBD struct {
 var baseDatos PreguntasBD
 
 //ConnectDatabase sirve para conectarse a la base de datos de las preguntas
-func (pDB *PreguntasBD) ConnectDatabase() {
+func ConnectDatabase(pDB *gorm.DB, rDB *gorm.DB) {
 
 }
 
