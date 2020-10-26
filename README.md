@@ -19,7 +19,21 @@ Para el acceso a estos microservicios se creará una API REST. El resto de herra
 
 ![](./docs/imgs/arquitectura.png)
 
+## Sintaxis
+Para comprobar la sintaxis se puede ejectuar
+```
+gofmt -e .  > /dev/null
+```
+
+o si se tiene instalada la herrmienta `Task` (puede hacerse mediante el script`install-task.sh`)
+
+```
+task syntax_check
+```
+
 ## Issues y milestones
+
+En el siguiente enlace está el enlace al [roadmap](https://github.com/PedroMFC/EvaluaUGR/projects).
 
 * [Arcvhivos auxiliares][mAuxiliar]: para mantener los archivos auxiliares completos.
   * [Añadir traivs][i10].
@@ -27,7 +41,6 @@ Para el acceso a estos microservicios se creará una API REST. El resto de herra
   * [Incluir archivo de tareas][i36].
   * [Actualizar travis][i10].
   * [Añadir badge travis][i9].
-  * [Añadir descripción][i3]
 
 * [La estructura del proyecto][mEstructura]: tener una estructura adecuada en el proyecto y como marca el lenguaje. 
   * [Renombrar archivos][i38].
@@ -47,6 +60,7 @@ Para el acceso a estos microservicios se creará una API REST. El resto de herra
   * [Renombrar archivos documentación][i21].
   * [Cambiar nombre del proyecto][i7].
   * [Mover problema del REDAME][i43].
+  * [Enlace al roadmap][i45].
 
 
 * [Gestionar valoraciones][mValoraciones]: gestión de toda la funcionalidad relacionada con las valoraciones.
@@ -75,7 +89,8 @@ Para el acceso a estos microservicios se creará una API REST. El resto de herra
   * [Conexión a la base de datos][i34].
   * [Crear modelo de pregunta][i31].
   * [Crear interfaz de operaciones][i32].
-  * [Solucionar errores][mErrores]: para solucionar errores.
+  
+* [Solucionar errores][mErrores]: para solucionar errores.
   * [Arreglar travis][i37].
 
 
@@ -144,3 +159,4 @@ Para el acceso a estos microservicios se creará una API REST. El resto de herra
 [i42]: https://github.com/PedroMFC/EvaluaUGR/issues/42
 [i43]: https://github.com/PedroMFC/EvaluaUGR/issues/43
 [i44]: https://github.com/PedroMFC/EvaluaUGR/issues/44
+[i45]: https://github.com/PedroMFC/EvaluaUGR/issues/45
