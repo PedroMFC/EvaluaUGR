@@ -30,6 +30,22 @@ o si se tiene instalada la herrmienta `Task` (puede hacerse mediante el script`i
 ```
 task syntax_check
 ```
+Las primeras clases con el "cascarón" son:
+* [valManager.go](./internal/microval/modelsval/valManager.go).
+* [resManager.go](./internal/microres/modelsres/resManager.go).
+* [preManager.go)](./internal/micropre/modelspre/preManager.go).
+
+## Historias de usuario
+
+  * [[HU1] Valorar una asignatura.][i12].
+  * [[HU2] Conocer valoraciones asignatura][i13].
+  * [[HU3] Valoración media de una asignatura ][i14].
+  * [[HU4] Enviar reseña asignatura ][i15].
+  * [[HU5] Ver reseñas de una asignatura][i16].
+  * [[HU6] Valorar reseña de una asignatura ][i17].
+  * [[HU7] Hacer pregunta de una asignatura][i18].
+  * [[HU8] Ver preguntas de una asignatura][i19].
+  * [[HU9] Responder pregunta de una asignatura][i20].
 
 ## Issues y milestones
 
@@ -61,32 +77,21 @@ En el siguiente enlace está el enlace al [roadmap](https://github.com/PedroMFC/
   * [Cambiar nombre del proyecto][i7].
   * [Mover problema del REDAME][i43].
   * [Enlace al roadmap][i45].
+  * [Especificar HU en el README][i47].
 
 
 * [Gestionar valoraciones][mValoraciones]: gestión de toda la funcionalidad relacionada con las valoraciones.
-  * [[HU1] Valorar una asignatura.][i12].
-  * [[HU2] Conocer valoraciones asignatura][i13].
-  * [[HU3] Valoración media de una asignatura ][i14].
-  * [Conexión a la base de datos][i26].
   * [Interfaz con las operaciones][i27].
   * [Crear modelos de valoración][i24].
   
 
 * [Gestionar reseñas][mResenias]: gestión de toda la funcionalidad relacionada con las reseñas/opiniones.
-  * [[HU4] Enviar reseña asignatura ][i15].
-  * [[HU5] Ver reseñas de una asignatura][i16].
-  * [[HU6] Valorar reseña de una asignatura ][i17].
-  * [Conexión a la base de datos reseñas][i33].
   * [Crear modelo de reseña][i29].
   * [Actualizar modelo][i39].
   * [Interfaz con las operaciones][i30].
   
 
 * [Gestionar preguntas][mPreguntas]: gestión de toda la funcionalidad relacionada con las preguntas.
-  * [[HU7] Hacer pregunta de una asignatura][i18].
-  * [[HU8] Ver preguntas de una asignatura][i19].
-  * [[HU9] Responder pregunta de una asignatura][i20].
-  * [Conexión a la base de datos][i34].
   * [Crear modelo de pregunta][i31].
   * [Crear interfaz de operaciones][i32].
   
@@ -160,3 +165,5 @@ En el siguiente enlace está el enlace al [roadmap](https://github.com/PedroMFC/
 [i43]: https://github.com/PedroMFC/EvaluaUGR/issues/43
 [i44]: https://github.com/PedroMFC/EvaluaUGR/issues/44
 [i45]: https://github.com/PedroMFC/EvaluaUGR/issues/45
+[i46]: https://github.com/PedroMFC/EvaluaUGR/issues/46
+[i47]: https://github.com/PedroMFC/EvaluaUGR/issues/47
