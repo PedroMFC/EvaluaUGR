@@ -14,7 +14,7 @@ Para la elaboración del proyecto se han considerado una serie de lenguajes inic
 * [JavaScript vs Rust](https://www.slant.co/versus/111/5522/~javascript_vs_rust).
 * [Cuáles son los lenguajes de programación con los sueldos más altos](https://www.businessinsider.es/cuales-son-lenguajes-programacion-sueldos-altos-737907).
 
-se ha decido seleccionar Go como lenguaje de programación del proyecto. Las principales razones para elegirlo frente a los otros ha sido que en la bibliografía consultada se ha resaltado la facilidad de aprender el lenguaje desde cero así como la rapidez de programación en él. También se ha tenido en cuenta que es un lengiaje que actualemte está en auge y se prevé que en los próximos años hagan falta informáticos con conocimiento en el mismo. Como nunca se ha trabajado con él, han sido necesarios consultar tutoriales para conocer la sintaxis del programa y también ha sido necesaria (y será) una investigación para conocer las herramientas que dispone y que nos harán falta durante el desarrollo. Estos aspectos se irán comentando según se crea necesario. En primer lugar, ponemos los enlaces de los tutoriales de Go utilizados para conocer la sintaxis del mismo y realizar el primer acercamineto al mismo:
+se ha decido seleccionar Go como lenguaje de programación del proyecto. Las principales razones para elegirlo frente a los otros ha sido que en la bibliografía consultada se ha resaltado la facilidad de aprender el lenguaje desde cero así como la rapidez de programación en él. También se ha tenido en cuenta que es un lenguaje que actualmente está en auge y se prevé que en los próximos años hagan falta informáticos con conocimiento en el mismo. Como nunca se ha trabajado con él, han sido necesarios consultar tutoriales para conocer la sintaxis del programa y también ha sido necesaria (y será) una investigación para conocer las herramientas que dispone y que nos harán falta durante el desarrollo. Estos aspectos se irán comentando según se crea necesario. En primer lugar, ponemos los enlaces de los tutoriales de Go utilizados para conocer la sintaxis del mismo y realizar el primer acercamiento al mismo:
 
 * [Tutorial GO I](https://tour.golang.org/list).
 * [Tutorial GO II](https://golang.org/doc/tutorial/getting-started).
@@ -22,7 +22,7 @@ se ha decido seleccionar Go como lenguaje de programación del proyecto. Las pri
 Se ha seguido [este tutorial](https://golang.org/doc/install) para instalar Go. También se ha seguido [esta guía](https://kgolding.co.uk/blog/2020/02/19/golang-application-directory-structure/) sobre cómo estructurar correctamente un proyecto en Go.
 
 ## Uso de `goftm`
-Con [gofmt](https://golang.org/cmd/gofmt/), que ya viene con el lenguaje, podemos automáticamente comprobar la sintaxis de los archivos o formatear el código. De hecho, en la etapa de definición de interfaces que no "podemos" ejecutar los archivos comprobamos que estos estén correctamente escritos. Además, estas comprobaciones se han incluido en el arhivo de tareas específico para que sea más fácil aplicarlas. En la estapa inicial esto se comprueba para ver que no hay problemas.
+Con [gofmt](https://golang.org/cmd/gofmt/), que ya viene con el lenguaje, podemos automáticamente comprobar la sintaxis de los archivos o formatear el código. De hecho, en la etapa de definición de interfaces que no "podemos" ejecutar los archivos comprobamos que estos estén correctamente escritos. Además, estas comprobaciones se han incluido en el arhivo de tareas específico para que sea más fácil aplicarlas. En la etapa inicial esto se comprueba para ver que no hay problemas.
 
 ## Dependiencias
 Pasamos ahora ha explicar cómo se van a manejar las dependencias del proyecto. Este apartado tiene relación con el [ejercicio 2](https://github.com/PedroMFC/Autoevaluacion-CC/blob/main/semana%202/Ejercicio2.md). En el trabajo de investigación se ha visto que tienes la opción de usar `vendoring` ([más información](https://riptutorial.com/go/topic/978/vendoring)) o `Go modules`. Se ha decidido usar esta última herramienta y su funcionamiento se ha visto en [este enlace](https://blog.friendsofgo.tech/posts/go-modules-en-tres-pasos/) y [este](https://medium.com/@adiach3nko/package-management-with-go-modules-the-pragmatic-guide-c831b4eaaf31). Se ha priorizado su uso frente a `vendoring` ya que es una herramienta más moderna y que permite manejar las dependencias de una manera más sencilla.
@@ -35,19 +35,19 @@ Este apartado guarda relación con el [ejercicio4](https://github.com/PedroMFC/A
 Este apartado guarda relación con el [ejercicio5](https://github.com/PedroMFC/Autoevaluacion-CC/blob/main/semana%202/Ejercicio5.md). Para llevar a cabo la integración continua se va a usar `Travis` que es una herramienta que ya ha usado, por ejemplo en [DatosDemograficos-curso-tdd](https://github.com/tdd-organization-afp/DatosDemograficos). También se ha consultado [este enlace]() para añadir el *badge* al `README.md`.
  
 ## Cobertura
-Para la cobertura de los test se va a usar `Codecov` que es una herramientos que también se usó en [DatosDemograficos-curso-tdd](https://github.com/tdd-organization-afp/DatosDemograficos) y presenta un muy buen funcionamiento junta con la herramienta de integración continua. Para añadir el *badge* al `README.md` se ha consultado [este enlace](https://stackoverflow.com/questions/54010651/codecov-io-badge-in-github-readme-md).
+Para la cobertura de los test se va a usar `Codecov` que es una herramientas que también se usó en [DatosDemograficos-curso-tdd](https://github.com/tdd-organization-afp/DatosDemograficos) y presenta un muy buen funcionamiento junta con la herramienta de integración continua. Para añadir el *badge* al `README.md` se ha consultado [este enlace](https://stackoverflow.com/questions/54010651/codecov-io-badge-in-github-readme-md).
  
 
 ## Automatización 
 
-En caso de ser necearia la automatización de tareas se usará o [Tusk](https://github.com/rliebz/tusk) o [Task](https://taskfile.dev/#/). Se ha decidio usar el segundo ya que en GitHub aparece que se ha actualizado más recientemente y tiene mayor valoración y contribuidores. Es cierto que go ya tiene mecanimos como `go test` para ejecutar los tests, pero usando `Task` tenemos una manera unificada para todas las tareas existentes.
+En caso de ser necesaria la automatización de tareas se usará o [Tusk](https://github.com/rliebz/tusk) o [Task](https://taskfile.dev/#/). Se ha decidido usar el segundo ya que en GitHub aparece que se ha actualizado más recientemente y tiene mayor valoración y contribuidores. Es cierto que go ya tiene mecanismos como `go test` para ejecutar los tests, pero usando `Task` tenemos una manera unificada para todas las tareas existentes.
 
 ## Base de datos
 La herramientas de bases de datos barajadas han sido las usuales: MySQL, PostgreSQL, MongoDB, SQLite, MariaDB, etc. Todas las opciones serían adecuadas para el desarrollo del proyecto. Si comparamos PostgreSQL y MongoDB:
 * [MongoDB vs PostgreSQL I](https://www.educative.io/blog/mongodb-versus-postgresql-databases).
 * [MongoDB vs PostgreSQL II](https://www.educative.io/blog/mongodb-versus-postgresql-databases) 
   
-vemos que ambas herramientas son robustas, adecuadas y cada una de ellas tiene sus ventajas e inconvenientes. Sin embargo, se ha decidio usar PostgeSQL, ya que, aunque MongoDB es adecuada para desarrollos ágiles, PostgeSQL tiene mejor itegración con otras herramientas que usaremos después como [Gorm](https://github.com/go-gorm/gorm) (una ORM que nos facilitará las operaciones en la base de datos). Además, presenta opciones como la facilidad de identificadores con autoincremento lo que será muy útil para poder identificar sin problemas cada una de las entradas de la base de datos. Los enlaces consultados sobre su utilización en el lenguaje y con otras herramientas han sido los siguientes:
+vemos que ambas herramientas son robustas, adecuadas y cada una de ellas tiene sus ventajas e inconvenientes. Sin embargo, se ha decidido usar PostgeSQL, ya que, aunque MongoDB es adecuada para desarrollos ágiles, PostgreSQL tiene mejor integración con otras herramientas que usaremos después como [Gorm](https://github.com/go-gorm/gorm) (una ORM que nos facilitará las operaciones en la base de datos). Además, presenta opciones como la facilidad de identificadores con autoincremento lo que será muy útil para poder identificar sin problemas cada una de las entradas de la base de datos. Los enlaces consultados sobre su utilización en el lenguaje y con otras herramientas han sido los siguientes:
 
 * [Instalar PostgreSQL](https://www.digitalocean.com/community/tutorials/como-instalar-y-utilizar-postgresql-en-ubuntu-18-04-es).
 * [PostgreSQL and Golang Tutorial](https://www.enterprisedb.com/postgres-tutorials/postgresql-and-golang-tutorial).
@@ -55,7 +55,7 @@ vemos que ambas herramientas son robustas, adecuadas y cada una de ellas tiene s
 
 ## Comunicación y tareas
 
-La aplicación que se va adesarrollar, va a utilizar microservicios como mostramos en al arquitectura de la misma. Para ello, es necesario un sistema para la comunicación entre los microservicios. Sobre este tema se han consultado los siguientes enlaces con distinas herrramientas:
+La aplicación que se va a desarrollar, va a utilizar microservicios como mostramos en al arquitectura de la misma. Para ello, es necesario un sistema para la comunicación entre los microservicios. Sobre este tema se han consultado los siguientes enlaces con distintas herramientas:
 
 * [Message Broker In Microservices](https://medium.com/@usha.dewasi/message-broker-in-microservices-c3c9dce003ef).
 * [Redis, Kafka or RabbitMQ: Which MicroServices Message Broker To Choose?](https://otonomo.io/blog/redis-kafka-or-rabbitmq-which-microservices-message-broker-to-choose/)
@@ -78,7 +78,7 @@ Otros enlaces para conocer mejor estos mecanismos han sido:
 
 ## Configuración remota
 
-Los servicios en la nuben necesitan una configuración remota. Entre las [posibilidades a usar](https://www.g2.com/products/etcd/competitors/alternatives) tenemos `etcd`, `zookeper` o `consul`. Si vemos los repositorios de estas herramientas:
+Los servicios en la nube necesitan una configuración remota. Entre las [posibilidades a usar](https://www.g2.com/products/etcd/competitors/alternatives) tenemos `etcd`, `zookeper` o `consul`. Si vemos los repositorios de estas herramientas:
 
 * [etcd](https://github.com/etcd-io/etcd).
 * [Zookeper](https://github.com/go-zookeeper/zk).
@@ -88,7 +88,7 @@ y actuamos de manera similar a las herramientas anteriores vemos que las que mej
 
 ## *Logging*
 
-También es necesara una herrmienta de *logging*. La información consultada para este tema se encuentra en
+También es necesaria una herramienta de *logging*. La información consultada para este tema se encuentra en
 las siguientes páginas:
 * [Logging in Go: Choosing a System and Using it](https://www.honeybadger.io/blog/golang-logging/).
 * [Golang Logging: ship GoLang application logs to logstash](https://logit.io/sources/configure/golang).
@@ -97,7 +97,7 @@ las siguientes páginas:
 Por lo tanto se va usar `logrus` y `Logstash`. Dentro del lenguaje de programación no se han econtrado muchas alternativas a `logrus` pero aún vemos que está bien valorada en [su repositorio](https://github.com/sirupsen/logrus). [Otras alternativas](https://sematext.com/blog/logstash-alternatives/) a `Logstash` serían las mostradas pero la integración junto con `logrus` es mejor y además es [gratuito](https://www.elastic.co/es/blog/elasticsearch-free-open-limitless).
 
 ## API REST Framework
-El acceso a los microservicios será mediante una API REST. Dentro del leguaje Go, tenemos [framworks](https://nordicapis.com/7-frameworks-to-build-a-rest-api-in-go/) para construirlo como Revel, Martini o Gorilla. En nuestro caso, hemos optado por usar [Gin](https://github.com/gin-gonic/gin), muy valorado en GitHub con 42.6K estrellas. Algunos ejemplos de su uso los podemos ver en [este tutorial](https://blog.logrocket.com/how-to-build-a-rest-api-with-golang-using-gin-and-gorm/) o [en este](https://medium.com/wesionary-team/create-your-first-rest-api-with-golang-using-gin-gorm-and-mysql-d439bcc6f987) donde se observa una buena división del proyecto en carpetas.
+El acceso a los microservicios será mediante una API REST. Dentro del lenguaje Go, tenemos [framworks](https://nordicapis.com/7-frameworks-to-build-a-rest-api-in-go/) para construirlo como Revel, Martini o Gorilla. En nuestro caso, hemos optado por usar [Gin](https://github.com/gin-gonic/gin), muy valorado en GitHub con 42.6K estrellas. Algunos ejemplos de su uso los podemos ver en [este tutorial](https://blog.logrocket.com/how-to-build-a-rest-api-with-golang-using-gin-and-gorm/) o [en este](https://medium.com/wesionary-team/create-your-first-rest-api-with-golang-using-gin-gorm-and-mysql-d439bcc6f987) donde se observa una buena división del proyecto en carpetas.
 
 
 [arquitectura]: COMPLETAR

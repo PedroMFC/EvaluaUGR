@@ -5,27 +5,13 @@
 # EvaluaUGR
 Proyecto para la asignatura de Cloud Computing del Máster en Ingeniería Informática.
 
-## Arquitectura
-
-Tras consultar la información sobre las diferentes arquitecturas disponibles, se ha decidio que la arquitectura utilizada sea una basada en **microservicios**. Si consultamos en páginas como [Medium](https://medium.com/@goodrebels/microservicios-ventajas-y-contras-de-la-arquitectura-descentralizada-a3b7fc814422) o [RedHat](https://www.redhat.com/es/topics/microservices/what-are-microservices), vemos que esta arquitectura presenta una serie de ventajas como puede ser la versatilidad, facilidad de integración y escalado o la capacidad de recuperación ya que el fallo de un microservicio no afecta a los demás. Sin embargo, también presenta una serie de inconvenientes que debemos de tener en cuenta como la dificultad de gestionar gran cantidad de microservicios en una aplicación. También se ha decidido usar esta arquitectura para ya que hemos visto que nuestra aplicación consta, digamos, de tres funcinalidad principales una vez vistas las historias de usuario. Además, es interesante que se mantega la integridad del sistema y siga funcionando aunque alguna de las funcionalidades falle.  
-
-De este modo, nuestro proyecto cuenta con tres microservicios obtenidos a partir de las historias de usuario que se pueden consultar en el apartado [issues]:
-
-* **Valoraciones**: este microservicio será el encargado de llevar el control acerca de las valoraciones "numéricas" de las asignaturas y aportar los resultados tal y como desean los usuarios.
-* **Reseñas**: por su parte, este se encargará de gestionar las opiniones/reseñas que los usuarios quieran incluir para cada una de las asignaturas.
-* **Preguntas**: para finalizar, este microservicio se encargará de controlar las preguntas y repuestas que formulen los distintos usuarios.
-
-Para el acceso a estos microservicios se creará una API REST. El resto de herramientas se pueden consultar en el apratado [herramientas][herramientas]. Presentamos un diagrama con la arquitectura propuesta.
-
-![](./docs/imgs/arquitectura.png)
-
 ## Sintaxis
-Para comprobar la sintaxis se puede ejectuar
+Para comprobar la sintaxis se puede ejecutar
 ```
 gofmt -e .  > /dev/null
 ```
 
-o si se tiene instalada la herrmienta `Task` (puede hacerse mediante el script`install-task.sh`)
+o si se tiene instalada la herramienta `Task` (puede hacerse mediante el script`install-task.sh`)
 
 ```
 task syntax_check
@@ -33,7 +19,7 @@ task syntax_check
 Las primeras clases con el "cascarón" son:
 * [valManager.go](./internal/microval/modelsval/valManager.go).
 * [resManager.go](./internal/microres/modelsres/resManager.go).
-* [preManager.go)](./internal/micropre/modelspre/preManager.go).
+* [preManager.go](./internal/micropre/modelspre/preManager.go).
 
 ## Historias de usuario
 
@@ -51,7 +37,7 @@ Las primeras clases con el "cascarón" son:
 
 En el siguiente enlace está el enlace al [roadmap](https://github.com/PedroMFC/EvaluaUGR/projects).
 
-* [Arcvhivos auxiliares][mAuxiliar]: para mantener los archivos auxiliares completos.
+* [Archivos auxiliares][mAuxiliar]: para mantener los archivos auxiliares completos.
   * [Añadir traivs][i10].
   * [Añadir cc.yaml][i42].
   * [Incluir archivo de tareas][i36].
@@ -65,7 +51,7 @@ En el siguiente enlace está el enlace al [roadmap](https://github.com/PedroMFC/
   * [Actualizar dependencias][i28].
   * [Crear módulo principal][i23].
 
-* [Buena documetación][mDocumentacion]: tener una buena documentación.
+* [Buena documentación][mDocumentacion]: tener una buena documentación.
   * [Añadir carpeta de documentación][i1]
   * [Documentar trabajo semana 1][i2].
   * [Documentar trabajo semana 2][i8].
@@ -104,10 +90,12 @@ En el siguiente enlace está el enlace al [roadmap](https://github.com/PedroMFC/
 * [Problema a resolver][problema].
 * [Puesta a punto del repositorio][configGitHub].
 * [La documentación sobre la selección de herramientas][herramientas].
+* [Información sobre la arquitectura empleada][arquitectura].
 
 [configGitHub]: https://pedromfc.github.io/EvaluaUGR/docs/configuracion_github
 [herramientas]: https://pedromfc.github.io/EvaluaUGR/docs/seleccion_herramientas
 [problema]: https://pedromfc.github.io/EvaluaUGR/docs/problema
+[arquitectura]: https://pedromfc.github.io/EvaluaUGR/docs/arquitectura
 [issues]: https://github.com/PedroMFC/EvaluaUGR/issues
 
 
