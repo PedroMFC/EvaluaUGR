@@ -8,6 +8,9 @@ import (
 //Valoracion contiene información acerca de los datos de una asignatura
 type Resenia struct {
 	Opinion string
+	Identificador int
+	MeGusta int
+	NoMeGusta int
 }
 
 //SetOpinion almacena la respuesta de la reseña

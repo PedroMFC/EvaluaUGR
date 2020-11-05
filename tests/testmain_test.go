@@ -32,7 +32,13 @@ func setup() {
 	res := new(modelsres.Resenia)
 	res2 := new(modelsres.Resenia)
 	res.Opinion = "Me ha parecido interesante"
+	res.MeGusta = 0
+	res.NoMeGusta = 0
+	res.Identificador = 0
 	res2.Opinion = "No me ha gustado"
+	res2.MeGusta = 0
+	res2.NoMeGusta = 0
+	res2.Identificador = 1
 	ResRepo.Resenias["BBB"] = []modelsres.Resenia{*res, *res2}
 
 	fmt.Printf("\033[1;36m%s\033[0m", "> Setup completed\n")

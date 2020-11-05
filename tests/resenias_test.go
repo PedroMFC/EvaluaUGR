@@ -36,6 +36,18 @@ func TestOpinar(t *testing.T) {
 	assert.NotNil(t, err)
 }
 
+//Comprobamos que se asignan bien los identificadores al enviar la reseña
+func TestIdentificadores(t *testing.T) {
+	err := ResRepo.Opinar("AB", "Esta reseña es adecuada")
+	assert.Nil(t, err)
+	err = ResRepo.Opinar("AB", "Esta reseña es también adecuada")
+	assert.Nil(t, err)
+
+	assert.Equal(t, 0, ResRepo.Resenias["AB"][0].Identificador, "Es la primera reseña enviada")
+	assert.Equal(t, 1, ResRepo.Resenias["AB"][1].Identificador, "Es la segunda reseña enviada")
+
+}
+
 // Comprobar que devuelve de manera correcta las reseñas
 func TestGetResenias(t *testing.T) {
 	res, err := ResRepo.GetResenias("AAAAAA")
