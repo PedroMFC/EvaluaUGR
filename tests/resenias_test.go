@@ -63,3 +63,45 @@ func TestGetResenias(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, 0, len(res), "El array de reseñas tiene que estar vacío")
 }
+
+//Comprobamos que las valoraciones positivas funcionan correctamente
+func TestMeGusta(t *testing.T) {
+	err1 := ResRepo.GustaResenia("ABCDEF", 0) //Identificador incorrecto
+	assert.NotNil(t, err1)
+
+	res, err := ResRepo.GetResenias("BBB")
+	assert.Nil(t, err)
+	assert.Equal(t, 0, res[0].MeGusta, "La primera opinión no se ha valorado")
+	assert.Equal(t, 0, res[1].MeGusta, "La segunda opinión tampoco se ha valorado")
+
+	err = ResRepo.GustaResenia("BBB", 2) //No tiene tantas reseñas
+	assert.NotNil(t, err)
+
+	err = ResRepo.GustaResenia("BBB", 0) //Esta debe de funcionar bien
+	assert.Nil(t, err)
+	res, _ = ResRepo.GetResenias("BBB")
+	assert.Equal(t, 1, res[0].MeGusta, "La primera opinión sí se ha valorado una vez")
+	assert.Equal(t, 0, res[1].MeGusta, "La segunda opinión NO se ha valorado")
+
+}
+
+//Comprobamos que las valoraciones negativas funcionan correctamente
+func TestNoMeGusta(t *testing.T) {
+	err1 := ResRepo.NoGustaResenia("ABCDEF", 0) //Identificador incorrecto
+	assert.NotNil(t, err1)
+
+	res, err := ResRepo.GetResenias("BBB")
+	assert.Nil(t, err)
+	assert.Equal(t, 0, res[0].NoMeGusta, "La primera opinión no se ha valorado")
+	assert.Equal(t, 0, res[1].NoMeGusta, "La segunda opinión tampoco se ha valorado")
+
+	err = ResRepo.NoGustaResenia("BBB", 2) //No tiene tantas reseñas
+	assert.NotNil(t, err)
+
+	err = ResRepo.NoGustaResenia("BBB", 1) //Esta debe de funcionar bien
+	assert.Nil(t, err)
+	res, _ = ResRepo.GetResenias("BBB")
+	assert.Equal(t, 0, res[0].NoMeGusta, "La primera opinión NO se ha valorado")
+	assert.Equal(t, 1, res[1].NoMeGusta, "La segunda opinión SÍ se ha valorado una vez")
+
+}
