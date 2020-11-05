@@ -35,3 +35,19 @@ func TestOpinar(t *testing.T) {
 								 "Esta no es una reseña válida porque tiene demasiados caracteres.")
 	assert.NotNil(t, err)
 }
+
+// Comprobar que devuelve de manera correcta las reseñas
+func TestGetResenias(t *testing.T) {
+	res, err := ResRepo.GetResenias("AAAAAA")
+	assert.NotNil(t, err)
+	res, err = ResRepo.GetResenias("BBB")
+	assert.Nil(t, err)
+	//Comprobamos que son iguales a las que hemos inicializado
+	assert.Equal(t, "Me ha parecido interesante", res[0].Opinion, "Debe coincidir la primera reseña")
+	assert.Equal(t, "No me ha gustado", res[1].Opinion, "Y también debe coincidir la segunda")
+
+	//Comprobamos que si no está la asinatura está vacío
+	res, err = ResRepo.GetResenias("AAA")
+	assert.Nil(t, err)
+	assert.Equal(t, 0, len(res), "El array de reseñas tiene que estar vacío")
+}

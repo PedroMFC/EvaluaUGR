@@ -36,3 +36,13 @@ func (resRepo *ReseniasRepositorio) Opinar(asignatura string, opinion string) er
 
 	return nil
 }
+
+//GetResenias nos aporta las reseñas realizadas en una asignatura
+func (resRepo *ReseniasRepositorio) GetResenias(asignatura string) ([]Resenia, error) {
+	err := asig.AsignaturaCorrecta(asignatura)
+	if err != nil {
+		return nil, err
+	}
+
+	return resRepo.Resenias[asignatura], nil
+}

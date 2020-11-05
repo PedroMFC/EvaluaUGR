@@ -29,7 +29,11 @@ func setup() {
 
 	//Creamos el conjunto de reseñas a testear
 	ResRepo = *modelsres.NewReseniasRepositorio()
-
+	res := new(modelsres.Resenia)
+	res2 := new(modelsres.Resenia)
+	res.Opinion = "Me ha parecido interesante"
+	res2.Opinion = "No me ha gustado"
+	ResRepo.Resenias["BBB"] = []modelsres.Resenia{*res, *res2}
 
 	fmt.Printf("\033[1;36m%s\033[0m", "> Setup completed\n")
 }
