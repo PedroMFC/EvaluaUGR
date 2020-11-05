@@ -8,7 +8,7 @@ import (
 
 //Contiene las valoraciones realizadas
 type ValoracionRepositorio struct {
-	Valoraciones map[string][]Valoracion
+	Valoraciones map[string][]Valoracion  //Con la tabla Hash hace la consultas más rápido
 }
 
 func NewValoracionsRepositorio() *ValoracionRepositorio {
