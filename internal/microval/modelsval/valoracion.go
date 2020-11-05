@@ -12,7 +12,7 @@ type Valoracion struct {
 func (val *Valoracion) SetValoracion(num int) error {
 	if num < 1 || num > 5 {
 		return &errorsval.ErrorValoracion{" la valoración no está en el rango especificado"}
-	} 
+	}
 
 	val.Valoracion = num
 

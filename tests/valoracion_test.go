@@ -27,3 +27,16 @@ func TestValoracionInferior(t *testing.T) {
 	err := val.SetValoracion(0)
 	assert.NotNil(t, err)
 }
+
+// Comprobar los errores que devuelve al valorar una asignatura
+func TestValorar(t *testing.T) {
+	valRepo := modelsval.NewValoracionsRepositorio()
+	err := valRepo.Valorar("ABC", 3)
+	assert.Nil(t, err)
+	err = valRepo.Valorar("ABC", 1)
+	assert.Nil(t, err)
+	err = valRepo.Valorar("ABCDEF", 1)
+	assert.NotNil(t, err)
+	err = valRepo.Valorar("ABC", 8)
+	assert.NotNil(t, err)
+}
