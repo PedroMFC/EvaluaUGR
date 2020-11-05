@@ -3,6 +3,7 @@ package modelsval
 import (
 	"github.com/PedroMFC/EvaluaUGR/internal/asignatura/asig"
 	//"fmt"
+	"github.com/PedroMFC/EvaluaUGR/internal/microval/errorsval"
 )
 
 //Contiene las valoraciones realizadas
@@ -44,4 +45,26 @@ func (valRepo *ValoracionRepositorio) GetValoraciones(asignatura string) ([]Valo
 	}
 
 	return valRepo.Valoraciones[asignatura], nil
+}
+
+//GetMedia nos aporta la valoración media de una asignatura
+func (valRepo *ValoracionRepositorio) GetMedia(asignatura string) (float64, error) {
+	err := asig.AsignaturaCorrecta(asignatura)
+	if err != nil {
+		return 0, err
+	}
+
+	valoraciones := valRepo.Valoraciones[asignatura]
+	if valoraciones == nil { //Si está vacío
+		return 0, &errorsval.ErrorValoracion{" no hay valoraciones disponibles"}
+	}
+
+	//Si no está vacío, calculamos la media
+	media := 0.0
+	for _, val := range valoraciones {
+		media = media + float64(val.Valoracion)
+	}
+	media = media / float64(len(valoraciones))
+
+	return media, nil
 }

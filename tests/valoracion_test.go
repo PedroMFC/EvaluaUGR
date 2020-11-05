@@ -56,3 +56,13 @@ func TestGetValoraciones(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, 0, len(val), "El array de valoraciones tiene que estar vacío")
 }
+
+
+func TestGetMedia(t *testing.T) {
+	media, err := ValRepo.GetMedia("AAAAAA")
+	assert.NotNil(t, err)
+	media, err = ValRepo.GetMedia("AAA")
+	assert.Nil(t, err)
+	//Comprobamos que son iguales a las que hemos inicializado
+	assert.Equal(t, 2.5, media, "La media es 2.5")
+}

@@ -29,8 +29,7 @@ func setup() {
 }
 
 func teardown() {
-	// Do something here.
-
+	ValRepo = modelsval.ValoracionRepositorio{} //Eliniminamos la estructura
 	fmt.Printf("\033[1;36m%s\033[0m", "> Teardown completed")
 	fmt.Printf("\n")
 }
