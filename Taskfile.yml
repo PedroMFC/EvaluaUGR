@@ -12,4 +12,9 @@ tasks:
       Al ejecutarla, modifica el código para que sea más fácil de leer dando el formato adecuado
     cmds:
       - gofmt -w . 
-      
+
+  test:
+    summary: |
+      Automatización de la ejecución de los tests. También almacena el porcentaje de cobertura
+    cmds:
+      - go test ./tests/ -v
