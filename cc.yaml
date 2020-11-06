@@ -1,5 +1,18 @@
 entidad: 
-  - internal/microval/modelsval/valManager.go
-  - internal/microres/modelsres/resManager.go
-  - internal/micropre/modelspre/preManager.go
+  - internal/microval/modelsval/valoracion.go
+  - internal/microval/modelsval/valoracionrepositorio.go
+  - internal/microres/modelsres/resenia.go
+  - internal/microres/modelsres/reseniarepositorio.go
+  - internal/micropre/modelspre/pregunta.go
+  - internal/micropre/modelspre/preguntarepositorio.go
+  - internal/micropre/modelspre/respuesta.go
+fichero_tareas: 
+  - Taskfile.yml
+lenguaje: go
+test: 
+  - tests/asignatura_test.go
+  - tests/preguntas_test.go
+  - tests/resenias_test.go
+  - tests/testmain_test.go
+  - tests/valoracion_test.go
 

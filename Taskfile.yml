@@ -15,6 +15,6 @@ tasks:
 
   test:
     summary: |
-      Automatización de la ejecución de los tests. También almacena el porcentaje de cobertura
+      Automatización de la ejecución de los tests
     cmds:
       - go test ./tests/ -v
