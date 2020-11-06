@@ -2,19 +2,28 @@ version: '3'
 
 tasks:
   syntax_check:
+    desc: comprobar sintaxis
     summary: |
-      Sirve para comporbar que la sintaxis de los archivos es correcta
+      Correción de sintaxis
+
+      Sirve para comprobar que la sintaxis de los archivos es correcta
     cmds:
       - gofmt -e .  > /dev/null
 
   format_code:
+    desc: formatear código
     summary: |
+      Formateo de código
+
       Al ejecutarla, modifica el código para que sea más fácil de leer dando el formato adecuado
     cmds:
       - gofmt -w . 
 
   test:
+    desc: ejecutar tests
     summary: |
+      Tests
+
       Automatización de la ejecución de los tests
     cmds:
       - go test ./tests/ -v

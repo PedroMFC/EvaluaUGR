@@ -5,88 +5,63 @@
 # EvaluaUGR
 Proyecto para la asignatura de Cloud Computing del Máster en Ingeniería Informática.
 
-## Sintaxis
-Para comprobar la sintaxis se puede ejecutar
-```
-gofmt -e .  > /dev/null
-```
+## Gestor de tareas. Ejecución de los tests
 
-o si se tiene instalada la herramienta `Task` (puede hacerse mediante el script`install-task.sh`)
+Como se indicó anteriormente en el apartado [selección de herramientas][herramientas], se ha escogido como gestor de tareas [Task](https://taskfile.dev/#/). En su momento otras alternativas a usar eran por ejemplo [Tusk](https://github.com/rliebz/tusk). Sin embargo, se optó por esta herramienta ya que presenta una actualización reciente así como gran cantidad de estrellas y colaboradores en GitHub. Además, en su [documentación](https://taskfile.dev/#/usage) vemos que es una herramienta flexible que permite incluir resúmenes a las órdenes para saber qué hacen, dependencias entre tareas ... Por ejemplo, ejecutamos la orden `task -l` vemos las tres tareas incluidas actualmente junto con una pequeña descripción de cada una. Más concretamente, las tareas incluidas son:
+* format_code:  formatear código
+* syntax_check: comprobar sintaxis
+* test:         ejecutar tests
 
-```
-task syntax_check
-```
-Las primeras clases con el "cascarón" son:
-* [valManager.go](./internal/microval/modelsval/valManager.go).
-* [resManager.go](./internal/microres/modelsres/resManager.go).
-* [preManager.go](./internal/micropre/modelspre/preManager.go).
+Si quisiéramos ejecutar alguna de ellas solo tendríamos que escribir `task nombre-tarea`. Finalmente, la herramienta `Task` se puede instalar fácilmente mediante el script  [install-task.sh](https://github.com/PedroMFC/EvaluaUGR/blob/main/install-task.sh).
 
-## Historias de usuario
+## Biblioteca de aserciones
 
-  * [[HU1] Valorar una asignatura.][i12].
-  * [[HU2] Conocer valoraciones asignatura][i13].
-  * [[HU3] Valoración media de una asignatura ][i14].
-  * [[HU4] Enviar reseña asignatura ][i15].
-  * [[HU5] Ver reseñas de una asignatura][i16].
-  * [[HU6] Valorar reseña de una asignatura ][i17].
-  * [[HU7] Hacer pregunta de una asignatura][i18].
-  * [[HU8] Ver preguntas de una asignatura][i19].
-  * [[HU9] Responder pregunta de una asignatura][i20].
+Del mismo modo que con el gestor de tareas, se decidió que usar [Testify](https://github.com/stretchr/testify) como biblioteca de aserciones. En [este enlace](https://bmuschko.com/blog/go-testing-frameworks/) aparecen una gran cantidad de bibliotecas el lenguaje escogido. A parte de `Testify`, encontramos otras como [Ginkgo](https://github.com/onsi/ginkgo) y [Goblin](https://github.com/franela/goblin) que presentan el sistema *Behaviour Driven Development* o incluso la propia librería estándar de `Go`. Las razones para el uso de `Testify` en el proyecto son por una lado, su valoración en GitHub. Al igual que el gestor de tareas, presenta una actualización reciente y gran número de estrellas y contribuidores. Por otro lado, la manera de trabajar con ella es sencilla, las funciones para aserciones que presenta son adecuadas para el proyecto y se integra bien con la librería estándar del lenguaje. Por lo que respecta a la escritura de los tests, aparte de la propia documentación de la herramienta se ha usado [este enlace](http://www.inanzzz.com/index.php/post/2t08/using-setup-and-teardown-in-golang-unit-tests). 
+
+## Sistema de prueba de código
+
+Como el lenguaje de desarrollo del proyecto es `Go`, se ha decidido usar el mecanismo estándar para ejecutar los tests en el mismo. Se ejecutan los tests escritos mediante [go test](https://golang.org/pkg/cmd/go/internal/test/) que ya viene proporcionado en el paquete de pruebas propio del lenguaje. Con este mecanismo, podemos ejecutar todos los tests contenidos en archivos del tipo `*_test.go`. También es posible obtener un porcentaje de cobertura de los tests o indicar archivos o funciones específicos que ejecutar. 
+
 
 ## Issues y milestones
 
-En el siguiente enlace está el enlace al [roadmap](https://github.com/PedroMFC/EvaluaUGR/projects).
-
-* [Archivos auxiliares][mAuxiliar]: para mantener los archivos auxiliares completos.
-  * [Añadir traivs][i10].
-  * [Añadir cc.yaml][i42].
-  * [Incluir archivo de tareas][i36].
-  * [Actualizar travis][i10].
-  * [Añadir badge travis][i9].
-
-* [La estructura del proyecto][mEstructura]: tener una estructura adecuada en el proyecto y como marca el lenguaje. 
-  * [Renombrar archivos][i38].
-  * [Arreglar nombre de funciones][i41].
-  * [Renombrar módulos][i40].
-  * [Actualizar dependencias][i28].
-  * [Crear módulo principal][i23].
-
-* [Buena documentación][mDocumentacion]: tener una buena documentación.
-  * [Añadir carpeta de documentación][i1]
-  * [Documentar trabajo semana 1][i2].
-  * [Documentar trabajo semana 2][i8].
-  * [Describir arquitectura][i11].
-  * [Incluir issues y milestones][i44].
-  * [Explicar herramienta gofmt][i35].
-  * [Arreglar fallo enlaces documentación][i22].
-  * [Renombrar archivos documentación][i21].
-  * [Cambiar nombre del proyecto][i7].
-  * [Mover problema del REDAME][i43].
-  * [Enlace al roadmap][i45].
-  * [Especificar HU en el README][i47].
+* [Tener las funcionalidades testeadas][mTests]: el producto mínimo viable consiste en las funcionalidades testeadas.
+  * [Se necesita manejar una valoración][i49].
+  * [Es necesario manejar las reseñas][i50].
+  * [Hay que manejar preguntas y respuestas][i51].
+  * [Hacer que las consultas a las valoraciones sean rápidas][i52].
+  * [Hacer que las consultas de las reseñas sean rápidas][i53].
+  * [Las consultas a las preguntas y respuestas deben de ser rápidas][i54].
+  * [Como programador necesito comprobar que la asignatura es correcta][i56].
 
 
-* [Gestionar valoraciones][mValoraciones]: gestión de toda la funcionalidad relacionada con las valoraciones.
-  * [Interfaz con las operaciones][i27].
-  * [Crear modelos de valoración][i24].
+* [Gestionar valoraciones][mValoraciones]: funcionalidad relacionada con las valoraciones.
+  * [[HU1] Valorar una asignatura.][i12].
+  * [[HU2] Conocer valoraciones asignatura][i13].
+  * [[HU3] Valoración media de una asignatura ][i14].
   
 
-* [Gestionar reseñas][mResenias]: gestión de toda la funcionalidad relacionada con las reseñas/opiniones.
-  * [Crear modelo de reseña][i29].
-  * [Actualizar modelo][i39].
-  * [Interfaz con las operaciones][i30].
+* [Gestionar reseñas][mResenias]: funcionalidad relacionada con las reseñas/opiniones.
+  * [[HU4] Enviar reseña asignatura ][i15].
+  * [[HU5] Ver reseñas de una asignatura][i16].
+  * [[HU6] Valorar reseña de una asignatura ][i17].
   
 
-* [Gestionar preguntas][mPreguntas]: gestión de toda la funcionalidad relacionada con las preguntas.
-  * [Crear modelo de pregunta][i31].
-  * [Crear interfaz de operaciones][i32].
+* [Gestionar preguntas][mPreguntas]: funcionalidad relacionada con las preguntas.
+  * [[HU7] Hacer pregunta de una asignatura][i18].
+  * [[HU8] Ver preguntas de una asignatura][i19].
+  * [[HU9] Responder pregunta de una asignatura][i20].
   
+Otros *milestones*:
+
 * [Solucionar errores][mErrores]: para solucionar errores.
-  * [Arreglar travis][i37].
-
+* [La estructura del proyecto][mEstructura]: tener una estructura adecuada en el proyecto y como marca el lenguaje. 
+* [Buena documentación][mDocumentacion]: tener una buena documentación.
 
 
 ## Documentación
+Puede consultar más información acerca del proyecto en los siguientes enlace:
+
 * [Problema a resolver][problema].
 * [Puesta a punto del repositorio][configGitHub].
 * [La documentación sobre la selección de herramientas][herramientas].
@@ -107,6 +82,7 @@ En el siguiente enlace está el enlace al [roadmap](https://github.com/PedroMFC/
 [mResenias]: https://github.com/PedroMFC/EvaluaUGR/milestone/6
 [mDocumentacion]: https://github.com/PedroMFC/EvaluaUGR/milestone/1
 [mValoraciones]: https://github.com/PedroMFC/EvaluaUGR/milestone/4
+[mTests]: https://github.com/PedroMFC/EvaluaUGR/milestone/8
 
 [i1]: https://github.com/PedroMFC/EvaluaUGR/issues/1
 [i2]: https://github.com/PedroMFC/EvaluaUGR/issues/2
@@ -155,3 +131,16 @@ En el siguiente enlace está el enlace al [roadmap](https://github.com/PedroMFC/
 [i45]: https://github.com/PedroMFC/EvaluaUGR/issues/45
 [i46]: https://github.com/PedroMFC/EvaluaUGR/issues/46
 [i47]: https://github.com/PedroMFC/EvaluaUGR/issues/47
+[i48]: https://github.com/PedroMFC/EvaluaUGR/issues/48
+[i49]: https://github.com/PedroMFC/EvaluaUGR/issues/49
+[i50]: https://github.com/PedroMFC/EvaluaUGR/issues/50
+[i51]: https://github.com/PedroMFC/EvaluaUGR/issues/51
+[i52]: https://github.com/PedroMFC/EvaluaUGR/issues/52
+[i53]: https://github.com/PedroMFC/EvaluaUGR/issues/53
+[i54]: https://github.com/PedroMFC/EvaluaUGR/issues/54
+[i55]: https://github.com/PedroMFC/EvaluaUGR/issues/55
+[i56]: https://github.com/PedroMFC/EvaluaUGR/issues/56
+[i57]: https://github.com/PedroMFC/EvaluaUGR/issues/57
+[i58]: https://github.com/PedroMFC/EvaluaUGR/issues/58
+[i59]: https://github.com/PedroMFC/EvaluaUGR/issues/59
+[i60]: https://github.com/PedroMFC/EvaluaUGR/issues/60
