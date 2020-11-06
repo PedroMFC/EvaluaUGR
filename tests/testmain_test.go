@@ -4,11 +4,13 @@ import (
 	"fmt"
 	"github.com/PedroMFC/EvaluaUGR/internal/microres/modelsres"
 	"github.com/PedroMFC/EvaluaUGR/internal/microval/modelsval"
+	"github.com/PedroMFC/EvaluaUGR/internal/micropre/modelspre"
 	"testing"
 )
 
 var ValRepo modelsval.ValoracionRepositorio
 var ResRepo modelsres.ReseniasRepositorio
+var PreRepo modelspre.PreguntasRepositorio
 
 func TestMain(m *testing.M) {
 	setup()
@@ -40,6 +42,9 @@ func setup() {
 	res2.NoMeGusta = 0
 	res2.Identificador = 1
 	ResRepo.Resenias["BBB"] = []modelsres.Resenia{*res, *res2}
+
+	//Creamos el conjunto de preguntas a testear
+	PreRepo = *modelspre.NewPreguntasRepositorio()
 
 	fmt.Printf("\033[1;36m%s\033[0m", "> Setup completed\n")
 }

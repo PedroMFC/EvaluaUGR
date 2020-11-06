@@ -11,3 +11,28 @@ type PreguntasRepositorio struct {
 	Preguntas map[string][]Pregunta 
 }
 
+func NewPreguntasRepositorio() *PreguntasRepositorio {
+	return &PreguntasRepositorio{Preguntas: make(map[string][]Pregunta)}
+}
+
+//Preguntar añade una pregunta al repositorio
+func (preRepo *PreguntasRepositorio) Preguntar(asignatura string, pregunta string) error {
+	err := asig.AsignaturaCorrecta(asignatura)
+	if err != nil {
+		return err
+	}
+
+	pre := new(Pregunta)
+	err = pre.SetPregunta(pregunta)
+	if err != nil {
+		return err
+	}
+
+	if preRepo.Preguntas[asignatura] != nil { // Si ya hay reeseñas antes se añaden a las existentes
+		preRepo.Preguntas[asignatura] = append(preRepo.Preguntas[asignatura], *pre)
+	} else { //Si no, tenemos que crear una nueva
+		preRepo.Preguntas[asignatura] = []Pregunta{*pre}
+	}
+
+	return nil
+}

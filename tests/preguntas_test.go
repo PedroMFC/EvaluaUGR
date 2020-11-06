@@ -21,3 +21,17 @@ func TestPreguntaCorrecta(t *testing.T) {
 							   "¿Fallará si incluimos una pregunta demasiado larga a la que los usuarios deben contestar?" )
 	assert.NotNil(t, err)
 }
+
+
+// Comprobar los errores que devuelve al preguntar algo sobre una asignatura
+func TestPreguntar(t *testing.T) {
+	err := PreRepo.Preguntar("ABC", "¿Esta es una pregunta válida?")
+	assert.Nil(t, err)
+	err = PreRepo.Preguntar("ABCDEF", "¿Esta es una pregunta válida?")
+	assert.NotNil(t, err)
+	err = PreRepo.Preguntar("ABC",  "¿Fallará si incluimos una pregunta demasiado larga a la que los usuarios deben contestar?" +
+									"¿Fallará si incluimos una pregunta demasiado larga a la que los usuarios deben contestar?" +
+									"¿Fallará si incluimos una pregunta demasiado larga a la que los usuarios deben contestar?" +
+									"¿Fallará si incluimos una pregunta demasiado larga a la que los usuarios deben contestar?" )
+	assert.NotNil(t, err)
+}
