@@ -10,6 +10,8 @@ import (
 //Pregunta contiene los datos de una pregunta formulada
 type Pregunta struct {
 	Pregunta   string 
+	Identificador int
+	Respuestas []Respuesta
 }
 
 
