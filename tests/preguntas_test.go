@@ -35,3 +35,20 @@ func TestPreguntar(t *testing.T) {
 									"¿Fallará si incluimos una pregunta demasiado larga a la que los usuarios deben contestar?" )
 	assert.NotNil(t, err)
 }
+
+
+// Comprobar que devuelve de manera correcta las preguntas
+func TestGetPreguntas(t *testing.T) {
+	pre, err := PreRepo.GetPreguntas("AAAAAA")
+	assert.NotNil(t, err)
+	pre, err = PreRepo.GetPreguntas("CCC")
+	assert.Nil(t, err)
+	//Comprobamos que son iguales a las que hemos inicializado
+	assert.Equal(t, "¿Esta es la primera pregunta?", pre[0].Pregunta, "Debe coincidir la primera pregunta")
+	assert.Equal(t, "¿Se ha hecho una segunda pregunta?", pre[1].Pregunta, "Y también debe coincidir la segunda")
+
+	//Comprobamos que si no está la asinatura está vacío
+	pre, err = PreRepo.GetPreguntas("AAA")
+	assert.Nil(t, err)
+	assert.Equal(t, 0, len(pre), "El array de preguntas tiene que estar vacío")
+}

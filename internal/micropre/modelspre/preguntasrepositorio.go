@@ -36,3 +36,13 @@ func (preRepo *PreguntasRepositorio) Preguntar(asignatura string, pregunta strin
 
 	return nil
 }
+
+//GetPreguntas nos aporta las preguntas realizadas en una asignatura
+func (preRepo *PreguntasRepositorio) GetPreguntas(asignatura string) ([]Pregunta, error) {
+	err := asig.AsignaturaCorrecta(asignatura)
+	if err != nil {
+		return nil, err
+	}
+
+	return preRepo.Preguntas[asignatura], nil
+}

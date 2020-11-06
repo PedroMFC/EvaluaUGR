@@ -45,6 +45,11 @@ func setup() {
 
 	//Creamos el conjunto de preguntas a testear
 	PreRepo = *modelspre.NewPreguntasRepositorio()
+	pre := new(modelspre.Pregunta)
+	pre2 := new(modelspre.Pregunta)
+	pre.Pregunta = "¿Esta es la primera pregunta?"
+	pre2.Pregunta = "¿Se ha hecho una segunda pregunta?"
+	PreRepo.Preguntas["CCC"] = []modelspre.Pregunta{*pre, *pre2}
 
 	fmt.Printf("\033[1;36m%s\033[0m", "> Setup completed\n")
 }
