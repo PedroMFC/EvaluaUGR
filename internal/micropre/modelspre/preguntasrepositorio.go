@@ -3,7 +3,7 @@ package modelspre
 import (
 	"github.com/PedroMFC/EvaluaUGR/internal/asignatura/asig"
 	//"fmt"
-	//"github.com/PedroMFC/EvaluaUGR/internal/micropre/errorspre"
+	"github.com/PedroMFC/EvaluaUGR/internal/micropre/errorspre"
 )
 
 //Contiene las reguntas realizadas
@@ -47,4 +47,30 @@ func (preRepo *PreguntasRepositorio) GetPreguntas(asignatura string) ([]Pregunta
 	}
 
 	return preRepo.Preguntas[asignatura], nil
+}
+
+//Responder añade una respuesta al repositorio
+func (preRepo *PreguntasRepositorio) Responder(asignatura string, id int, respuesta string) error {
+	err := asig.AsignaturaCorrecta(asignatura)
+	if err != nil {
+		return err
+	}
+
+	if id > len(preRepo.Preguntas[asignatura]) -1 {
+		return &errorspre.ErrorPregunta{" no hay una pregunta con ese identificador para la asignatura señalada"}
+	}
+
+	res := new(Respuesta)
+	err = res.SetRespuesta(respuesta)
+	if err != nil {
+		return err
+	}
+
+	if len(preRepo.Preguntas[asignatura][id].Respuestas) > 0{
+		preRepo.Preguntas[asignatura][id].Respuestas = append(preRepo.Preguntas[asignatura][id].Respuestas, *res)
+	} else{
+		preRepo.Preguntas[asignatura][id].Respuestas = []Respuesta{*res}
+	}
+	
+	return nil
 }

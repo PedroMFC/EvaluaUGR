@@ -72,10 +72,32 @@ func TestRespuestaCorrecta(t *testing.T) {
 func TestIdentificadoresPregunta(t *testing.T) {
 	err := PreRepo.Preguntar("AB", "¿Esta es una pregunta válida?")
 	assert.Nil(t, err)
-	err = PreRepo.Preguntar("AB", "¿Esta es una pregunta es válida también?")
+	err = PreRepo.Preguntar("AB", "¿Esta es una pregunta válida también?")
 	assert.Nil(t, err)
 
 	assert.Equal(t, 0, PreRepo.Preguntas["AB"][0].Identificador, "Es la primera pregunta enviada")
 	assert.Equal(t, 1, PreRepo.Preguntas["AB"][1].Identificador, "Es la segunda pregunta enviada")
 
+}
+
+//Comprobamos que las respuestas se almacenan correctamente
+func TestResponder(t *testing.T){
+	err := PreRepo.Responder("ABCDEF", 0, "Es una respuesta")  //Nombre de la asignatura no válido
+	assert.NotNil(t, err)
+
+	err = PreRepo.Responder("CCC", 3, "Es una respuesta")  //Identificador no válido
+	assert.NotNil(t, err)
+
+	err = PreRepo.Responder("CCC", 0, "No podemos almacenar esta respuesta porque es demasiado larga y no cumple con lo esperado" +
+										"No podemos almacenar esta respuesta porque es demasiado larga y no cumple con lo esperado" +
+										"No podemos almacenar esta respuesta porque es demasiado larga y no cumple con lo esperado" +
+										"No podemos almacenar esta respuesta porque es demasiado larga y no cumple con lo esperado")  //Respuesta muy larga
+
+	assert.NotNil(t, err)
+
+	err = PreRepo.Responder("CCC", 0, "Es la segunda respuesta")  //Identificador válido
+	assert.Nil(t, err)
+	assert.Equal(t, 2, len(PreRepo.Preguntas["CCC"][0].Respuestas), "Tiene que tener dos respuestas con la que hemos incluido antes")
+	assert.Equal(t, "Es la segunda respuesta", PreRepo.Preguntas["CCC"][0].Respuestas[1].Respuesta, "Vemos que se ha almacenado correctamente")
+	assert.Equal(t, 0, len(PreRepo.Preguntas["CCC"][1].Respuestas), "La segunda pregunta no tiene respuestas")
 }
