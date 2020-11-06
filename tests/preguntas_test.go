@@ -52,3 +52,17 @@ func TestGetPreguntas(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, 0, len(pre), "El array de preguntas tiene que estar vacío")
 }
+
+// Comprobar que las respuestas tienen el formato adecuado
+func TestRespuestaCorrecta(t *testing.T) {
+	respuesta := new(modelspre.Respuesta)
+	err := respuesta.SetRespuesta("Esta es una respuesta adecuada")
+	assert.Nil(t, err)
+	err = respuesta.SetRespuesta("")
+	assert.NotNil(t, err)
+	err = respuesta.SetRespuesta("No podemos almacenar esta respuesta porque es demasiado larga y no cumple con lo esperado" +
+							   "No podemos almacenar esta respuesta porque es demasiado larga y no cumple con lo esperado" +
+							   "No podemos almacenar esta respuesta porque es demasiado larga y no cumple con lo esperado" +
+							   "No podemos almacenar esta respuesta porque es demasiado larga y no cumple con lo esperado" )
+	assert.NotNil(t, err)
+}
