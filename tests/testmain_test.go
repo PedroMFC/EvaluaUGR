@@ -48,7 +48,9 @@ func setup() {
 	pre := new(modelspre.Pregunta)
 	pre2 := new(modelspre.Pregunta)
 	pre.Pregunta = "¿Esta es la primera pregunta?"
+	pre.Identificador = 0
 	pre2.Pregunta = "¿Se ha hecho una segunda pregunta?"
+	pre2.Identificador = 1
 	PreRepo.Preguntas["CCC"] = []modelspre.Pregunta{*pre, *pre2}
 
 	fmt.Printf("\033[1;36m%s\033[0m", "> Setup completed\n")

@@ -66,3 +66,16 @@ func TestRespuestaCorrecta(t *testing.T) {
 							   "No podemos almacenar esta respuesta porque es demasiado larga y no cumple con lo esperado" )
 	assert.NotNil(t, err)
 }
+
+
+//Comprobamos que se asignan bien los identificadores al enviar la pregunta
+func TestIdentificadoresPregunta(t *testing.T) {
+	err := PreRepo.Preguntar("AB", "¿Esta es una pregunta válida?")
+	assert.Nil(t, err)
+	err = PreRepo.Preguntar("AB", "¿Esta es una pregunta es válida también?")
+	assert.Nil(t, err)
+
+	assert.Equal(t, 0, PreRepo.Preguntas["AB"][0].Identificador, "Es la primera pregunta enviada")
+	assert.Equal(t, 1, PreRepo.Preguntas["AB"][1].Identificador, "Es la segunda pregunta enviada")
+
+}

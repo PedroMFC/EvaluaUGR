@@ -29,8 +29,10 @@ func (preRepo *PreguntasRepositorio) Preguntar(asignatura string, pregunta strin
 	}
 
 	if preRepo.Preguntas[asignatura] != nil { // Si ya hay reeseñas antes se añaden a las existentes
+		pre.Identificador = len(preRepo.Preguntas[asignatura])
 		preRepo.Preguntas[asignatura] = append(preRepo.Preguntas[asignatura], *pre)
 	} else { //Si no, tenemos que crear una nueva
+		pre.Identificador = 0
 		preRepo.Preguntas[asignatura] = []Pregunta{*pre}
 	}
 
