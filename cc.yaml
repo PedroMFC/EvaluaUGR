@@ -2,9 +2,9 @@ entidad:
   - internal/microval/modelsval/valoracion.go
   - internal/microval/modelsval/valoracionrepositorio.go
   - internal/microres/modelsres/resenia.go
-  - internal/microres/modelsres/reseniarepositorio.go
+  - internal/microres/modelsres/reseniasrepositorio.go
   - internal/micropre/modelspre/pregunta.go
-  - internal/micropre/modelspre/preguntarepositorio.go
+  - internal/micropre/modelspre/preguntasrepositorio.go
   - internal/micropre/modelspre/respuesta.go
 fichero_tareas: 
   - Taskfile.yml
