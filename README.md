@@ -16,7 +16,7 @@ Si quisiéramos ejecutar alguna de ellas solo tendríamos que escribir `task nom
 
 ## Biblioteca de aserciones
 
-Del mismo modo que con el gestor de tareas, se decidió que usar [Testify](https://github.com/stretchr/testify) como biblioteca de aserciones. En [este enlace](https://bmuschko.com/blog/go-testing-frameworks/) aparecen una gran cantidad de bibliotecas el lenguaje escogido. A parte de `Testify`, encontramos otras como [Ginkgo](https://github.com/onsi/ginkgo) y [Goblin](https://github.com/franela/goblin) que presentan el sistema *Behaviour Driven Development* o incluso la propia librería estándar de `Go`. Las razones para el uso de `Testify` en el proyecto son por una lado, su valoración en GitHub. Al igual que el gestor de tareas, presenta una actualización reciente y gran número de estrellas y contribuidores. Por otro lado, la manera de trabajar con ella es sencilla, las funciones para aserciones que presenta son adecuadas para el proyecto y se integra bien con la librería estándar del lenguaje. Por lo que respecta a la escritura de los tests, aparte de la propia documentación de la herramienta se ha usado [este enlace](http://www.inanzzz.com/index.php/post/2t08/using-setup-and-teardown-in-golang-unit-tests). 
+Del mismo modo que con el gestor de tareas, se decidió que usar [Testify](https://github.com/stretchr/testify) como biblioteca de aserciones. De este modo, se ha optado por un enfoque TDD. En [este enlace](https://bmuschko.com/blog/go-testing-frameworks/) aparecen una gran cantidad de bibliotecas el lenguaje escogido. A parte de `Testify`, encontramos otras como [Ginkgo](https://github.com/onsi/ginkgo) y [Goblin](https://github.com/franela/goblin) que presentan el sistema *Behaviour Driven Development* o incluso la propia librería estándar de `Go`. Las razones para el uso de `Testify` en el proyecto son por una lado, su valoración en GitHub. Al igual que el gestor de tareas, presenta una actualización reciente y gran número de estrellas y contribuidores. Por otro lado, la manera de trabajar con ella es sencilla, las funciones para aserciones que presenta son adecuadas para el proyecto y se integra bien con la librería estándar del lenguaje. Por lo que respecta a la escritura de los tests, aparte de la propia documentación de la herramienta se ha usado [este enlace](http://www.inanzzz.com/index.php/post/2t08/using-setup-and-teardown-in-golang-unit-tests). 
 
 ## Sistema de prueba de código
 
@@ -30,9 +30,9 @@ Se ha avanzado código en los siguientes archivos:
 - [Valoracion](./internal/microval/modelsval/valoracion.go)
 - [ValoracionRepositorio](./internal/microval/modelsval/valoracionrepositorio.go)
 - [Resenia](./internal/microres/modelsres/resenia.go)
-- [ReseniaRepositorio](./internal/microres/modelsres/reseniarepositorio.go)
+- [ReseniaRepositorio](./internal/microres/modelsres/reseniasrepositorio.go)
 - [Pregunta](./internal/micropre/modelspre/pregunta.go)
-- [PreguntaRepositorio](./internal/micropre/modelspre/preguntarepositorio.go)
+- [PreguntaRepositorio](./internal/micropre/modelspre/preguntasrepositorio.go)
 - [Respuesta](./internal/micropre/modelspre/respuesta.go)
 - [Asignatura](./internal/asignatura/asig/asignatura.go)
 
