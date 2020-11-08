@@ -10,8 +10,8 @@ fichero_tareas:
   - Taskfile.yml
 lenguaje: go
 test: 
-  - tests/asignatura_test.go
   - tests/preguntas_test.go
+  - tests/asignatura_test.go
   - tests/resenias_test.go
   - tests/testmain_test.go
   - tests/valoracion_test.go
