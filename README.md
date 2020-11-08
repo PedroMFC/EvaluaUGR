@@ -7,7 +7,7 @@ Proyecto para la asignatura de Cloud Computing del Máster en Ingeniería Inform
 
 ## Gestor de tareas. Ejecución de los tests
 
-Como se indicó anteriormente en el apartado [selección de herramientas][herramientas], se ha escogido como gestor de tareas [Task](https://taskfile.dev/#/). En su momento otras alternativas a usar eran por ejemplo [Tusk](https://github.com/rliebz/tusk). Sin embargo, se optó por esta herramienta ya que presenta una actualización reciente así como gran cantidad de estrellas y colaboradores en GitHub. Además, en su [documentación](https://taskfile.dev/#/usage) vemos que es una herramienta flexible que permite incluir resúmenes a las órdenes para saber qué hacen, dependencias entre tareas ... Por ejemplo, si ejecutamos la orden `task -l` vemos las tres tareas incluidas actualmente junto con una pequeña descripción de cada una. Más concretamente, las tareas incluidas son:
+Como se indicó anteriormente en el apartado [selección de herramientas][herramientas], se ha escogido como gestor de tareas [Task](https://taskfile.dev/#/). En su momento otras alternativas a usar eran por ejemplo [Tusk](https://github.com/rliebz/tusk). Sin embargo, se optó por esta herramienta ya que presenta una actualización reciente así como gran cantidad de estrellas y colaboradores en GitHub. Además, en su [documentación](https://taskfile.dev/#/usage) vemos que es una herramienta flexible que permite incluir resúmenes a las órdenes para saber qué hacen, dependencias entre tareas ... Por ejemplo, si ejecutamos la orden `task -l` vemos las tres tareas incluidas actualmente en el archivo [Taskfile](./Taskfile.yml) junto con una pequeña descripción de cada una. Más concretamente, las tareas incluidas son:
 * format_code:  formatear código
 * syntax_check: comprobar sintaxis
 * test:         ejecutar tests
@@ -23,42 +23,9 @@ Del mismo modo que con el gestor de tareas, se decidió que usar [Testify](https
 Como el lenguaje de desarrollo del proyecto es `Go`, se ha decidido usar el mecanismo estándar para ejecutar los tests en el mismo. Se ejecutan los tests escritos mediante [go test](https://golang.org/pkg/cmd/go/internal/test/) que ya viene proporcionado en el paquete de pruebas propio del lenguaje. Con este mecanismo, podemos ejecutar todos los tests contenidos en archivos del tipo `*_test.go`. También se ha decidido usar este método ya que es posible obtener un porcentaje de cobertura de los tests o indicar archivos o funciones específicos que ejecutar entre otros. 
 
 
-## Issues y milestones
+## Clases y tests
 
-* [Tener las funcionalidades testeadas][mTests]: el producto mínimo viable consiste en que las funcionalidades pasen los tests.
-  * [Se necesita manejar una valoración][i49].
-  * [Es necesario manejar las reseñas][i50].
-  * [Hay que manejar preguntas y respuestas][i51].
-  * [Hacer que las consultas a las valoraciones sean rápidas][i52].
-  * [Hacer que las consultas de las reseñas sean rápidas][i53].
-  * [Las consultas a las preguntas y respuestas deben de ser rápidas][i54].
-  * [Como programador necesito comprobar que la asignatura es correcta][i56].
-
-
-* [Gestionar valoraciones][mValoraciones]: funcionalidad relacionada con las valoraciones.
-  * [[HU1] Valorar una asignatura.][i12].
-  * [[HU2] Conocer valoraciones asignatura][i13].
-  * [[HU3] Valoración media de una asignatura ][i14].
-  
-
-* [Gestionar reseñas][mResenias]: funcionalidad relacionada con las reseñas/opiniones.
-  * [[HU4] Enviar reseña asignatura ][i15].
-  * [[HU5] Ver reseñas de una asignatura][i16].
-  * [[HU6] Valorar reseña de una asignatura ][i17].
-  
-
-* [Gestionar preguntas][mPreguntas]: funcionalidad relacionada con las preguntas.
-  * [[HU7] Hacer pregunta de una asignatura][i18].
-  * [[HU8] Ver preguntas de una asignatura][i19].
-  * [[HU9] Responder pregunta de una asignatura][i20].
-  
-Otros *milestones*:
-
-* [Solucionar errores][mErrores]: para solucionar errores.
-* [La estructura del proyecto][mEstructura]: tener una estructura adecuada en el proyecto y como marca el lenguaje. 
-* [Buena documentación][mDocumentacion]: tener una buena documentación.
-
-## Clases
+Se ha avanzado código en los siguientes archivos:
 
 - [Valoracion](./internal/microval/modelsval/valoracion.go)
 - [ValoracionRepositorio](./internal/microval/modelsval/valoracionrepositorio.go)
@@ -67,6 +34,15 @@ Otros *milestones*:
 - [Pregunta](./internal/micropre/modelspre/pregunta.go)
 - [PreguntaRepositorio](./internal/micropre/modelspre/preguntarepositorio.go)
 - [Respuesta](./internal/micropre/modelspre/respuesta.go)
+- [Asignatura](./internal/asignatura/asig/asignatura.go)
+
+Y los archivos de test correspondientes son:
+
+- [SetUp/TearDown](./tests/testmain_test.go)
+- [valoracion_test](./tests/valoracion_test.go)
+- [resenias_test](./tests/resenias_test.go)
+- [preguntas_test](./tests/preguntas_test.go)
+- [asignatura_test](./tests/asignatura_test.go)
 
 ## Documentación
 Puede consultar más información acerca del proyecto en los siguientes enlace:
@@ -75,13 +51,14 @@ Puede consultar más información acerca del proyecto en los siguientes enlace:
 * [Puesta a punto del repositorio][configGitHub].
 * [La documentación sobre la selección de herramientas][herramientas].
 * [Información sobre la arquitectura empleada][arquitectura].
+* [Planificación][planificacion].
 
 [configGitHub]: https://pedromfc.github.io/EvaluaUGR/docs/configuracion_github
 [herramientas]: https://pedromfc.github.io/EvaluaUGR/docs/seleccion_herramientas
 [problema]: https://pedromfc.github.io/EvaluaUGR/docs/problema
 [arquitectura]: https://pedromfc.github.io/EvaluaUGR/docs/arquitectura
 [issues]: https://github.com/PedroMFC/EvaluaUGR/issues
-
+[planificacion]: https://pedromfc.github.io/EvaluaUGR/docs/planificación
 
 
 [mAuxiliar]: https://github.com/PedroMFC/EvaluaUGR/milestone/2
