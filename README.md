@@ -7,7 +7,7 @@ Proyecto para la asignatura de Cloud Computing del Máster en Ingeniería Inform
 
 ## Gestor de tareas. Ejecución de los tests
 
-Como se indicó anteriormente en el apartado [selección de herramientas][herramientas], se ha escogido como gestor de tareas [Task](https://taskfile.dev/#/). En su momento otras alternativas a usar eran por ejemplo [Tusk](https://github.com/rliebz/tusk). Sin embargo, se optó por esta herramienta ya que presenta una actualización reciente así como gran cantidad de estrellas y colaboradores en GitHub. Además, en su [documentación](https://taskfile.dev/#/usage) vemos que es una herramienta flexible que permite incluir resúmenes a las órdenes para saber qué hacen, dependencias entre tareas ... Por ejemplo, ejecutamos la orden `task -l` vemos las tres tareas incluidas actualmente junto con una pequeña descripción de cada una. Más concretamente, las tareas incluidas son:
+Como se indicó anteriormente en el apartado [selección de herramientas][herramientas], se ha escogido como gestor de tareas [Task](https://taskfile.dev/#/). En su momento otras alternativas a usar eran por ejemplo [Tusk](https://github.com/rliebz/tusk). Sin embargo, se optó por esta herramienta ya que presenta una actualización reciente así como gran cantidad de estrellas y colaboradores en GitHub. Además, en su [documentación](https://taskfile.dev/#/usage) vemos que es una herramienta flexible que permite incluir resúmenes a las órdenes para saber qué hacen, dependencias entre tareas ... Por ejemplo, si ejecutamos la orden `task -l` vemos las tres tareas incluidas actualmente junto con una pequeña descripción de cada una. Más concretamente, las tareas incluidas son:
 * format_code:  formatear código
 * syntax_check: comprobar sintaxis
 * test:         ejecutar tests
@@ -20,12 +20,12 @@ Del mismo modo que con el gestor de tareas, se decidió que usar [Testify](https
 
 ## Sistema de prueba de código
 
-Como el lenguaje de desarrollo del proyecto es `Go`, se ha decidido usar el mecanismo estándar para ejecutar los tests en el mismo. Se ejecutan los tests escritos mediante [go test](https://golang.org/pkg/cmd/go/internal/test/) que ya viene proporcionado en el paquete de pruebas propio del lenguaje. Con este mecanismo, podemos ejecutar todos los tests contenidos en archivos del tipo `*_test.go`. También es posible obtener un porcentaje de cobertura de los tests o indicar archivos o funciones específicos que ejecutar. 
+Como el lenguaje de desarrollo del proyecto es `Go`, se ha decidido usar el mecanismo estándar para ejecutar los tests en el mismo. Se ejecutan los tests escritos mediante [go test](https://golang.org/pkg/cmd/go/internal/test/) que ya viene proporcionado en el paquete de pruebas propio del lenguaje. Con este mecanismo, podemos ejecutar todos los tests contenidos en archivos del tipo `*_test.go`. También se ha decidido usar este método ya que es posible obtener un porcentaje de cobertura de los tests o indicar archivos o funciones específicos que ejecutar entre otros. 
 
 
 ## Issues y milestones
 
-* [Tener las funcionalidades testeadas][mTests]: el producto mínimo viable consiste en las funcionalidades testeadas.
+* [Tener las funcionalidades testeadas][mTests]: el producto mínimo viable consiste en que las funcionalidades pasen los tests.
   * [Se necesita manejar una valoración][i49].
   * [Es necesario manejar las reseñas][i50].
   * [Hay que manejar preguntas y respuestas][i51].
@@ -58,6 +58,15 @@ Otros *milestones*:
 * [La estructura del proyecto][mEstructura]: tener una estructura adecuada en el proyecto y como marca el lenguaje. 
 * [Buena documentación][mDocumentacion]: tener una buena documentación.
 
+## Clases
+
+- [Valoracion](./internal/microval/modelsval/valoracion.go)
+- [ValoracionRepositorio](./internal/microval/modelsval/valoracionrepositorio.go)
+- [Resenia](./internal/microres/modelsres/resenia.go)
+- [ReseniaRepositorio](./internal/microres/modelsres/reseniarepositorio.go)
+- [Pregunta](./internal/micropre/modelspre/pregunta.go)
+- [PreguntaRepositorio](./internal/micropre/modelspre/preguntarepositorio.go)
+- [Respuesta](./internal/micropre/modelspre/respuesta.go)
 
 ## Documentación
 Puede consultar más información acerca del proyecto en los siguientes enlace:
