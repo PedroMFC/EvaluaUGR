@@ -1,10 +1,11 @@
-# Contenedor para ejecutar los tests tomando com base la imagen oficial del lenguaje de GO
+# Contenedor para ejecutar los tests tomando como base Alpine
 # Es necesario instalar Task y curl (este lo eliminamos después)
+# La hacemos en varias etapas
 
 # PRIMERA ETAPA
 FROM golang:alpine AS BUILD_IMAGE
 
-# Move to working directory 
+# Nos vamos al directorio de trabajo
 WORKDIR ../
 
 # Nos descargamos El gestor de tareas y curl para el mismo
@@ -14,13 +15,13 @@ RUN apk --no-cache add curl \
 
 
 # SEGUNDA ETAPA
-FROM golang:alpine
+FROM alpine:latest
 LABEL maintainer="Pedro Flores <pedro_23_96@hotmail.com>"
-LABEL version="0.1.2"
+LABEL version="0.2.1"
 
-# Copiamos la carpeta en la que se ha descargado el gestor de tareas
+# Copiamos la carpeta en la que se ha descargado el gestor de tareas y donde está el lenguaje
 COPY --from=BUILD_IMAGE /bin/task ./bin
-
+COPY --from=BUILD_IMAGE /usr/local/go ./usr/local/go
 
 # Añadimos el nuevo usuario que será el que ejecute los tests
 RUN adduser -D evaluaugr \
@@ -38,5 +39,5 @@ ENV PATH=$PATH:/go/bin:/usr/local/go/bin \
 USER evaluaugr
 WORKDIR /app/test
 
-# Comando a ejecutar cuando se ejecute el contenedor
+# Comando a ejecutar 
 CMD ["task", "test"]
