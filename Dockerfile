@@ -1,15 +1,15 @@
-# Contenedor para ejecutar los tests tomando com base Alpine
-# Es necesario instalar Task (y entre eso curl para descargarlo) y el lenguaje GO
+# Contenedor para ejecutar los tests tomando com base una imagen no oficial del lenguaje de GO
+# Es necesario instalar Task 
 
-FROM alpine:latest 
+FROM webhippie/golang:latest
 LABEL maintainer="Pedro Flores <pedro_23_96@hotmail.com>"
-LABEL version="0.0.1"
+LABEL version="0.0.2"
 
-# Descargamos Go, Task y curl (luego lo borramos porque no hace falta) 
-# La instalación es necesaria hacerla como root
-RUN apk --no-cache add curl go \
-  && sh -c "$(curl -ssL https://taskfile.dev/install.sh)" -- -d \
-  && apk del curl
+# Move to working directory 
+WORKDIR ../../
+
+# Nos descargamos El gestor de tareas. Go y curl ya vienen instalados
+RUN sh -c "$(curl -ssL https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin
 
 # Añadimos el nuevo usuario que será el que ejecute los tests
 RUN adduser -D evaluaugr \
