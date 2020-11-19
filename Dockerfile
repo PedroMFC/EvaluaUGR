@@ -1,9 +1,8 @@
 # Contenedor para ejecutar los tests tomando com base la imagen oficial del lenguaje de GO
 # Es necesario instalar Task y curl (este lo eliminamos después)
 
-FROM golang:alpine
-LABEL maintainer="Pedro Flores <pedro_23_96@hotmail.com>"
-LABEL version="0.1.1"
+# PRIMERA ETAPA
+FROM golang:alpine AS BUILD_IMAGE
 
 # Move to working directory 
 WORKDIR ../
@@ -12,6 +11,16 @@ WORKDIR ../
 RUN apk --no-cache add curl \
   && sh -c "$(curl -ssL https://taskfile.dev/install.sh)" -- -d \
   && apk del curl
+
+
+# SEGUNDA ETAPA
+FROM golang:alpine
+LABEL maintainer="Pedro Flores <pedro_23_96@hotmail.com>"
+LABEL version="0.1.2"
+
+# Copiamos la carpeta en la que se ha descargado el gestor de tareas
+COPY --from=BUILD_IMAGE /bin/task ./bin
+
 
 # Añadimos el nuevo usuario que será el que ejecute los tests
 RUN adduser -D evaluaugr \
