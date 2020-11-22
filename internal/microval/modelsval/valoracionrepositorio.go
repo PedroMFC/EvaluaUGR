@@ -1,6 +1,8 @@
 package modelsval
 
 import (
+	"sort"
+	
 	"github.com/PedroMFC/EvaluaUGR/internal/asignatura/asig"
 	//"fmt"
 	"github.com/PedroMFC/EvaluaUGR/internal/microval/errorsval"
@@ -67,4 +69,37 @@ func (valRepo *ValoracionRepositorio) GetMedia(asignatura string) (float64, erro
 	media = media / float64(len(valoraciones))
 
 	return media, nil
+}
+
+//GetPeorValorada devuelve una lista con las asignaturas con peores valoraciones en media
+func (valRepo *ValoracionRepositorio) GetPeorValorada() []string {
+	menosValoradas := []string{}
+
+	if len(valRepo.Valoraciones) == 0 { //Si el repositorio está vacío
+		return menosValoradas
+	}
+
+	mediasAsignaturas := []AsigMedia{}
+	// Obtenemos el conjunto de medias
+	for k := range valRepo.Valoraciones{
+		med, err := valRepo.GetMedia(k)
+		if err == nil{
+			mediasAsignaturas = append(mediasAsignaturas, AsigMedia{k, med})
+		}
+	}
+
+	//Vemos las asignaturas que tienes menos valoraciones
+	sort.Slice(mediasAsignaturas, func(i,j int) bool {
+		return mediasAsignaturas[i].media < mediasAsignaturas[j].media
+	})
+	
+	menosValoradas = append(menosValoradas, mediasAsignaturas[0].asig)
+
+	i := 1
+	for mediasAsignaturas[0].media == mediasAsignaturas[i].media {
+		menosValoradas = append(menosValoradas, mediasAsignaturas[i].asig)
+		i = i+1
+	}
+
+	return menosValoradas
 }

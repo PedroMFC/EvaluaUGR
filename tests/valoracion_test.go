@@ -66,3 +66,21 @@ func TestGetMedia(t *testing.T) {
 	//Comprobamos que son iguales a las que hemos inicializado
 	assert.Equal(t, 2.5, media, "La media es 2.5")
 }
+
+//Comprobar que calcula la peor valorada correctamente
+func TestPeorValorada(t *testing.T){
+	repoVacio := modelsval.NewValoracionsRepositorio()
+	menosValoradas := repoVacio.GetPeorValorada()
+	assert.Equal(t, 0, len(menosValoradas), "El array de valoraciones tiene que estar vacío")
+	menosValoradas = ValRepo.GetPeorValorada()
+	assert.Equal(t, 1, len(menosValoradas), "El array tiene que tener una asignatura") // Ahora mismo es hay dos asignaturas: map[AAA:[{2} {3}] ABC:[{3} {1}]]
+	assert.Equal(t, "ABC", menosValoradas[0], "Esa no es la peor valorada") 
+	
+	//Metemos otra asignatura para ver si devuelve el array
+	err := ValRepo.Valorar("DEF", 2)
+	assert.Nil(t, err)
+	menosValoradas = ValRepo.GetPeorValorada()
+	assert.Equal(t, 2, len(menosValoradas), "El array tiene que tener una asignatura") // Ahora mismo: map[AAA:[{2} {3}] ABC:[{3} {1}] DEF:[{2}]]
+	assert.Equal(t, "ABC", menosValoradas[0], "La primera peor valorada es ABC")
+	assert.Equal(t, "DEF", menosValoradas[1], "La segunda peor valorada es DEF")
+}
