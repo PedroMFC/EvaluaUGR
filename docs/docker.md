@@ -2,21 +2,21 @@
 
 Tenemos que construir una imagen para poder ejecutar en ella los tests. En nuestro caso, necesitamos tanto que el lenguaje `Go` esté instalado en el mismo como el gestor de tareas `Task`. Queremos que la imagen sea lo más pequeña por posible. Por eso, vamos a hacer una serie de pruebas con tres imágenes base diferentes:
 
-* Oficial del lenguaje para `Alpine`: 299 MB.
-* `Alpine`: 5.57 MB.
-* webhippie/golang. Una imagen no oficial con el lenguaje de `Go`: 682MB.
+* Oficial del lenguaje para `Alpine`: 299 MB. 
+* `Alpine`: 5.57 MB. 
+* webhippie/golang. Una imagen no oficial con el lenguaje de `Go`: 682MB. 
 
 Se ha intentado buscar otra imagen no oficial del lenguaje que fuese más pequeña pero las existentes o no nos servían para nuestro propósito o eran incluso más pesadas. 
 
 Primero, vamos a ver cómo resultan estas imágenes después de añadir lo necesario para ejecutar los tests. Los resultados obtenidos según el tamaño son:
 
-* Oficial del lenguaje para `Alpine`: 314 MB
-* `Alpine`: 463 MB.
-* webhippie/golang. Una imagen no oficial con el lenguaje de `Go`: 696 MB.
+* Oficial del lenguaje para `Alpine`: 314 MB df392ccf644f3575883bbe491ad2c1bae28fcd49
+* `Alpine`: 463 MB. 92772fe0f9852ad8b967d22f455154019b4175a7
+* webhippie/golang. Una imagen no oficial con el lenguaje de `Go`: 696 MB. 50e1430660d5eaaf7358ffd14158bc58510f8593
 
 Vemos que en principio las más adecuadas serían usar la oficial del lenguaje o la de `Alpine`. Destaca que en este último caso la imagen aumenta demasiado su tamaño. Veamos qué está pasando e intentemos disminuir el tamaño de ambas imágenes al máxima y ver cuál es más conveniente.
 
-Primero en la del lenguaje oficial hemos tenido que instalar `curl` para poder descargar el gestor de tareas. Si una vez descargado el gestor lo eliminamos conseguimos reducir su tamaño un poco a 313 MB. Vemos que en este caso solo hemos aumentado la imagen base en 14 MB. Sin embargo, vemos que no hemos uso de una herramienta que ayuda a reducir el tamaño: builds en múltiples etapas. En este caso de la imagen oficial, lo que vamos a hacer es usar una etapa para descargar el gestor de tareas y finalmente solo tendremos que copiar la carpeta en la que se ha instalado para usarla. Haciendo uso de este mecanismo obtenemos una imagen de 305 MB. No está nada mal. Veamos un poco más qué hay dentro de la misma haciendo uso de la herramienta [dive](https://github.com/wagoodman/dive).
+Primero en la del lenguaje oficial hemos tenido que instalar `curl` para poder descargar el gestor de tareas. Si una vez descargado el gestor lo eliminamos conseguimos reducir su tamaño un poco a 313 MB (6dbff1c95bf5b2bf7d96e45e23c10df5be9b7f87). Vemos que en este caso solo hemos aumentado la imagen base en 14 MB. Sin embargo, vemos que no hemos uso de una herramienta que ayuda a reducir el tamaño: builds en múltiples etapas. En este caso de la imagen oficial, lo que vamos a hacer es usar una etapa para descargar el gestor de tareas y finalmente solo tendremos que copiar la carpeta en la que se ha instalado para usarla. Haciendo uso de este mecanismo obtenemos una imagen de 305 MB (31c6bf80a042eac5f5a44cca2746e0e571e243d7). No está nada mal. Veamos un poco más qué hay dentro de la misma haciendo uso de la herramienta [dive](https://github.com/wagoodman/dive).
 
 ![](./imgs/docker/1.png)
 
@@ -26,7 +26,7 @@ Pasamos ahora a ver qué ocurre cuando construimos a partir de la imagen de `Alp
 
 ![](./imgs/docker/2.png)
 
-Vemos que hemos conseguido reducir el tamaño a 303 MB. También hay espacio desperdiciado, pero solamente 4.7 kB y vemos que se trata de la creación del usuario para ejecutar los tests sin privilegios. 
+Vemos que hemos conseguido reducir el tamaño a 303 MB (2e5a8a6ed3b511cc20134c0211e4f6232adafcb0). También hay espacio desperdiciado, pero solamente 4.7 kB y vemos que se trata de la creación del usuario para ejecutar los tests sin privilegios. 
 
 Por lo tanto vamos a tomar como base la imagen de `Alpine` ya que tras la optimización es la que menos espacio ocupa.
 

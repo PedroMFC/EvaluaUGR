@@ -1,63 +1,50 @@
-# Planificacición
+## Gestor de tareas. Ejecución de los tests
 
-El alcance de esta planificación llega hasta los tests funcionales/unitarios del proyecto.
+Como se indicó anteriormente en el apartado [selección de herramientas][herramientas], se ha escogido como gestor de tareas [Task](https://taskfile.dev/#/). En su momento otras alternativas a usar eran por ejemplo [Tusk](https://github.com/rliebz/tusk). Sin embargo, se optó por esta herramienta ya que presenta una actualización reciente así como gran cantidad de estrellas y colaboradores en GitHub. Además, en su [documentación](https://taskfile.dev/#/usage) vemos que es una herramienta flexible que permite incluir resúmenes a las órdenes para saber qué hacen, dependencias entre tareas ... Por ejemplo, si ejecutamos la orden `task -l` vemos las tres tareas incluidas actualmente en el archivo [Taskfile](./Taskfile.yml) junto con una pequeña descripción de cada una. Más concretamente, las tareas incluidas son:
+* format_code:  formatear código
+* syntax_check: comprobar sintaxis
+* test:         ejecutar tests
 
-Para alcanzar este objetivo, se va a proceder de la siguiente manera:
- * En primer lugar, se van a hacer las modificaciones oportunas en el código ya realizado tras la corrección anterior.
- * Una vez se hayan obtenido las conclusiones y cómo afrontar nuevamente el proyecto:
-   * Primero abordaremos el tema de verificar que el formato de la asignatura que se presenta es correcto. Esto es un "problema" común a lso tres casos de valoraciones, reseñas y preguntas.
-   * Una vez solucionado se realizará por separado la implementación de cada uno de los servicios ofertados empezando por las valoraciones (HU1-HU3), siguiendo por las reseñas(HU4-HU6) y por el último el de preguntas y respuestas(HU7-HU9). Se ha decidido que sea así ya que de este modo empezamos *a priori* por el más sencillo y acabamos con el que más trabajo conlleva.
-   * Aunque presenten diferentes niveles de dificultad, son parecidos en la manera de trabajar en ellos. Por esto mismo, lo primero que se hará con cada uno de ellos será crear las estructuras de las clases con los métodos redefinidos del primer punto si es necesario. Luego se debe de pensar en la manera más adecuada para almacenar y obtener la información en base a las historias de usuario y sus requisitos. Luego se irán escribiendo los tests e implementando las clases al mismo tiempo al seguir una metodología TDD. 
-   * Consideraremos que hemos alcanzado el objetivo, una vez hayamos cubierto todas las historias de usuario y se pasen los tests relacionados con las mismas.
+Si quisiéramos ejecutar alguna de ellas solo tendríamos que escribir `task nombre-tarea`. Finalmente, la herramienta `Task` se puede instalar fácilmente mediante el script  [install-task.sh](https://github.com/PedroMFC/EvaluaUGR/blob/main/install-task.sh).
 
-La división del trabajo en *issues* y *milestones* ha sido la siguiente:
+## Biblioteca de aserciones
 
-* [Tener las funcionalidades testeadas][mTests]: el producto mínimo viable consiste en que las funcionalidades pasen los tests.
-  * [Se necesita manejar una valoración][i49].
-  * [Es necesario manejar las reseñas][i50].
-  * [Hay que manejar preguntas y respuestas][i51].
-  * [Hacer que las consultas a las valoraciones sean rápidas][i52].
-  * [Hacer que las consultas de las reseñas sean rápidas][i53].
-  * [Las consultas a las preguntas y respuestas deben de ser rápidas][i54].
-  * [Como programador necesito comprobar que la asignatura es correcta][i56].
+Del mismo modo que con el gestor de tareas, se decidió que usar [Testify](https://github.com/stretchr/testify) como biblioteca de aserciones. De este modo, se ha optado por un enfoque TDD. En [este enlace](https://bmuschko.com/blog/go-testing-frameworks/) aparecen una gran cantidad de bibliotecas el lenguaje escogido. A parte de `Testify`, encontramos otras como [Ginkgo](https://github.com/onsi/ginkgo) y [Goblin](https://github.com/franela/goblin) que presentan el sistema *Behaviour Driven Development* o incluso la propia librería estándar de `Go`. Las razones para el uso de `Testify` en el proyecto son por una lado, su valoración en GitHub. Al igual que el gestor de tareas, presenta una actualización reciente y gran número de estrellas y contribuidores. Por otro lado, la manera de trabajar con ella es sencilla, las funciones para aserciones que presenta son adecuadas para el proyecto y se integra bien con la librería estándar del lenguaje. Por lo que respecta a la escritura de los tests, aparte de la propia documentación de la herramienta se ha usado [este enlace](http://www.inanzzz.com/index.php/post/2t08/using-setup-and-teardown-in-golang-unit-tests). 
+
+## Sistema de prueba de código
+
+Como el lenguaje de desarrollo del proyecto es `Go`, se ha decidido usar el mecanismo estándar para ejecutar los tests en el mismo. Se ejecutan los tests escritos mediante [go test](https://golang.org/pkg/cmd/go/internal/test/) que ya viene proporcionado en el paquete de pruebas propio del lenguaje. Con este mecanismo, podemos ejecutar todos los tests contenidos en archivos del tipo `*_test.go`. También se ha decidido usar este método ya que es posible obtener un porcentaje de cobertura de los tests o indicar archivos o funciones específicos que ejecutar entre otros. 
 
 
-* [Gestionar valoraciones][mValoraciones]: funcionalidad relacionada con las valoraciones.
-  * [[HU1] Valorar una asignatura.][i12].
-  * [[HU2] Conocer valoraciones asignatura][i13].
-  * [[HU3] Valoración media de una asignatura ][i14].
-  
+## Clases y tests
 
-* [Gestionar reseñas][mResenias]: funcionalidad relacionada con las reseñas/opiniones.
-  * [[HU4] Enviar reseña asignatura ][i15].
-  * [[HU5] Ver reseñas de una asignatura][i16].
-  * [[HU6] Valorar reseña de una asignatura ][i17].
-  
+Se ha avanzado código en los siguientes archivos:
 
-* [Gestionar preguntas][mPreguntas]: funcionalidad relacionada con las preguntas.
-  * [[HU7] Hacer pregunta de una asignatura][i18].
-  * [[HU8] Ver preguntas de una asignatura][i19].
-  * [[HU9] Responder pregunta de una asignatura][i20].
-  
-Otros *milestones*:
+- [Valoracion](./internal/microval/modelsval/valoracion.go)
+- [ValoracionRepositorio](./internal/microval/modelsval/valoracionrepositorio.go)
+- [Resenia](./internal/microres/modelsres/resenia.go)
+- [ReseniaRepositorio](./internal/microres/modelsres/reseniasrepositorio.go)
+- [Pregunta](./internal/micropre/modelspre/pregunta.go)
+- [PreguntaRepositorio](./internal/micropre/modelspre/preguntasrepositorio.go)
+- [Respuesta](./internal/micropre/modelspre/respuesta.go)
+- [Asignatura](./internal/asignatura/asig/asignatura.go)
 
-* [Solucionar errores][mErrores]: para solucionar errores.
-* [La estructura del proyecto][mEstructura]: tener una estructura adecuada en el proyecto y como marca el lenguaje. 
-* [Buena documentación][mDocumentacion]: tener una buena documentación.
+Y los archivos de test correspondientes son:
+
+- [SetUp/TearDown](./tests/testmain_test.go)
+- [valoracion_test](./tests/valoracion_test.go)
+- [resenias_test](./tests/resenias_test.go)
+- [preguntas_test](./tests/preguntas_test.go)
+- [asignatura_test](./tests/asignatura_test.go)
+
 
 [configGitHub]: https://pedromfc.github.io/EvaluaUGR/docs/configuracion_github
 [herramientas]: https://pedromfc.github.io/EvaluaUGR/docs/seleccion_herramientas
 [problema]: https://pedromfc.github.io/EvaluaUGR/docs/problema
 [arquitectura]: https://pedromfc.github.io/EvaluaUGR/docs/arquitectura
 [issues]: https://github.com/PedroMFC/EvaluaUGR/issues
+[planificacion]: https://pedromfc.github.io/EvaluaUGR/docs/planificación
 
-## Docker
-
-La planificación para la obtención del contenedor es la siguiente:
-
-* Primero construir el contenedor base atendiendo a las buenas prácticas y haciendo que sea lo más reducido posible. 
-* A la vez subirlo  tanto a DockerHub como a GitHub Container Registry. Estos procesos deben ser automáticos.
-* Seguir avanzando con el proyecto.
 
 [mAuxiliar]: https://github.com/PedroMFC/EvaluaUGR/milestone/2
 [mPreguntas]: https://github.com/PedroMFC/EvaluaUGR/milestone/5

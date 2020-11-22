@@ -7,44 +7,52 @@
 # EvaluaUGR
 Proyecto para la asignatura de Cloud Computing del Máster en Ingeniería Informática.
 
-## Gestor de tareas. Ejecución de los tests
+## Contenedor base, optimización y Dockerfile
 
-Como se indicó anteriormente en el apartado [selección de herramientas][herramientas], se ha escogido como gestor de tareas [Task](https://taskfile.dev/#/). En su momento otras alternativas a usar eran por ejemplo [Tusk](https://github.com/rliebz/tusk). Sin embargo, se optó por esta herramienta ya que presenta una actualización reciente así como gran cantidad de estrellas y colaboradores en GitHub. Además, en su [documentación](https://taskfile.dev/#/usage) vemos que es una herramienta flexible que permite incluir resúmenes a las órdenes para saber qué hacen, dependencias entre tareas ... Por ejemplo, si ejecutamos la orden `task -l` vemos las tres tareas incluidas actualmente en el archivo [Taskfile](./Taskfile.yml) junto con una pequeña descripción de cada una. Más concretamente, las tareas incluidas son:
-* format_code:  formatear código
-* syntax_check: comprobar sintaxis
-* test:         ejecutar tests
+Debido a que los procesos de elección del contenedor base y optimización han ido de la mano, se ha decidido juntar ambas rúbricas. 
 
-Si quisiéramos ejecutar alguna de ellas solo tendríamos que escribir `task nombre-tarea`. Finalmente, la herramienta `Task` se puede instalar fácilmente mediante el script  [install-task.sh](https://github.com/PedroMFC/EvaluaUGR/blob/main/install-task.sh).
+Entre los enlaces que se han consultado para realizar este proceso son los siguientes, aunque no se refieran al propio lenguaje, pero las herramientas o los procesos que comentan son útiles:
 
-## Biblioteca de aserciones
+ * [How We Reduce Node Docker Image Size In 3 Steps](https://medium.com/trendyol-tech/how-we-reduce-node-docker-image-size-in-3-steps-ff2762b51d5a).
+ * [Tips to Reduce Docker Image Sizes](https://hackernoon.com/tips-to-reduce-docker-image-sizes-876095da3b34).
+ * [Slim Docker images for your Go application](https://dev.to/andrioid/slim-docker-images-for-your-go-application-11oo).
+ * [Best practices for writing Dockerfiles](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/).
+ * [Intro Guide to Dockerfile Best Practices](https://www.docker.com/blog/intro-guide-to-dockerfile-best-practices/).
 
-Del mismo modo que con el gestor de tareas, se decidió que usar [Testify](https://github.com/stretchr/testify) como biblioteca de aserciones. De este modo, se ha optado por un enfoque TDD. En [este enlace](https://bmuschko.com/blog/go-testing-frameworks/) aparecen una gran cantidad de bibliotecas el lenguaje escogido. A parte de `Testify`, encontramos otras como [Ginkgo](https://github.com/onsi/ginkgo) y [Goblin](https://github.com/franela/goblin) que presentan el sistema *Behaviour Driven Development* o incluso la propia librería estándar de `Go`. Las razones para el uso de `Testify` en el proyecto son por una lado, su valoración en GitHub. Al igual que el gestor de tareas, presenta una actualización reciente y gran número de estrellas y contribuidores. Por otro lado, la manera de trabajar con ella es sencilla, las funciones para aserciones que presenta son adecuadas para el proyecto y se integra bien con la librería estándar del lenguaje. Por lo que respecta a la escritura de los tests, aparte de la propia documentación de la herramienta se ha usado [este enlace](http://www.inanzzz.com/index.php/post/2t08/using-setup-and-teardown-in-golang-unit-tests). 
+Todo el proceso detallado se encuentra en en el archivo [docker](docs/docker.md) dentro de la documentación, donde también puede encontrar imágenes y enlace a los *commits*. Si se quiere obtener toda la información se **recomienda consultarlo**. A modo de resumen,en nuestro caso necesitamos que la imagen contenga en lenguaje `Go` y el gestor de tareas. De este modo, partimos en principio de dos imágenes que tienen instalado el lenguaje: oficial de `Go` Alpine y [webhippie/golang](https://hub.docker.com/r/webhippie/golang) (no oficial). Como en las buenas prácticas también recomienda usar desde el primer momento imágenes lo más reducidas posibles, se ha probado con Alpine como tercera opción (hay que instalar tanto lenguaje como gestor). En los primeros Dockerfile de prueba, comprobamos que la imagen no oficial era demasiado pesada (porque contenía preinstaladas más cosas) por lo que nos centramos en la otras dos, destacando que en Alpine aumentaba mucho el tamaño. Sin embargo, usando la construcción en múltiples etapas y la herramienta [dive]([dive](https://github.com/wagoodman/dive)), conseguimos reducir el tamaño de la imagen oficial de 314 MB a 305 MB y en Alpine la bajamos de 463 MB iniciales a 303 MB. Por ello, la imagen base escogida es la de Alpine.
 
-## Sistema de prueba de código
+El archivo Dockerfile lo puede consultar [aquí](./Dockerfile). Se ha intentado seguir las buenas prácticas para su escritura como por ejemplo poner las palabras clave en mayúscula, agrupar sentencias RUN, usar LABEL en vez de MAINTAINER, copiar solo lo necesario, etc. También se ha creado un usuario que no sea *root* para ejecutar los tests. Se ha configurado el contenedor para que ejecute directamente los tests. Para ello, hay que indicar que en `/app/test` se monte este este directorio raíz y a continuación el contenedor pasa a ejecutar directamente `task test`.
 
-Como el lenguaje de desarrollo del proyecto es `Go`, se ha decidido usar el mecanismo estándar para ejecutar los tests en el mismo. Se ejecutan los tests escritos mediante [go test](https://golang.org/pkg/cmd/go/internal/test/) que ya viene proporcionado en el paquete de pruebas propio del lenguaje. Con este mecanismo, podemos ejecutar todos los tests contenidos en archivos del tipo `*_test.go`. También se ha decidido usar este método ya que es posible obtener un porcentaje de cobertura de los tests o indicar archivos o funciones específicos que ejecutar entre otros. 
+## Contenedor subido a Docker Hub
+
+El enlace a la página de Docker Hub donde está el contenedor es [este](https://hub.docker.com/r/pedromfc/evaluaugr). En las siguientes imágenes vemos cómo se ha configurado para las construcciones automáticas así como el historial de las mismas.
+
+![](./docs/imgs/docker/3.png)
+![](./docs/imgs/docker/4.png)
+![](./docs/imgs/docker/5.png)
+
+Se ha consultado [este tutorial](https://www.youtube.com/watch?v=SzzwFauxK98) para saber cómo hacer el proceso de automatización.
 
 
-## Clases y tests
+## Uso de registros alternativos y públicos de contenedores
 
-Se ha avanzado código en los siguientes archivos:
+Como registro alternativo se ha decidido usar GitHub Container Registry. Alguna información sobre su configuración la podemos encontrar [aquí](https://docs.github.com/es/free-pro-team@latest/packages/using-github-packages-with-your-projects-ecosystem/configuring-docker-for-use-with-github-packages). El proceso a groso modo es crear un nuevo *TOKEN* y añadirlo a docker. En ese momento, podemos hacer push indicando que queremos enviarlo a GitHub. Para no tener que hacer este proceso manual, se ha configurado una GitHub Action, maś concretamente a partir de [Docker Build & Push Action](https://github.com/marketplace/actions/docker-build-push-action) disponible en el *Marketplace* que permite hacerlo de una manera sencilla y además te explica los pasos. Así se ha creado el archivo [auto-gcr.yml](.github/workflows/auto-gcr.yml). En la siguiente imagen vemos cómo se han ido subiendo a [este enlace](https://github.com/PedroMFC/EvaluaUGR/packages/508196) de forma automática
+
+![](./docs/imgs/docker/6.png)
+
+
+
+## Avance del proyecto
+
+Desde la última revisión se ha avanzado código y hecho test nuevos en estos archivos.
 
 - [Valoracion](./internal/microval/modelsval/valoracion.go)
 - [ValoracionRepositorio](./internal/microval/modelsval/valoracionrepositorio.go)
-- [Resenia](./internal/microres/modelsres/resenia.go)
-- [ReseniaRepositorio](./internal/microres/modelsres/reseniasrepositorio.go)
-- [Pregunta](./internal/micropre/modelspre/pregunta.go)
-- [PreguntaRepositorio](./internal/micropre/modelspre/preguntasrepositorio.go)
-- [Respuesta](./internal/micropre/modelspre/respuesta.go)
-- [Asignatura](./internal/asignatura/asig/asignatura.go)
-
-Y los archivos de test correspondientes son:
-
-- [SetUp/TearDown](./tests/testmain_test.go)
 - [valoracion_test](./tests/valoracion_test.go)
-- [resenias_test](./tests/resenias_test.go)
-- [preguntas_test](./tests/preguntas_test.go)
-- [asignatura_test](./tests/asignatura_test.go)
+
+según las historias de usuario [HU10](https://github.com/PedroMFC/EvaluaUGR/issues/62) y [HU11](https://github.com/PedroMFC/EvaluaUGR/issues/63).
+
+También por indicaciones anteriores, se ha consultado dónde colocar los archivos de test en un proyecto de `Go`. Los enlaces consultados presentan disparidad de opiniones ya que hay partidarios de colocarlos en el [mismo paquete](https://stackoverflow.com/questions/19200235/golang-tests-in-sub-directory) o en [diferente](https://medium.com/@matryer/5-simple-tips-and-tricks-for-writing-unit-tests-in-golang-619653f90742). Entre los enlaces más interesantes se encuentra [Proper package naming for testing with the Go language](https://stackoverflow.com/questions/19998250/proper-package-naming-for-testing-with-the-go-language/31443271#31443271) que es una respuesta en la página *Stackoverflow*. Indica que depende de cómo se enfoquen los tests (caja blanca o caja negra) y que no hay nada malo en usar un método u otro. En mi caso, se ha optado por mantener los tests en paquetes diferentes al código como hasta ahora lo que también facilita tener solamente un archivo para el *setup* y *teardown*.
 
 ## Documentación
 Puede consultar más información acerca del proyecto en los siguientes enlace:
@@ -54,6 +62,7 @@ Puede consultar más información acerca del proyecto en los siguientes enlace:
 * [La documentación sobre la selección de herramientas][herramientas].
 * [Información sobre la arquitectura empleada][arquitectura].
 * [Planificación][planificacion].
+* [Test][tests].
 
 [configGitHub]: https://pedromfc.github.io/EvaluaUGR/docs/configuracion_github
 [herramientas]: https://pedromfc.github.io/EvaluaUGR/docs/seleccion_herramientas
@@ -61,7 +70,8 @@ Puede consultar más información acerca del proyecto en los siguientes enlace:
 [arquitectura]: https://pedromfc.github.io/EvaluaUGR/docs/arquitectura
 [issues]: https://github.com/PedroMFC/EvaluaUGR/issues
 [planificacion]: https://pedromfc.github.io/EvaluaUGR/docs/planificación
-
+[docker]: https://pedromfc.github.io/EvaluaUGR/docs/docker
+[tests]: https://pedromfc.github.io/EvaluaUGR/docs/tests
 
 [mAuxiliar]: https://github.com/PedroMFC/EvaluaUGR/milestone/2
 [mPreguntas]: https://github.com/PedroMFC/EvaluaUGR/milestone/5
