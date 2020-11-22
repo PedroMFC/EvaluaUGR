@@ -18,3 +18,10 @@ func (val *Valoracion) SetValoracion(num int) error {
 
 	return nil
 }
+
+
+//Definimos esta estrucutra tipo pair que agrupa la asignatura y la media 
+type AsigMedia struct {
+	asig string 
+	media float64
+}
