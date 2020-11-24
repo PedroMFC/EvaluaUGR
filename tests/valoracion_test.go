@@ -3,6 +3,8 @@ package tests
 import (
 	"github.com/stretchr/testify/assert"
 	"testing"
+	"sort"
+	//"log"
 	//"fmt"
 	"github.com/PedroMFC/EvaluaUGR/internal/microval/modelsval"
 )
@@ -80,7 +82,10 @@ func TestPeorValorada(t *testing.T){
 	err := ValRepo.Valorar("DEF", 2)
 	assert.Nil(t, err)
 	menosValoradas = ValRepo.GetPeorValorada()
-	assert.Equal(t, 2, len(menosValoradas), "El array tiene que tener una asignatura") // Ahora mismo: map[AAA:[{2} {3}] ABC:[{3} {1}] DEF:[{2}]]
+	sort.Slice(menosValoradas, func(i,j int) bool {
+		return menosValoradas[i] < menosValoradas[j]
+	})
+	assert.Equal(t, 2, len(menosValoradas), "El array tiene que tener dos asignaturas") // Ahora mismo: map[AAA:[{2} {3}] ABC:[{3} {1}] DEF:[{2}]]
 	assert.Equal(t, "ABC", menosValoradas[0], "La primera peor valorada es ABC")
 	assert.Equal(t, "DEF", menosValoradas[1], "La segunda peor valorada es DEF")
 }
@@ -102,6 +107,7 @@ func TestMejorValorada(t *testing.T){
 	err = ValRepo.Valorar("IJ", 4)
 	assert.Nil(t, err)
 	masValoradas = ValRepo.GetMejorValorada()
+	
 	assert.Equal(t, 2, len(masValoradas), "El array tiene que tener dos asignaturas") // Ahora mismo: map[AAA:[{2} {3}] ABC:[{3} {1}] DEF:[{2}] GH:[{3} {5}] IJ:[{4}]]
 	assert.Equal(t, "GH", masValoradas[0], "La primera mejor valorada es GH")
 	assert.Equal(t, "IJ", masValoradas[1], "La segunda mejor valorada es IJ")
