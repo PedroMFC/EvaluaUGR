@@ -4,7 +4,6 @@ import (
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"sort"
-	//"log"
 	//"fmt"
 	"github.com/PedroMFC/EvaluaUGR/internal/microval/modelsval"
 )
@@ -107,7 +106,9 @@ func TestMejorValorada(t *testing.T){
 	err = ValRepo.Valorar("IJ", 4)
 	assert.Nil(t, err)
 	masValoradas = ValRepo.GetMejorValorada()
-	
+	sort.Slice(masValoradas, func(i,j int) bool {
+		return masValoradas[i] < masValoradas[j]
+	})
 	assert.Equal(t, 2, len(masValoradas), "El array tiene que tener dos asignaturas") // Ahora mismo: map[AAA:[{2} {3}] ABC:[{3} {1}] DEF:[{2}] GH:[{3} {5}] IJ:[{4}]]
 	assert.Equal(t, "GH", masValoradas[0], "La primera mejor valorada es GH")
 	assert.Equal(t, "IJ", masValoradas[1], "La segunda mejor valorada es IJ")
