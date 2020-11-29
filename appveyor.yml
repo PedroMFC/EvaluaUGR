@@ -1,0 +1,19 @@
+# appveyor.yml
+image: Ubuntu
+
+# Solo queremos testear
+build: off
+
+# Probamos diferentes versiones de Go (menos la última que es es Travis)
+stack: 
+  - go 1.14.12
+  - go 1.13.15
+  - go 1.12.17
+
+# Instalamos el gestor de tareas Task
+install:
+  - ./install-task.sh
+
+# Ejecutamos los tests mediante Task
+test_script:
+  - task test
