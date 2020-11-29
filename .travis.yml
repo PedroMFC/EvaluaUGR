@@ -1,14 +1,21 @@
-language: go
+language: go  
 
+# Necesitamos usar Golang para poder instalar el gestor de tareas
 go:
 - "1.15" 			
 env:
 - GO111MODULE=on
 
-install: 
-# instalar mediante un sh Task
-- ./install-task.sh
+# Necesitamos los servicios de Docker
+services:
+  - docker
 
+install:
+  # Descargamos el contenedor que hemos creado para ejecutar los tests
+  - docker pull pedromfc/evaluaugr
+  # Instalamos el gestor de tareas Task
+  - ./install-task.sh
+
+# Ejecutamos el contenedor mediante Task
 script:
-- task test
-
+  - task docker_travis
