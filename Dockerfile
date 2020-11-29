@@ -1,3 +1,4 @@
+# ES VÁLIDO
 # Contenedor para ejecutar los tests tomando como base Alpine
 # Es necesario instalar Task y curl (este lo eliminamos después)
 # La hacemos en varias etapas
