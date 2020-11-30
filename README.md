@@ -9,6 +9,27 @@
 # EvaluaUGR
 Proyecto para la asignatura de Cloud Computing del Máster en Ingeniería Informática.
 
+## Travis
+
+La primera herramienta que se ha utilizado para la integración continua ha sido Travis. Esta es una herramienta que ya se había usado anteriormente aunque no con el lenguaje `Golang`. Se ha decidido que en Travis se ejecute el contenedor que hemos creado para poder ejecutar los test. En este caso, estamos lanzando los mismos con la [útlima versión](https://golang.org/doc/devel/release.html) del lenguaje, la 1.15.5. 
+
+Para poder realizar la integración continua en Travis se ha creado el archivo [.travil.yml](.travis.yml). Para ello, hemos usado los siguientes enlaces de ejemplo:
+* [Raku-aulas](https://github.com/JJ/raku-aulas/blob/master/.travis.yml): archivo de CI en el ejemplo visto en clase.
+* [Building a Go Project](https://docs.travis-ci.com/user/languages/go/): explicación de cómo usar Travis con Go.
+* [Travis Lifecicle](https://docs.travis-ci.com/user/job-lifecycle/)
+
+En primer lugar lo que hacemos es instalar el lenguaje `Go` en su última versión. En un principio no lo tendríamos que instalar ya que estamos utilizando un contenedor. Sin embargo, lo necesitamos para poder instalar el gestor de tareas `Task` y lanzar el contenedor mediante una orden del mismo. Luego, indicamos la variable de entorno `GO111MODULE=on`, que es necesario a partir de la versión 1.11 del lenguaje para llevar el control de las dependencias mediante la herramienta Go Modules. Luego, en el apartado `services` indicamos que queremos usar `Docker`. Ahora, *spbreescrbimos* el comportamiento por defecto que tiene Travis en los apartados `install` y `script` para adaptarlos a nuestras necesidades. En la primera de ellas nos descargamos el contenedor que creamos e instalamos el gestor de dependencias mediante el archivo [install-task.sh](install-task.sh) creado para tal efecto. Finalmente, en `script` ejecutamos la tarea `task docker_travis` pata ejecutar el contenedor.
+
+## Alternativas
+
+Una vez seleccionado Travis como primera herramienta de integración continua, vemos otras alternativas:
+
+* [Alternatives to Travis I](https://alternativeto.net/software/travis-ci/?license=free).
+* [What is Travis CI and what are its top alternatives?](https://stackshare.io/travis-ci/alternatives)
+
+Algunas que nos han llamado la atención son `Gitlab`(aunque *solo* tiene [400 minutos al mes de manera gratuita](https://about.gitlab.com/pricing/)), `CircleCI` (con [2 500 créditos a la semana] para la cuenta gratis), `Jenkins` y `AppVeyor` (ambos totalmente gratuitos). 
+
+
 ## Documentación
 Puede consultar más información acerca del proyecto en los siguientes enlace:
 
