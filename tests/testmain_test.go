@@ -9,6 +9,8 @@ import (
 )
 
 var ValRepo modelsval.ValoracionRepositorio
+var ValMap  modelsval.ValoracionMap
+
 var ResRepo modelsres.ReseniasRepositorio
 var PreRepo modelspre.PreguntasRepositorio
 
@@ -22,12 +24,13 @@ func setup() {
 	// Do something here.
 
 	//Creamos el conjunto de valoraciones a testear
-	ValRepo = *modelsval.NewValoracionsRepositorio()
+	//Creamos el conjunto de valoraciones a testear
+	ValMap = *modelsval.NewValoracionMap()
 	val := new(modelsval.Valoracion)
 	val2 := new(modelsval.Valoracion)
 	val.Valoracion = 2
 	val2.Valoracion = 3
-	ValRepo.Valoraciones["AAA"] = []modelsval.Valoracion{*val, *val2}
+	ValMap.Valoraciones["AAA"] = []modelsval.Valoracion{*val, *val2}
 
 	//Creamos el conjunto de reseñas a testear
 	ResRepo = *modelsres.NewReseniasRepositorio()
