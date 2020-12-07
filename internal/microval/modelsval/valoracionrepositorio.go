@@ -30,11 +30,7 @@ func (valRepo *ValoracionRepositorio) Valorar(asignatura string, numero int) err
 		return err
 	}
 
-	if valRepo.Valoraciones[asignatura] != nil { // Si ya hay valoraciones antes se añaden a las existentes
-		valRepo.Valoraciones[asignatura] = append(valRepo.Valoraciones[asignatura], *val)
-	} else { //Si no, tenemos que crear una nueva
-		valRepo.Valoraciones[asignatura] = []Valoracion{*val}
-	}
+	valRepo.Valoraciones.GuardarValoracion(asignatura, val)
 
 	return nil
 }

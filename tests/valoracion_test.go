@@ -31,7 +31,11 @@ func TestValoracionInferior(t *testing.T) {
 
 // Comprobar los errores que devuelve al valorar una asignatura
 func TestValorar(t *testing.T) {
-	//valRepo := modelsval.NewValoracionsRepositorio()
+	//Definimos el comportamiento que queremosa que tenga
+	ValMapMock = mocks.IValSaver{} 
+
+	ValMapMock.On("GuardarValoracion", mock.Anything, mock.Anything).Return(nil)
+
 	err := ValRepo.Valorar("ABC", 3)
 	assert.Nil(t, err)
 	err = ValRepo.Valorar("ABC", 1)
