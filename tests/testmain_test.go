@@ -14,6 +14,8 @@ var ValMap  modelsval.ValoracionMap
 var ValMapMock mocks.IValSaver
 
 var ResRepo modelsres.ReseniasRepositorio
+var ResMap  modelsres.ReseniasMap
+
 var PreRepo modelspre.PreguntasRepositorio
 
 func TestMain(m *testing.M) {
@@ -37,7 +39,7 @@ func setup() {
 	ValRepo = *modelsval.NewValoracionsRepositorio(&ValMapMock)
 
 	//Creamos el conjunto de reseñas a testear
-	ResRepo = *modelsres.NewReseniasRepositorio()
+	ResMap = *modelsres.NewReseniasMap()
 	res := new(modelsres.Resenia)
 	res2 := new(modelsres.Resenia)
 	res.Opinion = "Me ha parecido interesante"
@@ -48,7 +50,7 @@ func setup() {
 	res2.MeGusta = 0
 	res2.NoMeGusta = 0
 	res2.Identificador = 1
-	ResRepo.Resenias["BBB"] = []modelsres.Resenia{*res, *res2}
+	ResMap.Resenias["BBB"] = []modelsres.Resenia{*res, *res2}
 
 	//Creamos el conjunto de preguntas a testear
 	PreRepo = *modelspre.NewPreguntasRepositorio()
