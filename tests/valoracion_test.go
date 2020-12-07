@@ -70,6 +70,11 @@ func TestGetValoraciones(t *testing.T) {
 
 
 func TestGetMedia(t *testing.T) {
+	//Definimos el comportamiento que queremos
+	ValMapMock = mocks.IValSaver{} 
+
+	ValMapMock.On("ObtenerValoraciones", "AAA").Return([]modelsval.Valoracion{ modelsval.Valoracion{2}, modelsval.Valoracion{3} })
+
 	media, err := ValRepo.GetMedia("AAAAAA")
 	assert.NotNil(t, err)
 	media, err = ValRepo.GetMedia("AAA")

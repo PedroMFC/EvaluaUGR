@@ -52,7 +52,7 @@ func (valRepo *ValoracionRepositorio) GetMedia(asignatura string) (float64, erro
 		return 0, err
 	}
 
-	valoraciones := valRepo.Valoraciones[asignatura]
+	valoraciones := valRepo.Valoraciones.ObtenerValoraciones(asignatura)
 	if valoraciones == nil { //Si está vacío
 		return 0, &errorsval.ErrorValoracion{" no hay valoraciones disponibles"}
 	}
@@ -66,6 +66,7 @@ func (valRepo *ValoracionRepositorio) GetMedia(asignatura string) (float64, erro
 
 	return media, nil
 }
+
 
 //GetPeorValorada devuelve una lista con las asignaturas con peores valoraciones en media
 func (valRepo *ValoracionRepositorio) GetPeorValorada() []string {
