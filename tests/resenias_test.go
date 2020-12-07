@@ -1,6 +1,9 @@
 package tests
 
 import (
+	"github.com/PedroMFC/EvaluaUGR/internal/microres/errorsres"
+	"github.com/stretchr/testify/mock"
+	"github.com/PedroMFC/EvaluaUGR/mocks"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	//"fmt"
@@ -68,42 +71,36 @@ func TestGetResenias(t *testing.T) {
 
 //Comprobamos que las valoraciones positivas funcionan correctamente
 func TestMeGusta(t *testing.T) {
-	err1 := ResRepo.GustaResenia("ABCDEF", 0) //Identificador incorrecto
-	assert.NotNil(t, err1)
+	//Definimos el comportamiento que queremos
+	ResMapMock = mocks.IResSaver{} 
 
-	res, err := ResRepo.GetResenias("BBB")
-	assert.Nil(t, err)
-	assert.Equal(t, 0, res[0].MeGusta, "La primera opinión no se ha valorado")
-	assert.Equal(t, 0, res[1].MeGusta, "La segunda opinión tampoco se ha valorado")
+	ResMapMock.On("MeGustaResenia", "BBB", 0).Return(nil)
+	ResMapMock.On("MeGustaResenia", "BBB", 1).Return(&errorsres.ErrorResenia{""})
 
-	err = ResRepo.GustaResenia("BBB", 2) //No tiene tantas reseñas
+	err := ResRepo.GustaResenia("ABCDEF", 0) //Asignatura incorrecta
 	assert.NotNil(t, err)
 
-	err = ResRepo.GustaResenia("BBB", 0) //Esta debe de funcionar bien
+	err = ResRepo.GustaResenia("BBB", 0) 
 	assert.Nil(t, err)
-	res, _ = ResRepo.GetResenias("BBB")
-	assert.Equal(t, 1, res[0].MeGusta, "La primera opinión sí se ha valorado una vez")
-	assert.Equal(t, 0, res[1].MeGusta, "La segunda opinión NO se ha valorado")
+	err = ResRepo.GustaResenia("BBB", 1) 
+	assert.NotNil(t, err)
 
 }
 
 //Comprobamos que las valoraciones negativas funcionan correctamente
 func TestNoMeGusta(t *testing.T) {
-	err1 := ResRepo.NoGustaResenia("ABCDEF", 0) //Identificador incorrecto
-	assert.NotNil(t, err1)
+	//Definimos el comportamiento que queremos
+	ResMapMock = mocks.IResSaver{} 
 
-	res, err := ResRepo.GetResenias("BBB")
-	assert.Nil(t, err)
-	assert.Equal(t, 0, res[0].NoMeGusta, "La primera opinión no se ha valorado")
-	assert.Equal(t, 0, res[1].NoMeGusta, "La segunda opinión tampoco se ha valorado")
+	ResMapMock.On("NoMeGustaResenia", "BBB", 0).Return(nil)
+	ResMapMock.On("NoMeGustaResenia", "BBB", 1).Return(&errorsres.ErrorResenia{""})
 
-	err = ResRepo.NoGustaResenia("BBB", 2) //No tiene tantas reseñas
+	err := ResRepo.NoGustaResenia("ABCDEF", 0) //Asignatura incorrecta
 	assert.NotNil(t, err)
 
-	err = ResRepo.NoGustaResenia("BBB", 1) //Esta debe de funcionar bien
+	err = ResRepo.NoGustaResenia("BBB", 0) 
 	assert.Nil(t, err)
-	res, _ = ResRepo.GetResenias("BBB")
-	assert.Equal(t, 0, res[0].NoMeGusta, "La primera opinión NO se ha valorado")
-	assert.Equal(t, 1, res[1].NoMeGusta, "La segunda opinión SÍ se ha valorado una vez")
+	err = ResRepo.NoGustaResenia("BBB", 1) 
+	assert.NotNil(t, err)
 
 }

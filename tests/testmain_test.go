@@ -15,6 +15,7 @@ var ValMapMock mocks.IValSaver
 
 var ResRepo modelsres.ReseniasRepositorio
 var ResMap  modelsres.ReseniasMap
+var ResMapMock mocks.IResSaver
 
 var PreRepo modelspre.PreguntasRepositorio
 

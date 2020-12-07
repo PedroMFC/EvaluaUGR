@@ -3,7 +3,6 @@ package modelsres
 import (
 	"github.com/PedroMFC/EvaluaUGR/internal/asignatura/asig"
 	//"fmt"
-	"github.com/PedroMFC/EvaluaUGR/internal/microres/errorsres"
 )
 
 //Contiene las reseñas realizadas
@@ -53,12 +52,7 @@ func (resRepo *ReseniasRepositorio) GustaResenia(asignatura string, id int) erro
 		return err
 	}
 
-	if id > len(resRepo.Resenias[asignatura]) -1 {
-		return &errorsres.ErrorResenia{" la reseña no contiene in identificador válido"}
-	}
-
-	resRepo.Resenias[asignatura][id].MeGusta++ 
-	return nil
+	return resRepo.Resenias.MeGustaResenia(asignatura, id)
 }
 
 //NoGustaResenia aumenta las valoraciones negativas de una resenia
@@ -68,10 +62,5 @@ func (resRepo *ReseniasRepositorio) NoGustaResenia(asignatura string, id int) er
 		return err
 	}
 
-	if id > len(resRepo.Resenias[asignatura]) -1 {
-		return &errorsres.ErrorResenia{" la reseña no contiene in identificador válido"}
-	}
-
-	resRepo.Resenias[asignatura][id].NoMeGusta++ 
-	return nil
+	return resRepo.Resenias.NoMeGustaResenia(asignatura, id)
 }
