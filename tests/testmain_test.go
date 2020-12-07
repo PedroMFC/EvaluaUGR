@@ -52,6 +52,8 @@ func setup() {
 	res2.Identificador = 1
 	ResMap.Resenias["BBB"] = []modelsres.Resenia{*res, *res2}
 
+	ResRepo = *modelsres.NewReseniasRepositorio(&ResMapMock)
+
 	//Creamos el conjunto de preguntas a testear
 	PreRepo = *modelspre.NewPreguntasRepositorio()
 	pre := new(modelspre.Pregunta)

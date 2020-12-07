@@ -8,11 +8,12 @@ import (
 
 //Contiene las reseñas realizadas
 type ReseniasRepositorio struct {
-	Resenias map[string][]Resenia //Con la tabla Hash hace la consultas más rápido
+	Resenias IResSaver
 }
 
-func NewReseniasRepositorio() *ReseniasRepositorio {
-	return &ReseniasRepositorio{Resenias: make(map[string][]Resenia)}
+//NewReseniasRepositorio devuelve un repositorio de reseñas
+func NewReseniasRepositorio(resSaver IResSaver) *ReseniasRepositorio {
+	return &ReseniasRepositorio{Resenias: resSaver}
 }
 
 //Opinar añade una reseña/opinión al repositorio
