@@ -43,6 +43,15 @@ func TestOpinar(t *testing.T) {
 
 // Comprobar que devuelve de manera correcta las reseñas
 func TestGetResenias(t *testing.T) {
+	//Definimos el comportamiento que queremos
+	ResMapMock = mocks.IResSaver{} 
+
+	ResMapMock.On("ObtenerResenias", "BBB").Return([]modelsres.Resenia{ 
+		modelsres.Resenia{Opinion: "Me ha parecido interesante"}, 
+		modelsres.Resenia{Opinion: "No me ha gustado"} })
+
+	ResMapMock.On("ObtenerResenias", "AAA").Return([]modelsres.Resenia{})
+
 	res, err := ResRepo.GetResenias("AAAAAA")
 	assert.NotNil(t, err)
 	res, err = ResRepo.GetResenias("BBB")

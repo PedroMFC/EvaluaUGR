@@ -43,7 +43,7 @@ func (resRepo *ReseniasRepositorio) GetResenias(asignatura string) ([]Resenia, e
 		return nil, err
 	}
 
-	return resRepo.Resenias[asignatura], nil
+	return resRepo.Resenias.ObtenerResenias(asignatura), nil
 }
 
 //GustaResenia aumenta las valoraciones positivas de una resenia
