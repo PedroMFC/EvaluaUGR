@@ -42,7 +42,7 @@ func (valRepo *ValoracionRepositorio) GetValoraciones(asignatura string) ([]Valo
 		return nil, err
 	}
 
-	return valRepo.Valoraciones[asignatura], nil
+	return valRepo.Valoraciones.ObtenerValoraciones(asignatura), nil
 }
 
 //GetMedia nos aporta la valoración media de una asignatura

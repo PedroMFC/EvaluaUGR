@@ -48,6 +48,12 @@ func TestValorar(t *testing.T) {
 
 // Comprobar que devuelve de manera correcta las valoraciones
 func TestGetValoraciones(t *testing.T) {
+	//Definimos el comportamiento que queremos
+	ValMapMock = mocks.IValSaver{} 
+
+	ValMapMock.On("ObtenerValoraciones", "AAA").Return([]modelsval.Valoracion{ modelsval.Valoracion{2}, modelsval.Valoracion{3} })
+	ValMapMock.On("ObtenerValoraciones", "BBB").Return([]modelsval.Valoracion{})
+
 	val, err := ValRepo.GetValoraciones("AAAAAA")
 	assert.NotNil(t, err)
 	val, err = ValRepo.GetValoraciones("AAA")
