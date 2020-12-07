@@ -31,16 +31,10 @@ func (resRepo *ReseniasRepositorio) Opinar(asignatura string, opinion string) er
 
 	res.MeGusta = 0
 	res.NoMeGusta = 0
-	if resRepo.Resenias[asignatura] != nil { // Si ya hay reeseñas antes se añaden a las existentes
-		res.Identificador = len(resRepo.Resenias[asignatura])
-		resRepo.Resenias[asignatura] = append(resRepo.Resenias[asignatura], *res)
-	} else { //Si no, tenemos que crear una nueva
-		res.Identificador = 0
-		resRepo.Resenias[asignatura] = []Resenia{*res}
-	}
-
+	resRepo.Resenias.GuardarResenia(asignatura, res) 
 	return nil
 }
+
 
 //GetResenias nos aporta las reseñas realizadas en una asignatura
 func (resRepo *ReseniasRepositorio) GetResenias(asignatura string) ([]Resenia, error) {

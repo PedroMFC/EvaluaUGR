@@ -24,6 +24,11 @@ func TestOpinionCorrecta(t *testing.T) {
 
 // Comprobar los errores que devuelve al opinar sobre una asignatura
 func TestOpinar(t *testing.T) {
+	//Definimos el comportamiento que queremos
+	ResMapMock = mocks.IResSaver{} 
+
+	ResMapMock.On("GuardarResenia", mock.Anything, mock.Anything).Return(nil)
+
 	err := ResRepo.Opinar("ABC", "Esta reseña es adecuada")
 	assert.Nil(t, err)
 	err = ResRepo.Opinar("ABCDEF", "Esta reseña es buena también")
@@ -34,18 +39,6 @@ func TestOpinar(t *testing.T) {
 								 "Esta no es una reseña válida porque tiene demasiados caracteres." +
 								 "Esta no es una reseña válida porque tiene demasiados caracteres.")
 	assert.NotNil(t, err)
-}
-
-//Comprobamos que se asignan bien los identificadores al enviar la reseña
-func TestIdentificadores(t *testing.T) {
-	err := ResRepo.Opinar("AB", "Esta reseña es adecuada")
-	assert.Nil(t, err)
-	err = ResRepo.Opinar("AB", "Esta reseña es también adecuada")
-	assert.Nil(t, err)
-
-	assert.Equal(t, 0, ResRepo.Resenias["AB"][0].Identificador, "Es la primera reseña enviada")
-	assert.Equal(t, 1, ResRepo.Resenias["AB"][1].Identificador, "Es la segunda reseña enviada")
-
 }
 
 // Comprobar que devuelve de manera correcta las reseñas
