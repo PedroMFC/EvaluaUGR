@@ -1,6 +1,8 @@
 package tests
 
 import (
+	"github.com/PedroMFC/EvaluaUGR/mocks"
+	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"sort"
@@ -129,26 +131,44 @@ func TestPeorValoradaContenidoDoble(t *testing.T){
 
 
 //Comprobar que calcula la peor valorada correctamente
-func TestMejorValorada(t *testing.T){
-	repoVacio := modelsval.NewValoracionsRepositorio()
-	masValoradas := repoVacio.GetMejorValorada()
-	assert.Equal(t, 0, len(masValoradas), "El array de valoraciones tiene que estar vacío")
-	masValoradas = ValRepo.GetMejorValorada()
-	assert.Equal(t, 1, len(masValoradas), "El array tiene que tener una asignatura") // Ahora mismo: map[AAA:[{2} {3}] ABC:[{3} {1}] DEF:[{2}]]
-	assert.Equal(t, "AAA", masValoradas[0], "Esa no es la mejor valorada") 
-	
-	//Metemos otras asignaturas para ver si devuelve el array
-	err := ValRepo.Valorar("GH", 3)
-	assert.Nil(t, err)
-	err = ValRepo.Valorar("GH", 5)
-	assert.Nil(t, err)
-	err = ValRepo.Valorar("IJ", 4)
-	assert.Nil(t, err)
-	masValoradas = ValRepo.GetMejorValorada()
+func TestMejorValoradaVacio(t *testing.T){
+	//Definimos el comportamiento que queremos
+	ValMapMock = mocks.IValSaver{} 
+
+	ValMapMock.On("ObtenerAsignaturas").Return([]string{})
+
+	menosValoradas := ValRepo.GetMejorValorada()
+	assert.Equal(t, 0, len(menosValoradas), "El array de valoraciones tiene que estar vacío")
+}
+
+func TestMejorValoradaContenido(t *testing.T){
+	//Definimos el comportamiento que queremos
+	ValMapMock = mocks.IValSaver{} 
+
+	ValMapMock.On("ObtenerAsignaturas").Return([]string{"ABC", "AAA"})
+	ValMapMock.On("ObtenerValoraciones", "AAA").Return([]modelsval.Valoracion{ modelsval.Valoracion{2}, modelsval.Valoracion{3} })
+	ValMapMock.On("ObtenerValoraciones", "ABC").Return([]modelsval.Valoracion{ modelsval.Valoracion{3}, modelsval.Valoracion{1} })
+
+	menosValoradas := ValRepo.GetMejorValorada()
+	assert.Equal(t, 1, len(menosValoradas), "El array tiene que tener una asignatura") // Ahora mismo es hay dos asignaturas: map[AAA:[{2} {3}] ABC:[{3} {1}]]
+	assert.Equal(t, "AAA", menosValoradas[0], "Esa no es la mejor valorada")
+}
+
+func TestMejorValoradaContenidoDoble(t *testing.T){
+	//Definimos el comportamiento que queremos
+	ValMapMock = mocks.IValSaver{} 
+
+	ValMapMock.On("ObtenerAsignaturas").Return([]string{"ABC", "AAA", "DEF"})
+	ValMapMock.On("ObtenerValoraciones", "AAA").Return([]modelsval.Valoracion{ modelsval.Valoracion{4}, modelsval.Valoracion{2} })
+	ValMapMock.On("ObtenerValoraciones", "ABC").Return([]modelsval.Valoracion{ modelsval.Valoracion{3}, modelsval.Valoracion{1} })
+	ValMapMock.On("ObtenerValoraciones", "DEF").Return([]modelsval.Valoracion{ modelsval.Valoracion{3} })
+
+
+	masValoradas := ValRepo.GetMejorValorada()
 	sort.Slice(masValoradas, func(i,j int) bool {
 		return masValoradas[i] < masValoradas[j]
 	})
-	assert.Equal(t, 2, len(masValoradas), "El array tiene que tener dos asignaturas") // Ahora mismo: map[AAA:[{2} {3}] ABC:[{3} {1}] DEF:[{2}] GH:[{3} {5}] IJ:[{4}]]
-	assert.Equal(t, "GH", masValoradas[0], "La primera mejor valorada es GH")
-	assert.Equal(t, "IJ", masValoradas[1], "La segunda mejor valorada es IJ")
+	assert.Equal(t, 2, len(masValoradas), "El array tiene que tener dos asignaturas") // Ahora mismo: map[AAA:[{2} {3}] ABC:[{3} {1}] DEF:[{2}]]
+	assert.Equal(t, "AAA", masValoradas[0], "La primera peor valorada es ABC")
+	assert.Equal(t, "DEF", masValoradas[1], "La segunda peor valorada es DEF")
 }

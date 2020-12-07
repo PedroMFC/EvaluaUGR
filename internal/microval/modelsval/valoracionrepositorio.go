@@ -105,13 +105,13 @@ func (valRepo *ValoracionRepositorio) GetPeorValorada() []string {
 func (valRepo *ValoracionRepositorio) GetMejorValorada() []string {
 	menosValoradas := []string{}
 
-	if len(valRepo.Valoraciones) == 0 { //Si el repositorio está vacío
+	if len(valRepo.Valoraciones.ObtenerAsignaturas()) == 0 { //Si el repositorio está vacío
 		return menosValoradas
 	}
 
 	mediasAsignaturas := []AsigMedia{}
 	// Obtenemos el conjunto de medias
-	for k := range valRepo.Valoraciones{
+	for _,k := range valRepo.Valoraciones.ObtenerAsignaturas(){
 		med, err := valRepo.GetMedia(k)
 		if err == nil{
 			mediasAsignaturas = append(mediasAsignaturas, AsigMedia{k, med})
@@ -122,7 +122,7 @@ func (valRepo *ValoracionRepositorio) GetMejorValorada() []string {
 	sort.Slice(mediasAsignaturas, func(i,j int) bool {
 		return mediasAsignaturas[i].media > mediasAsignaturas[j].media
 	})
-	
+
 	menosValoradas = append(menosValoradas, mediasAsignaturas[0].asig)
 
 	i := 1
