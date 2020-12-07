@@ -8,15 +8,15 @@ import (
 	"github.com/PedroMFC/EvaluaUGR/internal/microval/errorsval"
 )
 
-//Contiene las valoraciones realizadas
+//ValoracionRepositorio Contiene las valoraciones realizadas
 type ValoracionRepositorio struct {
-	Valoraciones map[string][]Valoracion  //Con la tabla Hash hace la consultas más rápido
+	Valoraciones IValSaver
 }
 
-func NewValoracionsRepositorio() *ValoracionRepositorio {
-	return &ValoracionRepositorio{Valoraciones: make(map[string][]Valoracion)}
+//NewValoracionsRepositorio devuelve una ValoracionRepositorio
+func NewValoracionsRepositorio(val IValSaver) *ValoracionRepositorio {
+	return &ValoracionRepositorio{Valoraciones: val}
 }
-
 //Valorar añade una valoración al repositorio
 func (valRepo *ValoracionRepositorio) Valorar(asignatura string, numero int) error {
 	err := asig.AsignaturaCorrecta(asignatura)

@@ -5,11 +5,13 @@ import (
 	"github.com/PedroMFC/EvaluaUGR/internal/microres/modelsres"
 	"github.com/PedroMFC/EvaluaUGR/internal/microval/modelsval"
 	"github.com/PedroMFC/EvaluaUGR/internal/micropre/modelspre"
+	"github.com/PedroMFC/EvaluaUGR/mocks"
 	"testing"
 )
 
 var ValRepo modelsval.ValoracionRepositorio
 var ValMap  modelsval.ValoracionMap
+var ValMapMock mocks.IValSaver
 
 var ResRepo modelsres.ReseniasRepositorio
 var PreRepo modelspre.PreguntasRepositorio
@@ -31,6 +33,8 @@ func setup() {
 	val.Valoracion = 2
 	val2.Valoracion = 3
 	ValMap.Valoraciones["AAA"] = []modelsval.Valoracion{*val, *val2}
+
+	ValRepo = *modelsval.NewValoracionsRepositorio(&ValMapMock)
 
 	//Creamos el conjunto de reseñas a testear
 	ResRepo = *modelsres.NewReseniasRepositorio()
