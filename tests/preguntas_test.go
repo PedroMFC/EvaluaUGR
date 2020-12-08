@@ -25,6 +25,11 @@ func TestPreguntaCorrecta(t *testing.T) {
 
 // Comprobar los errores que devuelve al preguntar algo sobre una asignatura
 func TestPreguntar(t *testing.T) {
+	//Definimos el comportamiento que queremos
+	PreMapMock = mocks.IPreSaver{} 
+
+	PreMapMock.On("GuardarPregunta", mock.Anything, mock.Anything).Return(nil)
+
 	err := PreRepo.Preguntar("ABC", "¿Esta es una pregunta válida?")
 	assert.Nil(t, err)
 	err = PreRepo.Preguntar("ABCDEF", "¿Esta es una pregunta válida?")
