@@ -8,12 +8,13 @@ import (
 
 //Contiene las reguntas realizadas
 type PreguntasRepositorio struct {
-	Preguntas map[string][]Pregunta 
+	Preguntas IPreSaver
 }
 
-func NewPreguntasRepositorio() *PreguntasRepositorio {
-	return &PreguntasRepositorio{Preguntas: make(map[string][]Pregunta)}
+func NewPreguntasRepositorio(preSaver IPreSaver) *PreguntasRepositorio {
+	return &PreguntasRepositorio{Preguntas: preSaver}
 }
+
 
 //Preguntar añade una pregunta al repositorio
 func (preRepo *PreguntasRepositorio) Preguntar(asignatura string, pregunta string) error {
