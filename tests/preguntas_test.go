@@ -44,6 +44,16 @@ func TestPreguntar(t *testing.T) {
 
 // Comprobar que devuelve de manera correcta las preguntas
 func TestGetPreguntas(t *testing.T) {
+	//Definimos el comportamiento que queremos
+	PreMapMock = mocks.IPreSaver{} 
+
+	PreMapMock.On("ObtenerPregunta", "CCC").Return([]modelspre.Pregunta{
+		modelspre.Pregunta{Pregunta: "¿Esta es la primera pregunta?", Identificador: 0, Respuestas: []modelspre.Respuesta{}},
+		modelspre.Pregunta{Pregunta: "¿Se ha hecho una segunda pregunta?", Identificador: 1, Respuestas: []modelspre.Respuesta{}},
+	})
+
+	PreMapMock.On("ObtenerPregunta", "AAA").Return([]modelspre.Pregunta{})
+
 	pre, err := PreRepo.GetPreguntas("AAAAAA")
 	assert.NotNil(t, err)
 	pre, err = PreRepo.GetPreguntas("CCC")

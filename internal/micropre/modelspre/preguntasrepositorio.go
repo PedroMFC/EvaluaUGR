@@ -41,7 +41,7 @@ func (preRepo *PreguntasRepositorio) GetPreguntas(asignatura string) ([]Pregunta
 		return nil, err
 	}
 
-	return preRepo.Preguntas[asignatura], nil
+	return preRepo.Preguntas.ObtenerPregunta(asignatura), nil
 }
 
 //Responder añade una respuesta al repositorio
