@@ -18,6 +18,7 @@ var ResMap  modelsres.ReseniasMap
 var ResMapMock mocks.IResSaver
 
 var PreRepo modelspre.PreguntasRepositorio
+var PreMap  modelspre.PreguntasMap
 
 func TestMain(m *testing.M) {
 	setup()
@@ -56,7 +57,7 @@ func setup() {
 	ResRepo = *modelsres.NewReseniasRepositorio(&ResMapMock)
 
 	//Creamos el conjunto de preguntas a testear
-	PreRepo = *modelspre.NewPreguntasRepositorio()
+	PreMap = *modelspre.NewPreguntasMap()
 	pre := new(modelspre.Pregunta)
 	pre2 := new(modelspre.Pregunta)
 	pre.Pregunta = "¿Esta es la primera pregunta?"
@@ -66,7 +67,7 @@ func setup() {
 	pre.Respuestas = []modelspre.Respuesta{*respu}
 	pre2.Pregunta = "¿Se ha hecho una segunda pregunta?"
 	pre2.Identificador = 1
-	PreRepo.Preguntas["CCC"] = []modelspre.Pregunta{*pre, *pre2}
+	PreMap.Preguntas["CCC"] = []modelspre.Pregunta{*pre, *pre2}
 
 	fmt.Printf("\033[1;36m%s\033[0m", "> Setup completed\n")
 }
