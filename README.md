@@ -11,7 +11,7 @@ Proyecto para la asignatura de Cloud Computing del Máster en Ingeniería Inform
 
 ## Travis
 
-La primera herramienta que se ha utilizado para la integración continua ha sido Travis. Esta es una herramienta que ya se había usado anteriormente aunque no con el lenguaje `Golang`. Se ha decidido que en Travis se ejecute el **contenedor** que hemos creado para poder lanzar los test. En este caso, estamos trabajando con la [útlima versión](https://golang.org/doc/devel/release.html) del lenguaje, la 1.15.5. 
+La primera herramienta que se ha utilizado para la integración continua ha sido Travis. Esta es una herramienta que ya se había usado anteriormente aunque no con el lenguaje `Golang`. Se ha decidido que en Travis se ejecute el **contenedor** que hemos creado para poder lanzar los test. En este caso, estamos trabajando con la [útlima versión](https://golang.org/doc/devel/release.html) del lenguaje, la 1.15.6. 
 
 Para poder realizar la integración continua en Travis se ha creado el archivo [.travis.yml](.travis.yml). Para ello, hemos usado los siguientes enlaces de ejemplo:
 * [Raku-aulas](https://github.com/JJ/raku-aulas/blob/master/.travis.yml): archivo de CI en el ejemplo visto en clase. Para conocer cómo trabajar con Docker y Travis.
