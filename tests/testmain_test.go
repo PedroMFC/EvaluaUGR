@@ -19,6 +19,7 @@ var ResMapMock mocks.IResSaver
 
 var PreRepo modelspre.PreguntasRepositorio
 var PreMap  modelspre.PreguntasMap
+var PreMapMock mocks.IPreSaver
 
 func TestMain(m *testing.M) {
 	setup()
@@ -67,8 +68,10 @@ func setup() {
 	pre.Respuestas = []modelspre.Respuesta{*respu}
 	pre2.Pregunta = "¿Se ha hecho una segunda pregunta?"
 	pre2.Identificador = 1
-	PreMap.Preguntas["CCC"] = []modelspre.Pregunta{*pre, *pre2}
 
+	PreMap.Preguntas["CCC"] = []modelspre.Pregunta{*pre, *pre2}
+	PreRepo = *modelspre.NewPreguntasRepositorio(&PreMapMock)
+	
 	fmt.Printf("\033[1;36m%s\033[0m", "> Setup completed\n")
 }
 
