@@ -37,13 +37,3 @@ tasks:
       de los test. Monta directamente el directorio actual en /app/test y se elimina tras la ejecución
     cmds: 
       - docker run --rm -t -v `pwd`:/app/test pedromfc/evaluaugr
-
-  docker_travis:
-    desc: ejectuar docker en Travis
-    summary: |
-      Ejecución de docker en Travis
-
-      Adaptación de la orden para ejecutar el contenedor docker para los tests específicamente dentro
-      de la herramienta Travis.
-    cmds: 
-      - docker run -t -v $TRAVIS_BUILD_DIR:/app/test pedromfc/evaluaugr
