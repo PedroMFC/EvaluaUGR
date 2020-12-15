@@ -1,10 +1,4 @@
-language: go  
-
-# Necesitamos usar Golang para poder instalar el gestor de tareas
-go:
-- "1.15" 			
-env:
-- GO111MODULE=on
+language: minimal  
 
 # Necesitamos los servicios de Docker
 services:
@@ -13,9 +7,7 @@ services:
 install:
   # Descargamos el contenedor que hemos creado para ejecutar los tests
   - docker pull pedromfc/evaluaugr
-  # Instalamos el gestor de tareas Task
-  - ./install-task.sh
 
 # Ejecutamos el contenedor mediante Task
 script:
-  - task docker_travis
+  - docker run -t -v $TRAVIS_BUILD_DIR:/app/test pedromfc/evaluaugr
