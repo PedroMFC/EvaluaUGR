@@ -8,6 +8,5 @@ install:
   # Descargamos el contenedor que hemos creado para ejecutar los tests
   - docker pull pedromfc/evaluaugr
 
-# Ejecutamos el contenedor mediante Task
 script:
   - docker run -t -v $TRAVIS_BUILD_DIR:/app/test pedromfc/evaluaugr
