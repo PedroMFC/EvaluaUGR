@@ -2,7 +2,7 @@
 
 [![made-with-Go](https://img.shields.io/badge/Made%20with-Go-1f425f.svg)](http://golang.org)
 
-[![Build Status](https://travis-ci.org/PedroMFC/EvaluaUGR.svg?branch=main)](https://travis-ci.org/PedroMFC/EvaluaUGR)
+[![Build Status](https://travis-ci.com/PedroMFC/EvaluaUGR.svg?branch=main)](https://travis-ci.com/PedroMFC/EvaluaUGR)
 
 [![Build status](https://ci.appveyor.com/api/projects/status/j0jnyv7lgm7mkjkn?svg=true)](https://ci.appveyor.com/project/PedroMFC/evaluaugr)
 
@@ -11,29 +11,29 @@ Proyecto para la asignatura de Cloud Computing del Máster en Ingeniería Inform
 
 ## Travis
 
-La primera herramienta que se ha utilizado para la integración continua ha sido Travis. Esta es una herramienta que ya se había usado anteriormente aunque no con el lenguaje `Golang`. Se ha decidido que en Travis se ejecute el **contenedor** que hemos creado para poder lanzar los test. En este caso, estamos trabajando con la [útlima versión](https://golang.org/doc/devel/release.html) del lenguaje, la 1.15.6. 
+La primera herramienta que se ha utilizado para la integración continua ha sido Travis. Esta es una herramienta que ya se había usado anteriormente aunque no con el lenguaje `Golang`. Se ha decidido que en Travis se ejecute el **contenedor** que hemos creado para poder lanzar los test. En este caso, estamos trabajando con la [útlima versión](https://golang.org/doc/devel/release.html) del lenguaje, la 1.15.6. Otras versiones se comprobarán en otros sistemas de CI.
 
 Para poder realizar la integración continua en Travis se ha creado el archivo [.travis.yml](.travis.yml). Para ello, hemos usado los siguientes enlaces de ejemplo:
 * [Raku-aulas](https://github.com/JJ/raku-aulas/blob/master/.travis.yml): archivo de CI en el ejemplo visto en clase. Para conocer cómo trabajar con Docker y Travis.
-* [Building a Go Project](https://docs.travis-ci.com/user/languages/go/): explicación de cómo usar Travis con Go.
+* [Minimal and Generic images](https://docs.travis-ci.com/user/languages/minimal-and-generic/).
 * [Travis Lifecicle](https://docs.travis-ci.com/user/job-lifecycle/).
 
-En primer lugar lo que hacemos es indicar que necesitamos el lenguaje `Go` en su última versión. En un principio no lo tendríamos que usar ya que estamos utilizando un contenedor. Sin embargo, lo necesitamos para poder instalar el gestor de tareas `Task` y lanzar el contenedor mediante una orden del mismo. Luego, indicamos la variable de entorno `GO111MODULE=on`, que es necesario a partir de la versión 1.11 del lenguaje para llevar el control de las dependencias mediante la herramienta Go Modules. En el apartado `services` indicamos que queremos usar `Docker`. Ahora, *sobreescrbimos* el comportamiento por defecto que tiene Travis para Go en los apartados `install` y `script` para adaptarlos a nuestras necesidades. En la primera de ellas nos descargamos el contenedor que hemos creado para ejecutar los tests (no necesitaríamos especificarlo ya que lo descargaría cuando se ejecute, pero se ha decidido hacerlo así por si hay algún problema en la descarga verlo antes) e instalamos el gestor de tareas mediante el archivo [install-task.sh](install-task.sh) creado para tal efecto. Finalmente, en `script` ejecutamos la tarea `task docker_travis` (especificada en [Taskfile.yml](Taskfile.yml)) pata ejecutar el contenedor. 
-
-También se ha creado una tarea para poder ejecutar directamente el contenedor en local.
+Como hemos dicho, vamos a usar el contenedor que hemos creado. Por ello, no necesitamos indicar ningún lenguaje en específico ya que tenemos todo lo que necesitamos en el contenedor. Por eso usamos `lenguage:minimal`. Otra opción sería `language:generic` pero contiene más servicios y lenguajes que no necesitamos. Notamos que `minimal` no tienen definidos comandos `install` y `script` por defecto.
+En el apartado `services` indicamos que queremos usar `Docker`. Aunque no es necesario ya que se haría al ejecutarlo, hemos definido en el comando `install` la descarga del contenedor. Finalmente, en `script` ejecutamos el contenedor montado el directorio actual en la carpeta donde se ha definido que se lancen los tests.
 
 ## Alternativas
 
-Una vez seleccionado Travis como primera herramienta de integración continua, vemos otras alternativas:
+Una vez seleccionado Travis como primera herramienta de integración continua, vemos diferentes sistemas de CI alternativos:
 
 * [Alternatives to Travis](https://alternativeto.net/software/travis-ci/?license=free).
 * [What is Travis CI and what are its top alternatives?](https://stackshare.io/travis-ci/alternatives)
 
-Algunas que nos han llamado la atención son Gitlab (aunque *solo* tiene [400 minutos al mes de manera gratuita](https://about.gitlab.com/pricing/)), CircleCI (con [2 500 créditos a la semana](https://circleci.com/pricing/?utm_source=gb&utm_medium=SEM&utm_campaign=SEM-gb-200-Eng-ni&utm_content=SEM-gb-200-Eng-ni-CirclePricing&utm_term=a2&gclid=Cj0KCQiAzZL-BRDnARIsAPCJs71IGpSUzcd8woVIuXc0MY6RC0ytEGOQMN6FLBNqN4qw-h55ijrqEuYaAtV1EALw_wcB) para la cuenta gratis), Jenkins y AppVeyor (ambos totalmente gratuitos). De este modo, para no tener que estar pendiente de si nos pasamos con los créditos que dan de manera gratuita, se ha escogido trabajar con **Appveyor**. La única restricción para la cuenta gratuita es que solamente se puede ejecutar un *job* a la vez pero en nuestro caso no es ningún impedimento. Los principales enlaces consultados han sido:
+Algunas que nos han llamado la atención son Gitlab (aunque *solo* tiene [400 minutos al mes de manera gratuita](https://about.gitlab.com/pricing/)), CircleCI (con [2 500 créditos a la semana](https://circleci.com/pricing/?utm_source=gb&utm_medium=SEM&utm_campaign=SEM-gb-200-Eng-ni&utm_content=SEM-gb-200-Eng-ni-CirclePricing&utm_term=a2&gclid=Cj0KCQiAzZL-BRDnARIsAPCJs71IGpSUzcd8woVIuXc0MY6RC0ytEGOQMN6FLBNqN4qw-h55ijrqEuYaAtV1EALw_wcB) para la cuenta gratis), Jenkins y AppVeyor (ambos totalmente gratuitos). De este modo,  se ha decidido probar con **Appveyor**. La única restricción para la cuenta gratuita es que solamente se puede ejecutar un *job* a la vez pero en nuestro caso no es ningún impedimento. Los principales enlaces consultados han sido:
 * [AppVeyor Build Pipeline](https://www.appveyor.com/docs/build-configuration/#build-pipeline).
 * [Testing with Go | AppVeyor](https://www.appveyor.com/docs/lang/go/).
+* [Versiones de Go](https://golang.org/doc/devel/release.html).
 
-El archivo que se ha escrito es [appveyor.yml](appveyor.yml). Hemos observado que la sintaxis es similar a la de Travis. Lo primero que hacemos es indicar que vamos a utilizar una máquina Ubuntu y que no vamos a hacer *build*, solo vamos a ejecutar los tests. En la parte `stack` indicamos las versiones del lenguaje que vamos a testear. En [este enlace](https://www.appveyor.com/docs/linux-images-software/#golang) podemos ver las diferentes versiones disponibles. Como estamos usando GoModules para la gestión de dependencias, tenemos que usar una versión de Go mayor que la 1.11. Sin embargo, la biblioteca de aserciones da soporte como mínimo a la versión 1.13. Por ello, se van a testear las versiones 1.13.15 y 1.14.12 (son las versiones que tienen instaladas y [las últimas de las respectivas versiones](https://golang.org/doc/devel/release.html)). No probamos la última versión ya que esta se testea en Travis. Finalmente, en la parte `install` nos descargamos el gestor de tareas y en `test_script` ejecutamos los tests mediante la orden especificada en el archivo de tareas [Taskfile.yml](Taskfile.yml). 
+El archivo que se ha escrito es [appveyor.yml](appveyor.yml). Hemos observado que la sintaxis es similar a la de Travis. Lo primero que hacemos es indicar que vamos a utilizar una máquina Ubuntu y que no vamos a hacer *build*, solo vamos a ejecutar los tests. En la parte `stack` indicamos las versiones del lenguaje que vamos a testear. En [este enlace](https://www.appveyor.com/docs/linux-images-software/#golang) podemos ver las diferentes versiones disponibles en el sistema. Como estamos usando GoModules para la gestión de dependencias, tenemos que usar una versión de Go mayor que la 1.11. Sin embargo, la biblioteca de aserciones da soporte como mínimo a la versión 1.13. Por ello, se indican las versiones *major* 1.13 y 1.14. No probamos la última versión ya que esta se testea en Travis. Finalmente, en la parte `install` nos descargamos el gestor de tareas y en `test_script` ejecutamos los tests mediante la orden `task test` especificada en el archivo de tareas [Taskfile.yml](Taskfile.yml). 
 
 ## Avances
 
