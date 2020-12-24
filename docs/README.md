@@ -8,6 +8,7 @@
 * [Tests][tests].
 * [Docker][docker].
 * [Docker README][dockerR].
+* [Integración continua][CI].
 
 [configGitHub]: https://pedromfc.github.io/EvaluaUGR/docs/configuracion_github
 [herramientas]: https://pedromfc.github.io/EvaluaUGR/docs/seleccion_herramientas
@@ -18,3 +19,4 @@
 [tests]: https://pedromfc.github.io/EvaluaUGR/docs/tests
 [docker]: https://pedromfc.github.io/EvaluaUGR/docs/docker
 [dockerR]: https://pedromfc.github.io/EvaluaUGR/docs/docker_README
+[CI]: https://pedromfc.github.io/EvaluaUGR/docs/CI
