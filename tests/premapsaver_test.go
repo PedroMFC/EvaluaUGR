@@ -37,6 +37,21 @@ func TestAsignarIdentificadores(t *testing.T) {
 
 }
 
+func TestAsigRegistradaPre(t *testing.T) {
+	// Vemos una que sí está registrada
+	resultado := PreMap.AsignaturaRegistrada("CCC")
+	assert.Equal(t, true, resultado, "Sí está registrada")
+
+	// Vemos una que NO está registrada
+	resultado = PreMap.AsignaturaRegistrada("DDD")
+	assert.Equal(t, false, resultado, "No está registrada")
+
+	// Vemos que ahora el crear funciona bien
+	PreMap.CrearAsignatura("DDD")
+	resultado = PreMap.AsignaturaRegistrada("DDD")
+	assert.Equal(t, true, resultado, "Sí está registrada")
+}
+
 func TestObtenerPreguntasMap(t *testing.T) {
 	//Obtenemos las preguntas de la primera
 	//preguntas := PreMap.ObtenerPregunta("CCC")

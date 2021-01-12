@@ -17,15 +17,14 @@ func (preMap *PreguntasMap) CrearAsignatura(asignatura string) {
 	preMap.Preguntas[asignatura] = []Pregunta{}
 }
 
+//AsignaturaRegistrada comprueba si una asignatura está registrada
+func (preMap *PreguntasMap) AsignaturaRegistrada(asignatura string) bool {
+	return preMap.Preguntas[asignatura] != nil
+}
 
 func (preMap *PreguntasMap) GuardarPregunta(asignatura string, pre *Pregunta){
-	if preMap.Preguntas[asignatura] != nil { // Si ya hay preguntas antes se añaden a las existentes
-		pre.Identificador = len(preMap.Preguntas[asignatura])
-		preMap.Preguntas[asignatura] = append(preMap.Preguntas[asignatura], *pre)
-	} else { //Si no, tenemos que crear una nueva
-		pre.Identificador = 0
-		preMap.Preguntas[asignatura] = []Pregunta{*pre}
-	}
+	pre.Identificador = len(preMap.Preguntas[asignatura])
+	preMap.Preguntas[asignatura] = append(preMap.Preguntas[asignatura], *pre)
 }
 
 func (preMap *PreguntasMap) ObtenerPregunta(asignatura string) []Pregunta {
