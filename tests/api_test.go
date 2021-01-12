@@ -329,3 +329,25 @@ func TestApiGustaResenias(t *testing.T) {
 		Status(http.StatusBadRequest).
 		End()
 }
+
+/**
+PREGUNTAS
+**/
+func TestApiCrearAsigPreguntas(t *testing.T) {
+	server.StartDataPre()
+	handler := server.NewAppGin().Router 
+
+	apitest.New().
+		Handler(handler).
+		Put("/preguntas/asignatura/AAA").
+		Expect(t).
+		Status(http.StatusCreated).
+		End()
+
+	apitest.New().
+		Handler(handler).
+		Put("/preguntas/asignatura/AAAAAA").
+		Expect(t).
+		Status(http.StatusBadRequest).
+		End()
+}

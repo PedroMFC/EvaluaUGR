@@ -10,6 +10,8 @@ import (
 	"github.com/PedroMFC/EvaluaUGR/internal/microval/handlersval"
 	"github.com/PedroMFC/EvaluaUGR/internal/microres/modelsres"
 	"github.com/PedroMFC/EvaluaUGR/internal/microres/handlersres"
+	"github.com/PedroMFC/EvaluaUGR/internal/micropre/modelspre"
+	"github.com/PedroMFC/EvaluaUGR/internal/micropre/handlerspre"
 
 	"go.etcd.io/etcd/clientv3"
 	"golang.org/x/net/context"
@@ -53,7 +55,25 @@ func StartDataRes(){
 	ResRepo = *modelsres.NewReseniasRepositorio(&ResMap)
 }
 
+/*Singleton of Truth PREGUNTAS*/
+var PreRepo modelspre.PreguntasRepositorio
+var PreMap  modelspre.PreguntasMap
 
+func StartDataPre(){
+	PreMap = *modelspre.NewPreguntasMap()
+	pre := new(modelspre.Pregunta)
+	pre2 := new(modelspre.Pregunta)
+	pre.Pregunta = "¿Esta es la primera pregunta?"
+	pre.Identificador = 0
+	respu := new(modelspre.Respuesta)
+	respu.Respuesta = "Sí, esta es la primera pregunta."
+	pre.Respuestas = []modelspre.Respuesta{*respu}
+	pre2.Pregunta = "¿Se ha hecho una segunda pregunta?"
+	pre2.Identificador = 1
+
+	PreMap.Preguntas["CCC"] = []modelspre.Pregunta{*pre, *pre2}
+	PreRepo = *modelspre.NewPreguntasRepositorio(&PreMap)
+}
 
 type applicationGin struct {
 	Router *gin.Engine
@@ -145,6 +165,9 @@ func NewAppGin() *applicationGin {
 	router.POST("/resenias/asignatura/:asig", handlersres.Opinar(ResRepo))
 	router.POST("/resenias/asignatura/:asig/:id/gusta", handlersres.GustaResenia(ResRepo))
 	router.POST("/resenias/asignatura/:asig/:id/nogusta", handlersres.NoGustaResenia(ResRepo))
+
+	//Preguntas
+	router.PUT("preguntas/asignatura/:asig", handlerspre.CrearAsignatura(PreRepo))
 
 	return &applicationGin{Router: router}
 }
