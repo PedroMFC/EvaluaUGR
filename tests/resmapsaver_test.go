@@ -22,6 +22,7 @@ func TestGuardaReseResMap(t *testing.T) {
 	assert.Equal(t, 3, len(ResMap.Resenias["BBB"]), "La asignatura BBB tiene 3 reseñas")
 
 	//Creamos una reseña nueva
+	ResMap.CrearAsignatura("CCC")
 	ResMap.GuardarResenia("CCC", res)
 	//Hacemos las mismas comprobaciones que antes
 	assert.Equal(t, 2, len(ResMap.Resenias), "Ahora hay dos asignaturas")
@@ -124,4 +125,11 @@ func TestNoGustaResMap(t *testing.T) {
 	//Probamos con asignatura incorrecta
 	err = ResMap.NoMeGustaResenia("FGG", 0)
 	assert.NotNil(t, err)
+}
+
+func TestCrearAsigResMap(t *testing.T) {
+	ResMap.CrearAsignatura("DDD")
+	asignaturas := len(ResMap.Resenias)
+
+	assert.Equal(t, 3, asignaturas, "Debe haber tres asignaturas")
 }
