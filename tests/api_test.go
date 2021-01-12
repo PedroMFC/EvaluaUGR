@@ -351,3 +351,32 @@ func TestApiCrearAsigPreguntas(t *testing.T) {
 		Status(http.StatusBadRequest).
 		End()
 }
+
+func TestApiGetPreguntas(t *testing.T) {
+	server.StartDataPre()
+	handler := server.NewAppGin().Router
+
+	// Es correcta
+	apitest.New().
+		Handler(handler).
+		Get("/preguntas/asignatura/CCC").
+		Expect(t).
+		Status(http.StatusOK).
+		End()
+
+	// Es correcta pero no tiene registro
+	apitest.New().
+		Handler(handler).
+		Get("/preguntas/asignatura/ABB").
+		Expect(t).
+		Status(http.StatusNotFound).
+		End()
+
+	// No es correcta
+	apitest.New().
+		Handler(handler).
+		Get("/preguntas/asignatura/BBBBBBB").
+		Expect(t).
+		Status(http.StatusBadRequest).
+		End()
+}
