@@ -206,3 +206,50 @@ func TestApiGetResenias(t *testing.T) {
 		Status(http.StatusBadRequest).
 		End()
 }
+
+func TestApiGetResenia(t *testing.T) {
+	server.StartDataRes()
+	handler := server.NewAppGin().Router 
+	
+	// Es correcta
+	apitest.New().
+		Handler(handler).
+		Get("/resenias/asignatura/BBB/0").
+		Expect(t).
+		Status(http.StatusOK).
+		End()
+
+	// No tiene registro
+	apitest.New().
+		Handler(handler).
+		Get("/resenias/asignatura/BBB/5").
+		Expect(t).
+		Status(http.StatusNotFound).
+		End()
+
+	// Es correcta pero no tiene registro
+	apitest.New().
+		Handler(handler).
+		Get("/resenias/asignatura/ABB/0").
+		Expect(t).
+		Status(http.StatusNotFound).
+		End()
+
+	// No es correcta
+	apitest.New().
+		Handler(handler).
+		Get("/resenias/asignatura/BBBBBBB/0").
+		Expect(t).
+		Status(http.StatusBadRequest).
+		End()
+
+	// No es correcta
+	apitest.New().
+		Handler(handler).
+		Get("/resenias/asignatura/BBB/sdfsfd").
+		Expect(t).
+		Status(http.StatusBadRequest).
+		End()
+
+	
+}
