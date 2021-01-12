@@ -9,4 +9,5 @@ type IResSaver interface {
 	MeGustaResenia(asignatura string, id int) error
 	NoMeGustaResenia(asignatura string, id int) error
 	CrearAsignatura(asignatura string)
+	AsignaturaRegistrada(asignatura string) bool
 }

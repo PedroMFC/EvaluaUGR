@@ -10,6 +10,20 @@ type IResSaver struct {
 	mock.Mock
 }
 
+// AsignaturaRegistrada provides a mock function with given fields: asignatura
+func (_m *IResSaver) AsignaturaRegistrada(asignatura string) bool {
+	ret := _m.Called(asignatura)
+
+	var r0 bool
+	if rf, ok := ret.Get(0).(func(string) bool); ok {
+		r0 = rf(asignatura)
+	} else {
+		r0 = ret.Get(0).(bool)
+	}
+
+	return r0
+}
+
 // CrearAsignatura provides a mock function with given fields: asignatura
 func (_m *IResSaver) CrearAsignatura(asignatura string) {
 	_m.Called(asignatura)
