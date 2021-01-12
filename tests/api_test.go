@@ -155,3 +155,25 @@ func TestApiGetMediaValoraciones(t *testing.T) {
 		Status(http.StatusBadRequest).
 		End()
 }
+
+/*
+RESEÑAS
+*/
+func TestApiCrearAsigResenias(t *testing.T) {
+	server.StartDataRes()
+	handler := server.NewAppGin().Router 
+
+	apitest.New().
+		Handler(handler).
+		Put("/resenias/asignatura/AAA").
+		Expect(t).
+		Status(http.StatusCreated).
+		End()
+
+	apitest.New().
+		Handler(handler).
+		Put("/resenias/asignatura/AAAAAA").
+		Expect(t).
+		Status(http.StatusBadRequest).
+		End()
+}

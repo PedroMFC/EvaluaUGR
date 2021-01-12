@@ -8,6 +8,8 @@ import (
 
 	"github.com/PedroMFC/EvaluaUGR/internal/microval/modelsval"
 	"github.com/PedroMFC/EvaluaUGR/internal/microval/handlersval"
+	"github.com/PedroMFC/EvaluaUGR/internal/microres/modelsres"
+	"github.com/PedroMFC/EvaluaUGR/internal/microres/handlersres"
 
 	"go.etcd.io/etcd/clientv3"
 	"golang.org/x/net/context"
@@ -29,6 +31,29 @@ func StartDataVal(){
 	ValMap.Valoraciones["AAA"] = []modelsval.Valoracion{*val, *val2}
 	ValRepo = *modelsval.NewValoracionsRepositorio(&ValMap)
 }
+
+/*Singleton of Truth RESEÑAS*/
+var ResRepo modelsres.ReseniasRepositorio
+var ResMap  modelsres.ReseniasMap
+
+func StartDataRes(){
+	ResMap = *modelsres.NewReseniasMap()
+	res := new(modelsres.Resenia)
+	res2 := new(modelsres.Resenia)
+	res.Opinion = "Me ha parecido interesante"
+	res.MeGusta = 0
+	res.NoMeGusta = 0
+	res.Identificador = 0
+	res2.Opinion = "No me ha gustado"
+	res2.MeGusta = 0
+	res2.NoMeGusta = 0
+	res2.Identificador = 1
+	ResMap.Resenias["BBB"] = []modelsres.Resenia{*res, *res2}
+
+	ResRepo = *modelsres.NewReseniasRepositorio(&ResMap)
+}
+
+
 
 type applicationGin struct {
 	Router *gin.Engine
@@ -112,6 +137,9 @@ func NewAppGin() *applicationGin {
 	router.GET("/valoraciones/peor", handlersval.GetPeor(ValRepo))
 	router.GET("/valoraciones/mejor", handlersval.GetMejor(ValRepo))
 	router.GET("/valoraciones/asignatura/:asig/media", handlersval.GetMedia(ValRepo))
+
+	//Reseñas
+	router.PUT("resenias/asignatura/:asig", handlersres.CrearAsignatura(ResRepo))
 
 	return &applicationGin{Router: router}
 }
