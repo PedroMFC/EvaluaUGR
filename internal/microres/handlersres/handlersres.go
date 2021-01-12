@@ -19,3 +19,21 @@ func CrearAsignatura(repo modelsres.ReseniasRepositorio) gin.HandlerFunc {
 		} 
 	}
 }
+
+func GetResenias(repo modelsres.ReseniasRepositorio) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		asig := c.Param("asig")
+		resenias, err := repo.GetResenias(asig)
+
+
+		if err != nil{
+			if err.Error() == "Algo salió mal con la reseña:  la asignatura no está registrada"{
+				c.JSON(http.StatusNotFound, gin.H{"error": err })
+			}
+			c.JSON(http.StatusBadRequest, gin.H{"error": err })
+
+		} else {
+			c.JSON(http.StatusOK, gin.H{"resenias": resenias})
+		} 
+	}
+}
