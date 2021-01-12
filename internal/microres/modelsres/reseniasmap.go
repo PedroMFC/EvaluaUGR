@@ -12,6 +12,11 @@ func NewReseniasMap() *ReseniasMap {
 	return &ReseniasMap{Resenias: make(map[string][]Resenia)}
 }
 
+//CrearAsignatura crea una entrada para una asignatura
+func (resMap *ReseniasMap) CrearAsignatura(asignatura string) {
+	resMap.Resenias[asignatura] = []Resenia{}
+}
+
 func (resMap *ReseniasMap) GuardarResenia(asignatura string, opinion *Resenia){
 	if resMap.Resenias[asignatura] != nil { // Si ya hay reeseñas antes se añaden a las existentes
 		opinion.Identificador = len(resMap.Resenias[asignatura])
