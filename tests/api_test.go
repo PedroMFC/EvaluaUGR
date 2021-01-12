@@ -30,3 +30,32 @@ func TestApiCrearAsigValoraciones(t *testing.T) {
 		Status(http.StatusBadRequest).
 		End()
 }
+
+func TestApiGetValoraciones(t *testing.T) {
+	server.StartDataVal()
+	handler := server.NewAppGin().Router 
+
+	// Es correcta
+	apitest.New().
+		Handler(handler).
+		Get("/valoraciones/AAA").
+		Expect(t).
+		Status(http.StatusOK).
+		End()
+
+	// Es correcta pero no tiene registro
+	apitest.New().
+		Handler(handler).
+		Get("/valoraciones/AA").
+		Expect(t).
+		Status(http.StatusNotFound).
+		End()
+
+	// Es incorrecta
+	apitest.New().
+		Handler(handler).
+		Get("/valoraciones/AAAAAAA").
+		Expect(t).
+		Status(http.StatusBadRequest).
+		End()
+}

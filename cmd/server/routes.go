@@ -107,6 +107,7 @@ func NewAppGin() *applicationGin {
 	//Aquí definimos las rutas
 	//Valoraciones
 	router.PUT("valoraciones/:asig", handlersval.CrearAsignatura(ValRepo))
+	router.GET("/valoraciones/:asig", handlersval.GetValoraciones(ValRepo))
 
 	return &applicationGin{Router: router}
 }
