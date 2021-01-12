@@ -71,6 +71,24 @@ func TestGetResenias(t *testing.T) {
 	assert.Equal(t, 0, len(res), "El array de reseñas tiene que estar vacío")
 }
 
+
+func TestGetResenia(t *testing.T) {
+	//Definimos el comportamiento que queremos
+	ResMapMock = mocks.IResSaver{}
+
+	ResMapMock.On("ObtenerResenias", "BBB").Return([]modelsres.Resenia{
+		modelsres.Resenia{Opinion: "Me ha parecido interesante"},
+		modelsres.Resenia{Opinion: "No me ha gustado"}})
+	ResMapMock.On("AsignaturaRegistrada", mock.Anything).Return(true)
+
+	_, err := ResRepo.GetResenia("BBB", 0)
+	assert.Nil(t, err)
+
+	//Comprobamos que si no está la asinatura está vacío
+	_, err = ResRepo.GetResenia("BBB", 5)
+	assert.NotNil(t, err)
+}
+
 //Comprobamos que las valoraciones positivas funcionan correctamente
 func TestMeGusta(t *testing.T) {
 	//Definimos el comportamiento que queremos
