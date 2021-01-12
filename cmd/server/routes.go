@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/PedroMFC/EvaluaUGR/internal/microval/modelsval"
+	"github.com/PedroMFC/EvaluaUGR/internal/microval/handlersval"
 
 	"go.etcd.io/etcd/clientv3"
 	"golang.org/x/net/context"
@@ -15,11 +16,11 @@ import (
 	"time"
 )
 
-/*Singleton of Truth*/
+/*Singleton of Truth VALORACIONES*/
 
 var ValRepo modelsval.ValoracionRepositorio
 var ValMap  modelsval.ValoracionMap
-func StartData(){
+func StartDataVal(){
 	ValMap = *modelsval.NewValoracionMap()
 	val := new(modelsval.Valoracion)
 	val2 := new(modelsval.Valoracion)
@@ -104,7 +105,8 @@ func NewAppGin() *applicationGin {
 	router := gin.Default()
 
 	//Aquí definimos las rutas
-
+	//Valoraciones
+	router.PUT("valoraciones/:asig", handlersval.CrearAsignatura(ValRepo))
 
 	return &applicationGin{Router: router}
 }

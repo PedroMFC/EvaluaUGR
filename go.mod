@@ -12,6 +12,7 @@ require (
 	github.com/pytimer/mux-logrus v0.0.0-20200505085744-ce5a5e748151
 	github.com/rivo/uniseg v0.1.0
 	github.com/sirupsen/logrus v1.7.0
+	github.com/steinfletcher/apitest v1.4.16
 	github.com/stretchr/testify v1.6.1
 	go.etcd.io/etcd v0.5.0-alpha.5.0.20201125193152-8a03d2e9614b
 	golang.org/x/net v0.0.0-20201224014010-6772e930b67b
