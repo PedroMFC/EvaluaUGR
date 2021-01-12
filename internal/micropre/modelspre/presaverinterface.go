@@ -7,4 +7,5 @@ type IPreSaver interface {
 	GuardarPregunta(asignatura string, pre *Pregunta)
 	ObtenerPregunta(asignatura string) []Pregunta
 	Responder(asignatura string, id int, res *Respuesta) error
+	CrearAsignatura(asignatura string)
 }
