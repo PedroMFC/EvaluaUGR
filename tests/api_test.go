@@ -96,3 +96,18 @@ func TestApiPostValoraciones(t *testing.T) {
 		Status(http.StatusBadRequest).
 		End()
 }
+
+func TestApiPeorValoraciones(t *testing.T) {
+	server.StartDataVal()
+	handler := server.NewAppGin().Router 
+
+	// Accede a la peor
+	apitest.New().
+		Handler(handler).
+		Get("/valoraciones/peor").
+		Expect(t).
+		Body(`{"Peores valoradas":["AAA"]}`).
+		Status(http.StatusOK).
+		End()
+
+}
