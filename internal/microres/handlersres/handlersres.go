@@ -95,3 +95,57 @@ func Opinar(repo modelsres.ReseniasRepositorio) gin.HandlerFunc {
 		} 
 	}
 }
+
+func GustaResenia(repo modelsres.ReseniasRepositorio) gin.HandlerFunc {
+	return func(c *gin.Context) {
+
+		asig := c.Param("asig")
+		id,err := strconv.Atoi( c.Param("id") )
+
+		if err != nil{
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Identificador no es un entero"})
+			return
+		}
+
+
+		err = repo.GustaResenia(asig, id)
+		if err != nil{
+			if msg := err.Error(); (msg == "Algo salió mal con la reseña:  la asignatura no está registrada" ||
+				msg == "Algo salió mal con la reseña:  la reseña no contiene in identificador válido"){
+
+				c.JSON(http.StatusNotFound, gin.H{"error": err })
+			} 
+			c.JSON(http.StatusBadRequest, gin.H{"error": err })
+
+		}
+		c.JSON(http.StatusCreated, gin.H{"Mensaje": "creada correctamente"}) 
+		
+	}
+}
+
+func NoGustaResenia(repo modelsres.ReseniasRepositorio) gin.HandlerFunc {
+	return func(c *gin.Context) {
+
+		asig := c.Param("asig")
+		id,err := strconv.Atoi( c.Param("id") )
+
+		if err != nil{
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Identificador no es un entero"})
+			return
+		}
+
+
+		err = repo.NoGustaResenia(asig, id)
+		if err != nil{
+			if msg := err.Error(); (msg == "Algo salió mal con la reseña:  la asignatura no está registrada" ||
+				msg == "Algo salió mal con la reseña:  la reseña no contiene in identificador válido"){
+
+				c.JSON(http.StatusNotFound, gin.H{"error": err })
+			} 
+			c.JSON(http.StatusBadRequest, gin.H{"error": err })
+
+		}
+		c.JSON(http.StatusCreated, gin.H{"Mensaje": "creada correctamente"}) 
+		
+	}
+}

@@ -294,3 +294,38 @@ func TestApiOpinarResenias(t *testing.T) {
 		Status(http.StatusBadRequest).
 		End()
 }
+
+func TestApiGustaResenias(t *testing.T) {
+	server.StartDataRes()
+	handler := server.NewAppGin().Router 
+
+	// Es correcta
+	apitest.New().
+		Handler(handler).
+		Post("/resenias/asignatura/BBB/0/gusta").
+		Expect(t).
+		Status(http.StatusCreated).
+		End()
+
+	apitest.New().
+		Handler(handler).
+		Post("/resenias/asignatura/BBB/0/nogusta").
+		Expect(t).
+		Status(http.StatusCreated).
+		End()
+
+	// Petición incorrecta
+	apitest.New().
+		Handler(handler).
+		Post("/resenias/asignatura/BBB/7/nogusta").
+		Expect(t).
+		Status(http.StatusNotFound).
+		End()
+
+	apitest.New().
+		Handler(handler).
+		Post("/resenias/asignatura/BBBBBBBB/0/nogusta").
+		Expect(t).
+		Status(http.StatusBadRequest).
+		End()
+}
