@@ -21,6 +21,7 @@ func TestGuardaPreguntaMap(t *testing.T) {
 
 
 	//Guardamos en una nueva
+	PreMap.CrearAsignatura("BBB")
 	PreMap.GuardarPregunta("BBB", pre)
 	//Vemos que ahora hay dos asignaturas
 	assert.Equal(t, 2, len(PreMap.Preguntas), "Hay 2 una asignatura")
@@ -97,4 +98,11 @@ func TestResponderMap(t *testing.T) {
 	err = PreMap.Responder("FFF", 1, res)
 	assert.NotNil(t, err)
 	
+}
+
+func TestCrearAsigPreMap(t *testing.T) {
+	PreMap.CrearAsignatura("DDD")
+	asignaturas := len(PreMap.Preguntas)
+
+	assert.Equal(t, 3, asignaturas, "Debe haber tres asignaturas")
 }

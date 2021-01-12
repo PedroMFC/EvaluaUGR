@@ -12,6 +12,12 @@ func NewPreguntasMap() *PreguntasMap {
 	return &PreguntasMap{Preguntas: make(map[string][]Pregunta)}
 }
 
+//CrearAsignatura crea una entrada para una asignatura
+func (preMap *PreguntasMap) CrearAsignatura(asignatura string) {
+	preMap.Preguntas[asignatura] = []Pregunta{}
+}
+
+
 func (preMap *PreguntasMap) GuardarPregunta(asignatura string, pre *Pregunta){
 	if preMap.Preguntas[asignatura] != nil { // Si ya hay preguntas antes se añaden a las existentes
 		pre.Identificador = len(preMap.Preguntas[asignatura])
