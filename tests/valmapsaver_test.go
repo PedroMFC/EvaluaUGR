@@ -74,3 +74,11 @@ func TestObtenerAsigValMap(t *testing.T) {
 	assert.Equal(t, "BBB", asignaturas[1], "Segunda asignatura es BBB")
 
 }
+
+
+func TestCrearAsigValMap(t *testing.T) {
+	ValMap.CrearAsignatura("CCC")
+	asignaturas := ValMap.ObtenerAsignaturas()
+
+	assert.Equal(t, 3, len(asignaturas), "Debe haber tres asignaturas")
+}

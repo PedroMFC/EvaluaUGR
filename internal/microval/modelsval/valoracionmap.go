@@ -10,6 +10,12 @@ func NewValoracionMap() *ValoracionMap {
 	return &ValoracionMap{Valoraciones: make(map[string][]Valoracion)}
 }
 
+//CrearAsignatura crea una entrada para una asignatura
+func (valMap *ValoracionMap) CrearAsignatura(asignatura string) {
+	valMap.Valoraciones[asignatura] = []Valoracion{}
+}
+
+
 //GuardarValoracion alamcena una valoración
 func (valMap *ValoracionMap) GuardarValoracion(asignatura string, val *Valoracion) {
 	if valMap.Valoraciones[asignatura] != nil { // Si ya hay valoraciones antes se añaden a las existentes
