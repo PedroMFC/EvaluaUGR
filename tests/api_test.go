@@ -427,3 +427,44 @@ func TestApiGetPregunta(t *testing.T) {
 
 	
 }
+
+func TestApiPreguntarPreguntas(t *testing.T) {
+	server.StartDataPre()
+	handler := server.NewAppGin().Router
+
+	// Es correcta
+	apitest.New().
+		Handler(handler).
+		Post("/preguntas/asignatura/CCC").
+		Body("{ \"pregunta\": \"Me recomiendan la asignatura\" }").
+		Expect(t).
+		Status(http.StatusCreated).
+		End()
+
+	// Petición asignatura no registrada
+	apitest.New().
+		Handler(handler).
+		Post("/preguntas/asignatura/AAA").
+		Body("{\"pregunta\": \"Me recomiendan la asignatura\" }").
+		Expect(t).
+		Status(http.StatusNotFound).
+		End()
+
+	// Asignatura no válida
+	apitest.New().
+		Handler(handler).
+		Post("/preguntas/asignatura/AAAAAAAA").
+		Body("{\"pregunta\": \"Me recomiendan la asignatura\" }").
+		Expect(t).
+		Status(http.StatusBadRequest).
+		End()
+
+	// Petición incorrecta
+	apitest.New().
+		Handler(handler).
+		Post("/preguntas/asignatura/AAAAAAAA").
+		Body("{\"pnta\": \"Me recomiendan la asignatura\" }").
+		Expect(t).
+		Status(http.StatusBadRequest).
+		End()
+}

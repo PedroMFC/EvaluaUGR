@@ -71,3 +71,36 @@ func GetPregunta(repo modelspre.PreguntasRepositorio) gin.HandlerFunc {
 		} 
 	}
 }
+
+type CreatePreguntaInput struct {
+	Pregunta string `json:"pregunta" binding:"required"`
+}
+
+func Preguntar(repo modelspre.PreguntasRepositorio) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		asig := c.Param("asig")
+		var input CreatePreguntaInput
+
+		if err := c.ShouldBindJSON(&input); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "No se han enviado los campos requeridos"})
+			return
+		}
+
+		err := repo.Preguntar(asig, input.Pregunta)
+
+		if err != nil{
+			if msg := err.Error(); msg == "Algo salió mal con la pregunta:  la asignatura no está registrada" {
+
+				c.JSON(http.StatusNotFound, gin.H{"error": err })
+				return
+			} 
+			c.JSON(http.StatusBadRequest, gin.H{"error": err })
+			return
+
+		} else {
+			pre, _ := repo.GetPreguntas(asig)
+			dir := "preguntas/asignatura/" + asig + "/" + strconv.Itoa(len(pre)-1)
+			c.JSON(http.StatusCreated, gin.H{"Location": dir})
+		} 
+	}
+}
