@@ -2,6 +2,7 @@ package modelspre
 
 import (
 	"github.com/PedroMFC/EvaluaUGR/internal/asignatura/asig"
+	"github.com/PedroMFC/EvaluaUGR/internal/micropre/errorspre"
 	//"fmt"
 )
 
@@ -39,6 +40,12 @@ func (preRepo *PreguntasRepositorio) Preguntar(asignatura string, pregunta strin
 		return err
 	}
 
+	// Vemos que no está vacío
+	if  !preRepo.Preguntas.AsignaturaRegistrada(asignatura) {
+		return &errorspre.ErrorPregunta{" la asignatura no está registrada"}
+	}
+
+
 	preRepo.Preguntas.GuardarPregunta(asignatura, pre)
 
 	return nil
@@ -49,6 +56,11 @@ func (preRepo *PreguntasRepositorio) GetPreguntas(asignatura string) ([]Pregunta
 	err := asig.AsignaturaCorrecta(asignatura)
 	if err != nil {
 		return nil, err
+	}
+
+	// Vemos que no está vacío
+	if  !preRepo.Preguntas.AsignaturaRegistrada(asignatura) {
+		return nil, &errorspre.ErrorPregunta{" la asignatura no está registrada"}
 	}
 
 	return preRepo.Preguntas.ObtenerPregunta(asignatura), nil
@@ -67,7 +79,10 @@ func (preRepo *PreguntasRepositorio) Responder(asignatura string, id int, respue
 		return err
 	}
 
-	preRepo.Preguntas.Responder(asignatura, id, res)
+	// Vemos que no está vacío
+	if  !preRepo.Preguntas.AsignaturaRegistrada(asignatura) {
+		return &errorspre.ErrorPregunta{" la asignatura no está registrada"}
+	}
 
-	return nil
+	return preRepo.Preguntas.Responder(asignatura, id, res)
 }

@@ -31,6 +31,7 @@ func TestPreguntar(t *testing.T) {
 	PreMapMock = mocks.IPreSaver{} 
 
 	PreMapMock.On("GuardarPregunta", mock.Anything, mock.Anything).Return(nil)
+	PreMapMock.On("AsignaturaRegistrada", mock.Anything).Return(true)
 
 	err := PreRepo.Preguntar("ABC", "¿Esta es una pregunta válida?")
 	assert.Nil(t, err)
@@ -55,6 +56,7 @@ func TestGetPreguntas(t *testing.T) {
 	})
 
 	PreMapMock.On("ObtenerPregunta", "AAA").Return([]modelspre.Pregunta{})
+	PreMapMock.On("AsignaturaRegistrada", mock.Anything).Return(true)
 
 	pre, err := PreRepo.GetPreguntas("AAAAAA")
 	assert.NotNil(t, err)
@@ -90,6 +92,7 @@ func TestResponder(t *testing.T){
 	PreMapMock = mocks.IPreSaver{} 
 
 	PreMapMock.On("Responder", mock.Anything, mock.Anything, mock.Anything).Return(nil)
+	PreMapMock.On("AsignaturaRegistrada", mock.Anything).Return(true)
 
 	err := PreRepo.Responder("ABCDEF", 0, "Es una respuesta")  //Nombre de la asignatura no válido
 	assert.NotNil(t, err)
