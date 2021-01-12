@@ -18,14 +18,14 @@ func TestApiCrearAsigValoraciones(t *testing.T) {
 	handler := server.NewAppGin().Router 
 	apitest.New().
 		Handler(handler).
-		Put("/valoraciones/AAA").
+		Put("/valoraciones/asignatura/AAA").
 		Expect(t).
 		Status(http.StatusCreated).
 		End()
 
 	apitest.New().
 		Handler(handler).
-		Put("/valoraciones/AAAAAA").
+		Put("/valoraciones/asignatura/AAAAAA").
 		Expect(t).
 		Status(http.StatusBadRequest).
 		End()
@@ -38,7 +38,7 @@ func TestApiGetValoraciones(t *testing.T) {
 	// Es correcta
 	apitest.New().
 		Handler(handler).
-		Get("/valoraciones/AAA").
+		Get("/valoraciones/asignatura/AAA").
 		Expect(t).
 		Status(http.StatusOK).
 		End()
@@ -46,7 +46,7 @@ func TestApiGetValoraciones(t *testing.T) {
 	// Es correcta pero no tiene registro
 	apitest.New().
 		Handler(handler).
-		Get("/valoraciones/AA").
+		Get("/valoraciones/asignatura/AA").
 		Expect(t).
 		Status(http.StatusNotFound).
 		End()
@@ -54,7 +54,7 @@ func TestApiGetValoraciones(t *testing.T) {
 	// Es incorrecta
 	apitest.New().
 		Handler(handler).
-		Get("/valoraciones/AAAAAAA").
+		Get("/valoraciones/asignatura/AAAAAAA").
 		Expect(t).
 		Status(http.StatusBadRequest).
 		End()
@@ -67,7 +67,7 @@ func TestApiPostValoraciones(t *testing.T) {
 	// Es correcta
 	apitest.New().
 		Handler(handler).
-		Post("/valoraciones/AAA/5").
+		Post("/valoraciones/asignatura/AAA/5").
 		Expect(t).
 		Status(http.StatusCreated).
 		End()
@@ -75,7 +75,7 @@ func TestApiPostValoraciones(t *testing.T) {
 	// No existe 
 	apitest.New().
 		Handler(handler).
-		Post("/valoraciones/BBB/5").
+		Post("/valoraciones/asignatura/BBB/5").
 		Expect(t).
 		Status(http.StatusNotFound).
 		End()
@@ -83,7 +83,7 @@ func TestApiPostValoraciones(t *testing.T) {
 	// La valoración no es correcta
 	apitest.New().
 		Handler(handler).
-		Post("/valoraciones/AAA/55").
+		Post("/valoraciones/asignatura/AAA/55").
 		Expect(t).
 		Status(http.StatusBadRequest).
 		End()
@@ -91,7 +91,7 @@ func TestApiPostValoraciones(t *testing.T) {
 	// La asignatura no es correcta
 	apitest.New().
 		Handler(handler).
-		Post("/valoraciones/AAAAAAA/55").
+		Post("/valoraciones/asignatura/AAAAAAA/55").
 		Expect(t).
 		Status(http.StatusBadRequest).
 		End()
