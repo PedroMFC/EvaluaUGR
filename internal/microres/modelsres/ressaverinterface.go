@@ -8,4 +8,5 @@ type IResSaver interface {
 	ObtenerResenias(asignatura string) []Resenia
 	MeGustaResenia(asignatura string, id int) error
 	NoMeGustaResenia(asignatura string, id int) error
+	CrearAsignatura(asignatura string)
 }

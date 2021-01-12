@@ -10,6 +10,11 @@ type IResSaver struct {
 	mock.Mock
 }
 
+// CrearAsignatura provides a mock function with given fields: asignatura
+func (_m *IResSaver) CrearAsignatura(asignatura string) {
+	_m.Called(asignatura)
+}
+
 // GuardarResenia provides a mock function with given fields: asignatura, opinion
 func (_m *IResSaver) GuardarResenia(asignatura string, opinion *modelsres.Resenia) {
 	_m.Called(asignatura, opinion)
