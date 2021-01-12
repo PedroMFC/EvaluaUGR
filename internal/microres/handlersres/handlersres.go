@@ -65,3 +65,33 @@ func GetResenia(repo modelsres.ReseniasRepositorio) gin.HandlerFunc {
 		} 
 	}
 }
+
+type CreateReseniaInput struct {
+	Opinion string `json:"opinion" binding:"required"`
+}
+
+func Opinar(repo modelsres.ReseniasRepositorio) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		asig := c.Param("asig")
+		var input CreateReseniaInput
+		
+		if err := c.ShouldBindJSON(&input); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "No se han enviado los campos requeridos"})
+			return
+		}
+
+		err := repo.Opinar(asig, input.Opinion)
+
+		if err != nil{
+			if err.Error() == "Algo salió mal con la reseña:  la asignatura no está registrada"{
+				c.JSON(http.StatusNotFound, gin.H{"error": err })
+			}
+			c.JSON(http.StatusBadRequest, gin.H{"error": err })
+
+		} else {
+			res, _ := repo.GetResenias(asig)
+			dir := "resenias/asignatura/" + asig + "/" + strconv.Itoa(len(res)-1)
+			c.JSON(http.StatusCreated, gin.H{"Location": dir})
+		} 
+	}
+}

@@ -142,6 +142,7 @@ func NewAppGin() *applicationGin {
 	router.PUT("resenias/asignatura/:asig", handlersres.CrearAsignatura(ResRepo))
 	router.GET("/resenias/asignatura/:asig", handlersres.GetResenias(ResRepo))
 	router.GET("/resenias/asignatura/:asig/:id", handlersres.GetResenia(ResRepo))
+	router.POST("/resenias/asignatura/:asig", handlersres.Opinar(ResRepo))
 
 	return &applicationGin{Router: router}
 }
