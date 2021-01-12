@@ -10,6 +10,25 @@ type IPreSaver struct {
 	mock.Mock
 }
 
+// AsignaturaRegistrada provides a mock function with given fields: asignatura
+func (_m *IPreSaver) AsignaturaRegistrada(asignatura string) bool {
+	ret := _m.Called(asignatura)
+
+	var r0 bool
+	if rf, ok := ret.Get(0).(func(string) bool); ok {
+		r0 = rf(asignatura)
+	} else {
+		r0 = ret.Get(0).(bool)
+	}
+
+	return r0
+}
+
+// CrearAsignatura provides a mock function with given fields: asignatura
+func (_m *IPreSaver) CrearAsignatura(asignatura string) {
+	_m.Called(asignatura)
+}
+
 // GuardarPregunta provides a mock function with given fields: asignatura, pre
 func (_m *IPreSaver) GuardarPregunta(asignatura string, pre *modelspre.Pregunta) {
 	_m.Called(asignatura, pre)

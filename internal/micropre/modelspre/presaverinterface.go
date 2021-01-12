@@ -8,4 +8,5 @@ type IPreSaver interface {
 	ObtenerPregunta(asignatura string) []Pregunta
 	Responder(asignatura string, id int, res *Respuesta) error
 	CrearAsignatura(asignatura string)
+	AsignaturaRegistrada(asignatura string) bool
 }
