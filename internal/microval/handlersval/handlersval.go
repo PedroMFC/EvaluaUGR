@@ -79,3 +79,11 @@ func GetPeor(repo modelsval.ValoracionRepositorio) gin.HandlerFunc {
 		
 	}
 }
+
+func GetMejor(repo modelsval.ValoracionRepositorio) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		peores := repo.GetMejorValorada()
+		c.JSON(http.StatusOK, gin.H{"Mejores valoradas": peores})
+		
+	}
+}

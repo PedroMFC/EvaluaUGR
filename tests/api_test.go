@@ -111,3 +111,18 @@ func TestApiPeorValoraciones(t *testing.T) {
 		End()
 
 }
+
+func TestApiMejorValoraciones(t *testing.T) {
+	server.StartDataVal()
+	handler := server.NewAppGin().Router 
+
+	// Accede a la mejor
+	apitest.New().
+		Handler(handler).
+		Get("/valoraciones/mejor").
+		Expect(t).
+		Body(`{"Mejores valoradas":["AAA"]}`).
+		Status(http.StatusOK).
+		End()
+
+}
