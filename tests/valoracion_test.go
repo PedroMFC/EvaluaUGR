@@ -37,6 +37,7 @@ func TestValorar(t *testing.T) {
 	ValMapMock = mocks.IValSaver{} 
 
 	ValMapMock.On("GuardarValoracion", mock.Anything, mock.Anything).Return(nil)
+	ValMapMock.On("AsignaturaRegistrada", "ABC").Return(true)
 
 	err := ValRepo.Valorar("ABC", 3)
 	assert.Nil(t, err)
@@ -48,6 +49,19 @@ func TestValorar(t *testing.T) {
 	assert.NotNil(t, err)
 }
 
+// Comprobar que crea una asignatura correctamente
+func TestCrearAsignaturaValoraciones(t *testing.T) {
+	ValMapMock = mocks.IValSaver{} 
+
+	ValMapMock.On("CrearAsignatura", mock.Anything)
+
+	err := ValRepo.CrearAsignatura("AAA")
+	assert.Nil(t, err)
+	err = ValRepo.CrearAsignatura("AAAAAA")
+	assert.NotNil(t, err)
+
+}
+
 // Comprobar que devuelve de manera correcta las valoraciones
 func TestGetValoraciones(t *testing.T) {
 	//Definimos el comportamiento que queremos
@@ -55,6 +69,7 @@ func TestGetValoraciones(t *testing.T) {
 
 	ValMapMock.On("ObtenerValoraciones", "AAA").Return([]modelsval.Valoracion{ modelsval.Valoracion{2}, modelsval.Valoracion{3} })
 	ValMapMock.On("ObtenerValoraciones", "BBB").Return([]modelsval.Valoracion{})
+	ValMapMock.On("AsignaturaRegistrada", mock.Anything).Return(true)
 
 	val, err := ValRepo.GetValoraciones("AAAAAA")
 	assert.NotNil(t, err)
@@ -76,6 +91,7 @@ func TestGetMedia(t *testing.T) {
 	ValMapMock = mocks.IValSaver{} 
 
 	ValMapMock.On("ObtenerValoraciones", "AAA").Return([]modelsval.Valoracion{ modelsval.Valoracion{2}, modelsval.Valoracion{3} })
+	ValMapMock.On("AsignaturaRegistrada", mock.Anything).Return(true)
 
 	media, err := ValRepo.GetMedia("AAAAAA")
 	assert.NotNil(t, err)
@@ -104,6 +120,7 @@ func TestPeorValoradaContenido(t *testing.T){
 	ValMapMock.On("ObtenerAsignaturas").Return([]string{"ABC", "AAA"})
 	ValMapMock.On("ObtenerValoraciones", "AAA").Return([]modelsval.Valoracion{ modelsval.Valoracion{2}, modelsval.Valoracion{3} })
 	ValMapMock.On("ObtenerValoraciones", "ABC").Return([]modelsval.Valoracion{ modelsval.Valoracion{3}, modelsval.Valoracion{1} })
+	ValMapMock.On("AsignaturaRegistrada", mock.Anything).Return(true)
 
 	menosValoradas := ValRepo.GetPeorValorada()
 	assert.Equal(t, 1, len(menosValoradas), "El array tiene que tener una asignatura") // Ahora mismo es hay dos asignaturas: map[AAA:[{2} {3}] ABC:[{3} {1}]]
@@ -118,7 +135,7 @@ func TestPeorValoradaContenidoDoble(t *testing.T){
 	ValMapMock.On("ObtenerValoraciones", "AAA").Return([]modelsval.Valoracion{ modelsval.Valoracion{2}, modelsval.Valoracion{3} })
 	ValMapMock.On("ObtenerValoraciones", "ABC").Return([]modelsval.Valoracion{ modelsval.Valoracion{3}, modelsval.Valoracion{1} })
 	ValMapMock.On("ObtenerValoraciones", "DEF").Return([]modelsval.Valoracion{ modelsval.Valoracion{2} })
-
+	ValMapMock.On("AsignaturaRegistrada", mock.Anything).Return(true)
 
 	menosValoradas := ValRepo.GetPeorValorada()
 	sort.Slice(menosValoradas, func(i,j int) bool {
@@ -136,6 +153,7 @@ func TestMejorValoradaVacio(t *testing.T){
 	ValMapMock = mocks.IValSaver{} 
 
 	ValMapMock.On("ObtenerAsignaturas").Return([]string{})
+	ValMapMock.On("AsignaturaRegistrada", mock.Anything).Return(true)
 
 	menosValoradas := ValRepo.GetMejorValorada()
 	assert.Equal(t, 0, len(menosValoradas), "El array de valoraciones tiene que estar vacío")
@@ -148,6 +166,7 @@ func TestMejorValoradaContenido(t *testing.T){
 	ValMapMock.On("ObtenerAsignaturas").Return([]string{"ABC", "AAA"})
 	ValMapMock.On("ObtenerValoraciones", "AAA").Return([]modelsval.Valoracion{ modelsval.Valoracion{2}, modelsval.Valoracion{3} })
 	ValMapMock.On("ObtenerValoraciones", "ABC").Return([]modelsval.Valoracion{ modelsval.Valoracion{3}, modelsval.Valoracion{1} })
+	ValMapMock.On("AsignaturaRegistrada", mock.Anything).Return(true)
 
 	menosValoradas := ValRepo.GetMejorValorada()
 	assert.Equal(t, 1, len(menosValoradas), "El array tiene que tener una asignatura") // Ahora mismo es hay dos asignaturas: map[AAA:[{2} {3}] ABC:[{3} {1}]]
@@ -162,7 +181,7 @@ func TestMejorValoradaContenidoDoble(t *testing.T){
 	ValMapMock.On("ObtenerValoraciones", "AAA").Return([]modelsval.Valoracion{ modelsval.Valoracion{4}, modelsval.Valoracion{2} })
 	ValMapMock.On("ObtenerValoraciones", "ABC").Return([]modelsval.Valoracion{ modelsval.Valoracion{3}, modelsval.Valoracion{1} })
 	ValMapMock.On("ObtenerValoraciones", "DEF").Return([]modelsval.Valoracion{ modelsval.Valoracion{3} })
-
+	ValMapMock.On("AsignaturaRegistrada", mock.Anything).Return(true)
 
 	masValoradas := ValRepo.GetMejorValorada()
 	sort.Slice(masValoradas, func(i,j int) bool {

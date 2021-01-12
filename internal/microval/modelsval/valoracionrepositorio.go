@@ -17,6 +17,20 @@ type ValoracionRepositorio struct {
 func NewValoracionsRepositorio(val IValSaver) *ValoracionRepositorio {
 	return &ValoracionRepositorio{Valoraciones: val}
 }
+
+//CrearAsignaura añade una asignatura para poder valorarla
+func (valRepo *ValoracionRepositorio) CrearAsignatura(asignatura string) error{
+	err := asig.AsignaturaCorrecta(asignatura)
+	if err != nil {
+		return err
+	}
+
+	valRepo.Valoraciones.CrearAsignatura(asignatura)
+
+	return nil
+}
+
+
 //Valorar añade una valoración al repositorio
 func (valRepo *ValoracionRepositorio) Valorar(asignatura string, numero int) error {
 	err := asig.AsignaturaCorrecta(asignatura)
@@ -28,6 +42,11 @@ func (valRepo *ValoracionRepositorio) Valorar(asignatura string, numero int) err
 	err = val.SetValoracion(numero)
 	if err != nil {
 		return err
+	}
+
+	// Vemos que no está vacío
+	if  !valRepo.Valoraciones.AsignaturaRegistrada(asignatura) {
+		return &errorsval.ErrorValoracion{" la asignatura no está registrada"}
 	}
 
 	valRepo.Valoraciones.GuardarValoracion(asignatura, val)
@@ -42,6 +61,11 @@ func (valRepo *ValoracionRepositorio) GetValoraciones(asignatura string) ([]Valo
 		return nil, err
 	}
 
+	// Vemos que no está vacío
+	if  !valRepo.Valoraciones.AsignaturaRegistrada(asignatura) {
+		return nil, &errorsval.ErrorValoracion{" la asignatura no está registrada"}
+	}
+
 	return valRepo.Valoraciones.ObtenerValoraciones(asignatura), nil
 }
 
@@ -52,10 +76,12 @@ func (valRepo *ValoracionRepositorio) GetMedia(asignatura string) (float64, erro
 		return 0, err
 	}
 
-	valoraciones := valRepo.Valoraciones.ObtenerValoraciones(asignatura)
-	if valoraciones == nil { //Si está vacío
-		return 0, &errorsval.ErrorValoracion{" no hay valoraciones disponibles"}
+	// Vemos que no está vacío
+	if  !valRepo.Valoraciones.AsignaturaRegistrada(asignatura) {
+		return -1, &errorsval.ErrorValoracion{" la asignatura no está registrada"}
 	}
+	
+	valoraciones := valRepo.Valoraciones.ObtenerValoraciones(asignatura)
 
 	//Si no está vacío, calculamos la media
 	media := 0.0
