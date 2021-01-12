@@ -8,4 +8,5 @@ type IValSaver interface {
 	ObtenerValoraciones(asignatura string) []Valoracion
 	ObtenerAsignaturas() []string
 	CrearAsignatura(asignatura string)
+	AsignaturaRegistrada(asignatura string) bool
 }
