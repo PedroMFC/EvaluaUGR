@@ -66,6 +66,29 @@ func (preRepo *PreguntasRepositorio) GetPreguntas(asignatura string) ([]Pregunta
 	return preRepo.Preguntas.ObtenerPregunta(asignatura), nil
 }
 
+//GetPregunta nos aporta las preguntas realizadas en una asignatura
+func (preRepo *PreguntasRepositorio) GetPregunta(asignatura string, id int) (Pregunta, error) {
+	err := asig.AsignaturaCorrecta(asignatura)
+	if err != nil {
+		return Pregunta{}, err
+	}
+
+	// Vemos que no está vacío
+	if  !preRepo.Preguntas.AsignaturaRegistrada(asignatura) {
+		return Pregunta{}, &errorspre.ErrorPregunta{" la asignatura no está registrada"}
+	}
+
+	preguntas := preRepo.Preguntas.ObtenerPregunta(asignatura)
+
+	if id > len(preguntas)-1{
+		return Pregunta{}, &errorspre.ErrorPregunta{" la pregunta no contiene un identificador válido"}
+	}
+	
+
+	return preguntas[id], nil
+
+}
+
 //Responder añade una respuesta al repositorio
 func (preRepo *PreguntasRepositorio) Responder(asignatura string, id int, respuesta string) error {
 	err := asig.AsignaturaCorrecta(asignatura)

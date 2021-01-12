@@ -72,6 +72,26 @@ func TestGetPreguntas(t *testing.T) {
 	assert.Equal(t, 0, len(pre), "El array de preguntas tiene que estar vacío")
 }
 
+//Comprobar que devuelve correctamente una pregunta
+func TestGetPregunta(t *testing.T) {
+	//Definimos el comportamiento que queremos
+	PreMapMock = mocks.IPreSaver{} 
+
+	PreMapMock.On("ObtenerPregunta", "CCC").Return([]modelspre.Pregunta{
+		modelspre.Pregunta{Pregunta: "¿Esta es la primera pregunta?", Identificador: 0, Respuestas: []modelspre.Respuesta{}},
+		modelspre.Pregunta{Pregunta: "¿Se ha hecho una segunda pregunta?", Identificador: 1, Respuestas: []modelspre.Respuesta{}},
+	})
+
+	PreMapMock.On("AsignaturaRegistrada", mock.Anything).Return(true)
+
+	_, err := PreRepo.GetPregunta("CCC", 0)
+	assert.Nil(t, err)
+
+	//Comprobamos que si no está la asinatura está vacío
+	_, err = PreRepo.GetPregunta("CCC", 5)
+	assert.NotNil(t, err)
+}
+
 // Comprobar que las respuestas tienen el formato adecuado
 func TestRespuestaCorrecta(t *testing.T) {
 	respuesta := new(modelspre.Respuesta)
