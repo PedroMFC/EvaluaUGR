@@ -14,6 +14,17 @@ func NewPreguntasRepositorio(preSaver IPreSaver) *PreguntasRepositorio {
 	return &PreguntasRepositorio{Preguntas: preSaver}
 }
 
+//CrearAsignaura añade una asignatura para poder valorarla
+func (preRepo *PreguntasRepositorio) CrearAsignatura(asignatura string) error{
+	err := asig.AsignaturaCorrecta(asignatura)
+	if err != nil {
+		return err
+	}
+
+	preRepo.Preguntas.CrearAsignatura(asignatura)
+
+	return nil
+}
 
 //Preguntar añade una pregunta al repositorio
 func (preRepo *PreguntasRepositorio) Preguntar(asignatura string, pregunta string) error {

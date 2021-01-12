@@ -104,3 +104,16 @@ func TestResponder(t *testing.T){
 	err = PreRepo.Responder("CCC", 0, "Es la segunda respuesta")  //Identificador válido
 	assert.Nil(t, err)
 }
+
+// Comprobar que crea una asignatura correctamente
+func TestCrearAsignaturaPregunta(t *testing.T) {
+	PreMapMock = mocks.IPreSaver{} 
+
+	PreMapMock.On("CrearAsignatura", mock.Anything)
+
+	err := PreRepo.CrearAsignatura("AAA")
+	assert.Nil(t, err)
+	err = PreRepo.CrearAsignatura("AAAAAA")
+	assert.NotNil(t, err)
+
+}
