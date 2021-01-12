@@ -169,6 +169,7 @@ func NewAppGin() *applicationGin {
 	//Preguntas
 	router.PUT("preguntas/asignatura/:asig", handlerspre.CrearAsignatura(PreRepo))
 	router.GET("/preguntas/asignatura/:asig", handlerspre.GetPreguntas(PreRepo))
+	router.GET("/preguntas/asignatura/:asig/:id", handlerspre.GetPregunta(PreRepo))
 
 	return &applicationGin{Router: router}
 }

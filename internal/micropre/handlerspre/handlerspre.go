@@ -3,7 +3,7 @@ package handlerspre
 import (
 	"net/http"
 	"github.com/gin-gonic/gin"
-	//"strconv"
+	"strconv"
 
 	"github.com/PedroMFC/EvaluaUGR/internal/micropre/modelspre"
 )
@@ -38,6 +38,36 @@ func GetPreguntas(repo modelspre.PreguntasRepositorio) gin.HandlerFunc {
 		} else {
 
 			c.JSON(http.StatusOK, gin.H{"preguntas": preguntas})
+		} 
+	}
+}
+
+
+
+func GetPregunta(repo modelspre.PreguntasRepositorio) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		asig := c.Param("asig")
+		id, err1 := strconv.Atoi( c.Param("id") )
+
+		if err1 != nil{
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Identificador no es un entero"})
+			return
+		}
+		pregunta, err := repo.GetPregunta(asig, id)
+
+		if err != nil{
+			if msg := err.Error(); (msg == "Algo salió mal con la pregunta:  la asignatura no está registrada" ||
+				msg == "Algo salió mal con la pregunta:  la pregunta no contiene un identificador válido"){
+
+				c.JSON(http.StatusNotFound, gin.H{"error": err })
+				return
+			} 
+			c.JSON(http.StatusBadRequest, gin.H{"error": err })
+			return
+
+		} else {
+
+			c.JSON(http.StatusOK, gin.H{"pregunta": pregunta})
 		} 
 	}
 }

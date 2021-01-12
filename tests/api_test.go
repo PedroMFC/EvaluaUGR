@@ -380,3 +380,50 @@ func TestApiGetPreguntas(t *testing.T) {
 		Status(http.StatusBadRequest).
 		End()
 }
+
+func TestApiGetPregunta(t *testing.T) {
+	server.StartDataPre()
+	handler := server.NewAppGin().Router
+
+	// Es correcta
+	apitest.New().
+		Handler(handler).
+		Get("/preguntas/asignatura/CCC/0").
+		Expect(t).
+		Status(http.StatusOK).
+		End()
+
+	// No tiene registro
+	apitest.New().
+		Handler(handler).
+		Get("/preguntas/asignatura/CCC/5").
+		Expect(t).
+		Status(http.StatusNotFound).
+		End()
+
+	// Es correcta pero no tiene registro
+	apitest.New().
+		Handler(handler).
+		Get("/preguntas/asignatura/ABB/0").
+		Expect(t).
+		Status(http.StatusNotFound).
+		End()
+
+	// No es correcta
+	apitest.New().
+		Handler(handler).
+		Get("/preguntas/asignatura/BBBBBBB/0").
+		Expect(t).
+		Status(http.StatusBadRequest).
+		End()
+
+	// No es correcta
+	apitest.New().
+		Handler(handler).
+		Get("/preguntas/asignatura/BBB/sdfsfd").
+		Expect(t).
+		Status(http.StatusBadRequest).
+		End()
+
+	
+}
