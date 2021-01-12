@@ -7,4 +7,5 @@ type IValSaver interface {
 	GuardarValoracion(asignatura string, val *Valoracion)
 	ObtenerValoraciones(asignatura string) []Valoracion
 	ObtenerAsignaturas() []string
+	CrearAsignatura(asignatura string)
 }

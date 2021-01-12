@@ -10,6 +10,11 @@ type IValSaver struct {
 	mock.Mock
 }
 
+// CrearAsignatura provides a mock function with given fields: asignatura
+func (_m *IValSaver) CrearAsignatura(asignatura string) {
+	_m.Called(asignatura)
+}
+
 // GuardarValoracion provides a mock function with given fields: asignatura, val
 func (_m *IValSaver) GuardarValoracion(asignatura string, val *modelsval.Valoracion) {
 	_m.Called(asignatura, val)
