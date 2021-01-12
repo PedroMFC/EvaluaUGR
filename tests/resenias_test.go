@@ -31,6 +31,7 @@ func TestOpinar(t *testing.T) {
 	ResMapMock = mocks.IResSaver{} 
 
 	ResMapMock.On("GuardarResenia", mock.Anything, mock.Anything).Return(nil)
+	ResMapMock.On("AsignaturaRegistrada", mock.Anything).Return(true)
 
 	err := ResRepo.Opinar("ABC", "Esta reseña es adecuada")
 	assert.Nil(t, err)
@@ -54,6 +55,7 @@ func TestGetResenias(t *testing.T) {
 		modelsres.Resenia{Opinion: "No me ha gustado"} })
 
 	ResMapMock.On("ObtenerResenias", "AAA").Return([]modelsres.Resenia{})
+	ResMapMock.On("AsignaturaRegistrada", mock.Anything).Return(true)
 
 	res, err := ResRepo.GetResenias("AAAAAA")
 	assert.NotNil(t, err)
@@ -76,6 +78,7 @@ func TestMeGusta(t *testing.T) {
 
 	ResMapMock.On("MeGustaResenia", "BBB", 0).Return(nil)
 	ResMapMock.On("MeGustaResenia", "BBB", 1).Return(&errorsres.ErrorResenia{""})
+	ResMapMock.On("AsignaturaRegistrada", mock.Anything).Return(true)
 
 	err := ResRepo.GustaResenia("ABCDEF", 0) //Asignatura incorrecta
 	assert.NotNil(t, err)
@@ -94,6 +97,7 @@ func TestNoMeGusta(t *testing.T) {
 
 	ResMapMock.On("NoMeGustaResenia", "BBB", 0).Return(nil)
 	ResMapMock.On("NoMeGustaResenia", "BBB", 1).Return(&errorsres.ErrorResenia{""})
+	ResMapMock.On("AsignaturaRegistrada", mock.Anything).Return(true)
 
 	err := ResRepo.NoGustaResenia("ABCDEF", 0) //Asignatura incorrecta
 	assert.NotNil(t, err)

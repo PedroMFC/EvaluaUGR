@@ -2,6 +2,7 @@ package modelsres
 
 import (
 	"github.com/PedroMFC/EvaluaUGR/internal/asignatura/asig"
+	"github.com/PedroMFC/EvaluaUGR/internal/microres/errorsres"
 	//"fmt"
 )
 
@@ -40,6 +41,12 @@ func (resRepo *ReseniasRepositorio) Opinar(asignatura string, opinion string) er
 		return err
 	}
 
+	// Vemos que no está vacío
+	if  !resRepo.Resenias.AsignaturaRegistrada(asignatura) {
+		return &errorsres.ErrorResenia{" la asignatura no está registrada"}
+	}
+
+
 	res.MeGusta = 0
 	res.NoMeGusta = 0
 	resRepo.Resenias.GuardarResenia(asignatura, res) 
@@ -54,6 +61,13 @@ func (resRepo *ReseniasRepositorio) GetResenias(asignatura string) ([]Resenia, e
 		return nil, err
 	}
 
+	// Vemos que no está vacío
+	if  !resRepo.Resenias.AsignaturaRegistrada(asignatura) {
+		return nil, &errorsres.ErrorResenia{" la asignatura no está registrada"}
+	}
+	
+
+
 	return resRepo.Resenias.ObtenerResenias(asignatura), nil
 }
 
@@ -64,6 +78,12 @@ func (resRepo *ReseniasRepositorio) GustaResenia(asignatura string, id int) erro
 		return err
 	}
 
+	// Vemos que no está vacío
+	if  !resRepo.Resenias.AsignaturaRegistrada(asignatura) {
+		return &errorsres.ErrorResenia{" la asignatura no está registrada"}
+	}
+
+
 	return resRepo.Resenias.MeGustaResenia(asignatura, id)
 }
 
@@ -73,6 +93,12 @@ func (resRepo *ReseniasRepositorio) NoGustaResenia(asignatura string, id int) er
 	if err != nil {
 		return err
 	}
+
+	// Vemos que no está vacío
+	if  !resRepo.Resenias.AsignaturaRegistrada(asignatura) {
+		return &errorsres.ErrorResenia{" la asignatura no está registrada"}
+	}
+
 
 	return resRepo.Resenias.NoMeGustaResenia(asignatura, id)
 }
