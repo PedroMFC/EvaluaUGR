@@ -15,14 +15,14 @@ func (valMap *ValoracionMap) CrearAsignatura(asignatura string) {
 	valMap.Valoraciones[asignatura] = []Valoracion{}
 }
 
+//AsignaturaRegistrada comprueba si una asignatura está registrada
+func (valMap *ValoracionMap) AsignaturaRegistrada(asignatura string) bool {
+	return valMap.Valoraciones[asignatura] != nil
+}
 
 //GuardarValoracion alamcena una valoración
 func (valMap *ValoracionMap) GuardarValoracion(asignatura string, val *Valoracion) {
-	if valMap.Valoraciones[asignatura] != nil { // Si ya hay valoraciones antes se añaden a las existentes
-		valMap.Valoraciones[asignatura] = append(valMap.Valoraciones[asignatura], *val)
-	} else { //Si no, tenemos que crear una nueva
-		valMap.Valoraciones[asignatura] = []Valoracion{*val}
-	}
+	valMap.Valoraciones[asignatura] = append(valMap.Valoraciones[asignatura], *val)
 }
 
 //ObtenerValoraciones devuelve valoraciones de una asignatura

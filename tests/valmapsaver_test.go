@@ -20,10 +20,25 @@ func TestGuardaValoValMap(t *testing.T) {
 	assert.Equal(t, 3, len(ValMap.Valoraciones["AAA"]), "La asignatura AAA tiene 3 valoraciones")
 
 	//Creamos una valoración nueva
+	ValMap.CrearAsignatura("BBB")
 	ValMap.GuardarValoracion("BBB", val)
 	//Hacemos las mismas comprobaciones que antes
 	assert.Equal(t, 2, len(ValMap.Valoraciones), "Ahora hay dos asignaturas")
 	assert.Equal(t, 1, len(ValMap.Valoraciones["BBB"]), "La asignatura BBB tiene 1 valoración")
+}
+
+func TestAsigRegistradaVal(t *testing.T) {
+	// Vemos una que sí está registrada
+	resultado := ValMap.AsignaturaRegistrada("AAA")
+	assert.Equal(t, true, resultado, "Sí está registrada")
+
+	// Vemos una que NO está registrada
+	resultado = ValMap.AsignaturaRegistrada("DDD")
+	assert.Equal(t, false, resultado, "No está registrada")
+
+	ValMap.CrearAsignatura("DDD")
+	resultado = ValMap.AsignaturaRegistrada("DDD")
+	assert.Equal(t, true, resultado, "Sí está registrada")
 }
 
 func TestObtenerValoValMap(t *testing.T) {
@@ -67,11 +82,12 @@ func TestObtenerAsigValMap(t *testing.T) {
 		return asignaturas[i] < asignaturas[j]
 	})
 
-	// Vemos que tiene 2 y que son las que hemos indicado
-	assert.Equal(t, 2, len(asignaturas), "Solo tenemos dos asignaturas")
+	// Vemos que tiene 3 y que son las que hemos indicado
+	assert.Equal(t, 3, len(asignaturas), "Solo tenemos dos asignaturas")
 	// Vemos que son las que hemos introducido
 	assert.Equal(t, "AAA", asignaturas[0], "Primera asignatura es AAA")
 	assert.Equal(t, "BBB", asignaturas[1], "Segunda asignatura es BBB")
+	assert.Equal(t, "DDD", asignaturas[2], "Tercera asignatura es DDD")
 
 }
 
@@ -80,5 +96,5 @@ func TestCrearAsigValMap(t *testing.T) {
 	ValMap.CrearAsignatura("CCC")
 	asignaturas := ValMap.ObtenerAsignaturas()
 
-	assert.Equal(t, 3, len(asignaturas), "Debe haber tres asignaturas")
+	assert.Equal(t, 4, len(asignaturas), "Debe haber tres asignaturas")
 }
