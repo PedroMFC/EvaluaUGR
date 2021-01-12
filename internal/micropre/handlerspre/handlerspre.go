@@ -104,3 +104,43 @@ func Preguntar(repo modelspre.PreguntasRepositorio) gin.HandlerFunc {
 		} 
 	}
 }
+
+type CreateRespuestaInput struct {
+	Respuesta string `json:"respuesta" binding:"required"`
+}
+
+func Responder(repo modelspre.PreguntasRepositorio) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		asig := c.Param("asig")
+		id, err1 := strconv.Atoi( c.Param("id") )
+
+		if err1 != nil{
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Identificador no es un entero"})
+			return
+		}
+		var input CreateRespuestaInput
+
+		if err := c.ShouldBindJSON(&input); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "No se han enviado los campos requeridos"})
+			return
+		}
+
+		err := repo.Responder(asig, id, input.Respuesta)
+
+
+		if err != nil{
+			if msg := err.Error(); (msg == "Algo salió mal con la pregunta:  la asignatura no está registrada" ||
+				msg == "Algo salió mal con la pregunta:  no hay una pregunta con ese identificador para la asignatura señalada") {
+
+				c.JSON(http.StatusNotFound, gin.H{"error": err })
+				return
+			} 
+			c.JSON(http.StatusBadRequest, gin.H{"error": err })
+			return
+
+		} else {
+
+			c.JSON(http.StatusCreated, gin.H{"Mensaje": "Creada correctamente"})
+		} 
+	}
+}

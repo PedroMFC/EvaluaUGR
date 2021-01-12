@@ -468,3 +468,64 @@ func TestApiPreguntarPreguntas(t *testing.T) {
 		Status(http.StatusBadRequest).
 		End()
 }
+
+func TestApiResponderPreguntas(t *testing.T) {
+	server.StartDataPre()
+	handler := server.NewAppGin().Router 
+
+	// Es correcta
+	apitest.New().
+		Handler(handler).
+		Post("/preguntas/asignatura/CCC/0").
+		Body("{ \"respuesta\": \"Es una respuesta\"}").
+		Expect(t).
+		Status(http.StatusCreated).
+		End()
+
+	// Pregunta no registrada
+	apitest.New().
+		Handler(handler).
+		Post("/preguntas/asignatura/CCC/5").
+		Body("{ \"respuesta\": \"Es una respuesta\"}").
+		Expect(t).
+		Status(http.StatusNotFound).
+		End()
+
+	// Asignatura no registrada
+	apitest.New().
+		Handler(handler).
+		Post("/preguntas/asignatura/AAA/0").
+		Body("{ \"respuesta\": \"Es una respuesta\"}").
+		Expect(t).
+		Status(http.StatusNotFound).
+		End()
+
+
+	// Asignatura no válida
+	apitest.New().
+		Handler(handler).
+		Post("/preguntas/asignatura/CCCCCCC/0").
+		Body("{\"respuesta\": \"Es una respuesta\"}").
+		Expect(t).
+		Status(http.StatusBadRequest).
+		End()
+
+	// petición incorrecta
+	apitest.New().
+		Handler(handler).
+		Post("/preguntas/asignatura/CCC/0").
+		Body("{\"resua\": \"Es una respuesta\"}").
+		Expect(t).
+		Status(http.StatusBadRequest).
+		End()
+
+	// petición incorrecta
+	apitest.New().
+		Handler(handler).
+		Post("/preguntas/asignatura/CCC/sdfsdf").
+		Body("{\"respuesta\": \"Es una respuesta\"}").
+		Expect(t).
+		Status(http.StatusBadRequest).
+		End()
+
+}
