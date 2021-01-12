@@ -36,6 +36,21 @@ func TestIdentificadoresCorrectos(t *testing.T) {
 
 }
 
+func TestAsigRegistradaRes(t *testing.T) {
+	// Vemos una que sí está registrada
+	resultado := ResMap.AsignaturaRegistrada("BBB")
+	assert.Equal(t, true, resultado, "Sí está registrada")
+
+	// Vemos una que NO está registrada
+	resultado = ResMap.AsignaturaRegistrada("DDD")
+	assert.Equal(t, false, resultado, "No está registrada")
+
+	// Vemos que ahora el crear funciona bien
+	ResMap.CrearAsignatura("DDD")
+	resultado = ResMap.AsignaturaRegistrada("DDD")
+	assert.Equal(t, true, resultado, "Sí está registrada")
+}
+
 func TestObtenerResenias(t *testing.T) {
 	// Obtenemos las valoraciones de la primera asignatura
 	resenias := ResMap.ObtenerResenias("BBB")

@@ -17,6 +17,12 @@ func (resMap *ReseniasMap) CrearAsignatura(asignatura string) {
 	resMap.Resenias[asignatura] = []Resenia{}
 }
 
+//AsignaturaRegistrada comprueba si una asignatura está registrada
+func (resMap *ReseniasMap) AsignaturaRegistrada(asignatura string) bool {
+	return resMap.Resenias[asignatura] != nil
+}
+
+
 func (resMap *ReseniasMap) GuardarResenia(asignatura string, opinion *Resenia){
 	if resMap.Resenias[asignatura] != nil { // Si ya hay reeseñas antes se añaden a las existentes
 		opinion.Identificador = len(resMap.Resenias[asignatura])
