@@ -26,8 +26,6 @@ func GetValoraciones(repo modelsval.ValoracionRepositorio) gin.HandlerFunc {
 		asig := c.Param("asig")
 		valoraciones, err := repo.GetValoraciones(asig)
 
-		//https://github.com/gin-gonic/gin/issues/1335
-		//time.Sleep(20 * time.Second)
 
 		if err != nil{
 			if err.Error() == "Algo salió mal en la valoración:  la asignatura no está registrada"{
@@ -86,4 +84,23 @@ func GetMejor(repo modelsval.ValoracionRepositorio) gin.HandlerFunc {
 		c.JSON(http.StatusOK, gin.H{"Mejores valoradas": peores})
 		
 	}
+}
+
+func GetMedia(repo modelsval.ValoracionRepositorio) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		asig := c.Param("asig")
+		media, err := repo.GetValoraciones(asig)
+
+		if err != nil{
+			if err.Error() == "Algo salió mal en la valoración:  la asignatura no está registrada"{
+				c.JSON(http.StatusNotFound, gin.H{"error": err })
+			}
+			c.JSON(http.StatusBadRequest, gin.H{"error": err })
+
+		} else {
+
+			c.JSON(http.StatusOK, gin.H{"media": media})
+		} 
+	}
+		
 }

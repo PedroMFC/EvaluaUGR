@@ -111,6 +111,7 @@ func NewAppGin() *applicationGin {
 	router.POST("/valoraciones/asignatura/:asig/:val", handlersval.Valorar(ValRepo))
 	router.GET("/valoraciones/peor", handlersval.GetPeor(ValRepo))
 	router.GET("/valoraciones/mejor", handlersval.GetMejor(ValRepo))
+	router.GET("/valoraciones/asignatura/:asig/media", handlersval.GetMedia(ValRepo))
 
 	return &applicationGin{Router: router}
 }

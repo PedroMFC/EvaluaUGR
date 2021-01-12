@@ -126,3 +126,32 @@ func TestApiMejorValoraciones(t *testing.T) {
 		End()
 
 }
+
+func TestApiGetMediaValoraciones(t *testing.T) {
+	server.StartDataVal()
+	handler := server.NewAppGin().Router 
+
+	// Es correcta
+	apitest.New().
+		Handler(handler).
+		Get("/valoraciones/asignatura/AAA/media").
+		Expect(t).
+		Status(http.StatusOK).
+		End()
+
+	// Es correcta pero no tiene registro
+	apitest.New().
+		Handler(handler).
+		Get("/valoraciones/asignatura/AA/media").
+		Expect(t).
+		Status(http.StatusNotFound).
+		End()
+
+	// Es incorrecta
+	apitest.New().
+		Handler(handler).
+		Get("/valoraciones/asignatura/AAAAAAA/media").
+		Expect(t).
+		Status(http.StatusBadRequest).
+		End()
+}
