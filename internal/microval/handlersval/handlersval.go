@@ -3,6 +3,7 @@ package handlersval
 import (
 	"net/http"
 	"github.com/gin-gonic/gin"
+	"strconv"
 
 	"github.com/PedroMFC/EvaluaUGR/internal/microval/modelsval"
 )
@@ -42,5 +43,31 @@ func GetValoraciones(repo modelsval.ValoracionRepositorio) gin.HandlerFunc {
 
 			c.JSON(http.StatusOK, gin.H{"valoraciones": valoracionesNum})
 		} 
+	}
+}
+
+func Valorar(repo modelsval.ValoracionRepositorio) gin.HandlerFunc {
+	return func(c *gin.Context) {
+
+		asig := c.Param("asig")
+		val,err := strconv.Atoi( c.Param("val") )
+
+		if err != nil{
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Valoración no es un entero"})
+			return
+		}
+
+
+		err = repo.Valorar(asig, val)
+		if err != nil{
+			if err.Error() == "Algo salió mal en la valoración:  la asignatura no está registrada"{
+				c.JSON(http.StatusNotFound, gin.H{"error": err })
+			}
+			c.JSON(http.StatusBadRequest, gin.H{"error": err })
+
+		}
+		
+		c.JSON(http.StatusCreated, gin.H{"Mensaje": "creada correctamente"}) 
+		
 	}
 }

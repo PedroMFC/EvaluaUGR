@@ -59,3 +59,40 @@ func TestApiGetValoraciones(t *testing.T) {
 		Status(http.StatusBadRequest).
 		End()
 }
+
+func TestApiPostValoraciones(t *testing.T) {
+	server.StartDataVal()
+	handler := server.NewAppGin().Router 
+
+	// Es correcta
+	apitest.New().
+		Handler(handler).
+		Post("/valoraciones/AAA/5").
+		Expect(t).
+		Status(http.StatusCreated).
+		End()
+
+	// No existe 
+	apitest.New().
+		Handler(handler).
+		Post("/valoraciones/BBB/5").
+		Expect(t).
+		Status(http.StatusNotFound).
+		End()
+
+	// La valoración no es correcta
+	apitest.New().
+		Handler(handler).
+		Post("/valoraciones/AAA/55").
+		Expect(t).
+		Status(http.StatusBadRequest).
+		End()
+
+	// La asignatura no es correcta
+	apitest.New().
+		Handler(handler).
+		Post("/valoraciones/AAAAAAA/55").
+		Expect(t).
+		Status(http.StatusBadRequest).
+		End()
+}
