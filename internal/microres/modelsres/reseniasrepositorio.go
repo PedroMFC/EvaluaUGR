@@ -15,6 +15,18 @@ func NewReseniasRepositorio(resSaver IResSaver) *ReseniasRepositorio {
 	return &ReseniasRepositorio{Resenias: resSaver}
 }
 
+//CrearAsignaura añade una asignatura para poder valorarla
+func (resRepo *ReseniasRepositorio) CrearAsignatura(asignatura string) error{
+	err := asig.AsignaturaCorrecta(asignatura)
+	if err != nil {
+		return err
+	}
+
+	resRepo.Resenias.CrearAsignatura(asignatura)
+
+	return nil
+}
+
 //Opinar añade una reseña/opinión al repositorio
 func (resRepo *ReseniasRepositorio) Opinar(asignatura string, opinion string) error {
 	err := asig.AsignaturaCorrecta(asignatura)

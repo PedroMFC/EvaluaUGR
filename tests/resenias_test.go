@@ -104,3 +104,16 @@ func TestNoMeGusta(t *testing.T) {
 	assert.NotNil(t, err)
 
 }
+
+// Comprobar que crea una asignatura correctamente
+func TestCrearAsignaturaResenias(t *testing.T) {
+	ResMapMock = mocks.IResSaver{} 
+
+	ResMapMock.On("CrearAsignatura", mock.Anything)
+
+	err := ResRepo.CrearAsignatura("AAA")
+	assert.Nil(t, err)
+	err = ResRepo.CrearAsignatura("AAAAAA")
+	assert.NotNil(t, err)
+
+}
