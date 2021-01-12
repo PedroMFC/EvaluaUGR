@@ -9,6 +9,28 @@
 # EvaluaUGR
 Proyecto para la asignatura de Cloud Computing del Máster en Ingeniería Informática.
 
+## Framework para el microservicio
+
+Estamos usando el lenguaje de programación `Golang`. Para conocer los *frameworks* disponibles para el miso se han consultado varios enlaces entre los que destacan:
+* [Comparison of Popular Web Frameworks in Go](https://dzone.com/articles/comparison-of-popular-web-frameworks-in-go).
+* [Top 5 Golang Frameworks in 2020](https://www.geeksforgeeks.org/top-5-golang-frameworks-in-2020/).
+
+Vemos que existen una gran cantidad de opciones disponibles. Para facilitar la elección del *framework* nos hemos centrado en tres que nos han parecido interesantes. Brevemente explicadas:
+
+* [Mux](https://github.com/gorilla/mux): implementa la interfaz `http.Handler` por lo que es compatible con el estándar `http.ServerMux`. Además, permite anidar rutas para la definición de grupos. Su desventaja es la rapidez ya que no es adecuado si se necesita un alto rendimiento.
+* [Echo](https://github.com/labstack/echo): se considera un *framework* minimalista. Está muy optimizado para llevar a cabo el enrutamiento y se usa para construir aplicaciones escalables y robustas. Soporta tipo de datos como JSON y XML entre otros. Su principal desventaja es la frecuencia de actualización.
+* [Gin](https://github.com/gin-gonic/gin): también se considera minimalista como `Echo` y está pensado para un alto rendimiento. También acepta formatos como JSON y da soporte para middleware personalizado. Sin embargo, no está pensado par desarrollar aplicaciones muy complejas.
+
+Para llevar a cabo una mejor elección, se ha decido hacer pruebas reales para trabajar con las tres opciones y luego ver cuál se adapta mejor al problema. Para ello, en el archivo [main.go](./cmd/prueba/main.go) se ha creado un pequeño simulador de la aplicación. Como decidimos, su finalidad no es la de ser el programa de la aplicación sino tener una primera aproximación para poder trabajar con los diferentes marcos de trabajo. Por lo tanto, solo se han implementado dos rutas para obtener las valoraciones de una asignatura (`GET`) y otra para añadir valoraciones (`POST`). Para los datos usamos un *singleton of truth*. Más adelante se hará una explicación de todas las rutas así como su relación con las historias de usuario. Por ahora, se han elegido estas ya que se consideran que estas dos tareas son igual de importantes y se llevan a cabo con la misma frecuencia. Para ver la velocidad de cada uno de los opciones de las opciones se han creado unos *benchmarks* en el archivo [benchmark_test.go](./tests/benchmark_test.go) aprovechando la funcionalidad para medir el rendimiento  del paquete [testing](https://golang.org/pkg/testing/) que también usamos para la automatización de tests. En estas pruebas estamos realizando el mismo número de peticiones `GET` y `PUT`. Los resultados han sido los siguientes, en los que se ha lanzado cada una de las pruebas tres veces.
+
+| *Framework* | Prueba 1 | Prueba 2 | Prueba 3 |
+| -- | -- | -- | --- |
+| Echo | 2.159s | 2.163s | 2.240s |
+| Gorilla/Mux | 2.027s | 3.212s | 3.279s |
+| Gin |  2.219s | 2.262s | 2.214s |
+
+Vemos que el más lento es `Gorilla/Mux` mientras que los otros dos, presentan un rendimiento similar. Así, vistos los resultados y tras el uso de ambos se ha decidido usar `Gin` como *framework*.
+
 
 ## Documentación
 Puede consultar más información acerca del proyecto en los siguientes enlace:
@@ -41,6 +63,18 @@ Puede consultar más información acerca del proyecto en los siguientes enlace:
 [mDocumentacion]: https://github.com/PedroMFC/EvaluaUGR/milestone/1
 [mValoraciones]: https://github.com/PedroMFC/EvaluaUGR/milestone/4
 [mTests]: https://github.com/PedroMFC/EvaluaUGR/milestone/8
+
+[hu1]: https://github.com/PedroMFC/EvaluaUGR/issues/12
+[hu2]: https://github.com/PedroMFC/EvaluaUGR/issues/13
+[hu3]: https://github.com/PedroMFC/EvaluaUGR/issues/14
+[hu4]: https://github.com/PedroMFC/EvaluaUGR/issues/15
+[hu5]: https://github.com/PedroMFC/EvaluaUGR/issues/16
+[hu6]: https://github.com/PedroMFC/EvaluaUGR/issues/17
+[hu7]: https://github.com/PedroMFC/EvaluaUGR/issues/18
+[hu8]: https://github.com/PedroMFC/EvaluaUGR/issues/19
+[hu9]: https://github.com/PedroMFC/EvaluaUGR/issues/20
+[hu10]: https://github.com/PedroMFC/EvaluaUGR/issues/62
+[hu11]: https://github.com/PedroMFC/EvaluaUGR/issues/63
 
 [i1]: https://github.com/PedroMFC/EvaluaUGR/issues/1
 [i2]: https://github.com/PedroMFC/EvaluaUGR/issues/2
