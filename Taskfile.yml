@@ -38,3 +38,23 @@ tasks:
       con la orden --rm
     cmds: 
       - docker run --rm -t -v `pwd`:/app/test pedromfc/evaluaugr
+
+  build:
+    desc: generar ejecutables
+    summary: |
+      Generar ejecutables
+
+      Mediante esta orden creamos los ejecutables de la aplicación. Como se puede llevar a cabo directamente
+      con la orden install, no hacemos realmente nada
+    cmds: 
+      - echo "Todo OK. Construimos en install"
+  
+  install:
+    desc: instalar el programa
+    summary: |
+      Instalar el programa
+
+      Mediante esta orden instalamos el programa. Construye los ejecutables y los mueve directamente al
+      directrio $GOPATH/bin
+    cmds: 
+      - go install ./cmd

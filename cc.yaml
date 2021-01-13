@@ -15,4 +15,4 @@ test:
   - tests/resenias_test.go
   - tests/testmain_test.go
   - tests/valoracion_test.go
-
+make: task
