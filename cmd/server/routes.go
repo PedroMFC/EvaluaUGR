@@ -1,6 +1,7 @@
 package server
 
 import (
+	"github.com/PedroMFC/EvaluaUGR/internal/microres/errorsres"
 	log "github.com/sirupsen/logrus"
 	"net/http"
 
@@ -43,23 +44,24 @@ func StartDataVal(){
 
 /*Singleton of Truth RESEÑAS*/
 var ResRepo modelsres.ReseniasRepositorio
-var ResMap  modelsres.ReseniasMap
+var ResMapMock2  mocks.IResSaver
 
 func StartDataRes(){
-	ResMap = *modelsres.NewReseniasMap()
-	res := new(modelsres.Resenia)
-	res2 := new(modelsres.Resenia)
-	res.Opinion = "Me ha parecido interesante"
-	res.MeGusta = 0
-	res.NoMeGusta = 0
-	res.Identificador = 0
-	res2.Opinion = "No me ha gustado"
-	res2.MeGusta = 0
-	res2.NoMeGusta = 0
-	res2.Identificador = 1
-	ResMap.Resenias["BBB"] = []modelsres.Resenia{*res, *res2}
 
-	ResRepo = *modelsres.NewReseniasRepositorio(&ResMap)
+	ResMapMock2.On("CrearAsignatura", mock.Anything)
+	ResMapMock2.On("ObtenerResenias", "BBB").Return([]modelsres.Resenia{
+		modelsres.Resenia{Opinion: "Me ha parecido interesante"},
+		modelsres.Resenia{Opinion: "No me ha gustado"}})
+	ResMapMock2.On("AsignaturaRegistrada", "AAA").Return(false)
+	ResMapMock2.On("AsignaturaRegistrada", "BBB").Return(true)
+	ResMapMock2.On("AsignaturaRegistrada", "ABB").Return(false)
+	ResMapMock2.On("AsignaturaRegistrada", "TDA").Return(false)
+	ResMapMock2.On("GuardarResenia", mock.Anything, mock.Anything)
+	ResMapMock2.On("MeGustaResenia", "BBB", 0).Return(nil)
+	ResMapMock2.On("NoMeGustaResenia", "BBB", 0).Return(nil)
+	ResMapMock2.On("NoMeGustaResenia", "BBB", 7).Return(&errorsres.ErrorResenia{" la reseña no contiene in identificador válido"})
+
+	ResRepo = *modelsres.NewReseniasRepositorio(&ResMapMock2)
 }
 
 /*Singleton of Truth PREGUNTAS*/
