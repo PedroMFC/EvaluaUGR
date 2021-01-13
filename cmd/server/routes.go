@@ -1,6 +1,7 @@
 package server
 
 import (
+	"github.com/PedroMFC/EvaluaUGR/internal/micropre/errorspre"
 	"github.com/PedroMFC/EvaluaUGR/internal/microres/errorsres"
 	log "github.com/sirupsen/logrus"
 	"net/http"
@@ -42,7 +43,7 @@ func StartDataVal(){
 	ValRepo = *modelsval.NewValoracionsRepositorio(&ValMapMock2)
 }
 
-/*Singleton of Truth RESEÑAS*/
+/*Mockeamos los datos de RESEÑAS*/
 var ResRepo modelsres.ReseniasRepositorio
 var ResMapMock2  mocks.IResSaver
 
@@ -64,24 +65,25 @@ func StartDataRes(){
 	ResRepo = *modelsres.NewReseniasRepositorio(&ResMapMock2)
 }
 
-/*Singleton of Truth PREGUNTAS*/
+/*Mockeamos los datos de PREGUNTAS*/
 var PreRepo modelspre.PreguntasRepositorio
-var PreMap  modelspre.PreguntasMap
+var PreMapMock2  mocks.IPreSaver
 
 func StartDataPre(){
-	PreMap = *modelspre.NewPreguntasMap()
-	pre := new(modelspre.Pregunta)
-	pre2 := new(modelspre.Pregunta)
-	pre.Pregunta = "¿Esta es la primera pregunta?"
-	pre.Identificador = 0
-	respu := new(modelspre.Respuesta)
-	respu.Respuesta = "Sí, esta es la primera pregunta."
-	pre.Respuestas = []modelspre.Respuesta{*respu}
-	pre2.Pregunta = "¿Se ha hecho una segunda pregunta?"
-	pre2.Identificador = 1
+	PreMapMock2.On("CrearAsignatura", mock.Anything)
+	PreMapMock2.On("ObtenerPregunta", "CCC").Return([]modelspre.Pregunta{
+		modelspre.Pregunta{Pregunta: "¿Esta es la primera pregunta?", Identificador: 0, Respuestas: []modelspre.Respuesta{}},
+		modelspre.Pregunta{Pregunta: "¿Se ha hecho una segunda pregunta?", Identificador: 1, Respuestas: []modelspre.Respuesta{}},
+	})
+	PreMapMock2.On("AsignaturaRegistrada", "ABB").Return(false)
+	PreMapMock2.On("AsignaturaRegistrada", "AAA").Return(false)
+	PreMapMock2.On("AsignaturaRegistrada", "CCC").Return(true)
+	PreMapMock2.On("GuardarPregunta", mock.Anything, mock.Anything)
+	PreMapMock2.On("Responder", "CCC", 0, mock.Anything).Return(nil)
+	PreMapMock2.On("Responder", "CCC", 5, mock.Anything).Return(&errorspre.ErrorPregunta{" no hay una pregunta con ese identificador para la asignatura señalada"})
 
-	PreMap.Preguntas["CCC"] = []modelspre.Pregunta{*pre, *pre2}
-	PreRepo = *modelspre.NewPreguntasRepositorio(&PreMap)
+
+	PreRepo = *modelspre.NewPreguntasRepositorio(&PreMapMock2)
 }
 
 type applicationGin struct {
