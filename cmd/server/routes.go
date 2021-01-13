@@ -4,6 +4,7 @@ import (
 	"github.com/PedroMFC/EvaluaUGR/internal/micropre/errorspre"
 	"github.com/PedroMFC/EvaluaUGR/internal/microres/errorsres"
 	log "github.com/sirupsen/logrus"
+	"github.com/PedroMFC/EvaluaUGR/internal/customlog"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -122,15 +123,18 @@ func (a *applicationGin) Start(port string) {
 		err := godotenv.Load()
 
 		if err != nil {
-			log.Println("Error loading .env file")
+			log.Info("No hay archivo .env")
 		}
 
 		// Si hay una entrada en el .env
 		//Almacenamos en etcd
 		port = os.Getenv(PortVarName); 
-		log.Println("Puerto del .env" + port)
+		log.WithFields(log.Fields{
+			"Puerto": port,
+		}).Info("Puerto leído desde .env")
+
 		if port != ""{
-			log.Println("Usamos la configuración del .env")
+			log.Info("Usamos la configuración del .env")
 			ctx, _ := context.WithTimeout(context.Background(), 5 * time.Second)
 			_, err := cli.Put(ctx, PortVarName, port)
 
@@ -140,7 +144,7 @@ func (a *applicationGin) Start(port string) {
 		// Si las anteriores han fallado, usamos un puerto por defecto
 		//Almacenamos en etcd
 		} else{
-			log.Println("Usamos la configuración por defecto")
+			log.Info("Usamos la configuración por defecto")
 			port = "8080"
 			ctx, _ := context.WithTimeout(context.Background(), 5 * time.Second)
 			_, err := cli.Put(ctx, PortVarName, port)
@@ -152,13 +156,28 @@ func (a *applicationGin) Start(port string) {
 
 	}
 
-	log.Println("GIN valoraciones conectado en " + port)
+	log.WithFields(log.Fields{
+		"Puerto": port,
+	}).Info("GIN se ha conectado a un puerto")
 	log.Fatal(http.ListenAndServe("localhost:" + port, a.Router))
 }
 
 
 func NewAppGin() *applicationGin {
-	router := gin.Default()
+	//router := gin.Default()
+	router := gin.New()
+
+	//Log
+	logger := log.New()
+	logger.SetFormatter(&log.TextFormatter{
+		DisableColors: false,
+		FullTimestamp: true,
+		EnvironmentOverrideColors: true,
+		TimestampFormat : "2006-01-02 15:04:05",
+	})
+	logger.Formatter = &log.TextFormatter{}
+
+	router.Use(customlog.Logger(logger), gin.Recovery())
 
 	//Aquí definimos las rutas
 	//Valoraciones
