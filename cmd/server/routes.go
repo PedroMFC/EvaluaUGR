@@ -13,6 +13,10 @@ import (
 	"github.com/PedroMFC/EvaluaUGR/internal/micropre/modelspre"
 	"github.com/PedroMFC/EvaluaUGR/internal/micropre/handlerspre"
 
+	"github.com/PedroMFC/EvaluaUGR/mocks"
+	"github.com/stretchr/testify/mock"
+
+
 	"go.etcd.io/etcd/clientv3"
 	"golang.org/x/net/context"
 	"github.com/joho/godotenv"
@@ -20,18 +24,21 @@ import (
 	"time"
 )
 
-/*Singleton of Truth VALORACIONES*/
+/*Mockeamos los datos de VALORACIONES*/
 
 var ValRepo modelsval.ValoracionRepositorio
-var ValMap  modelsval.ValoracionMap
+var ValMapMock2 mocks.IValSaver
+
 func StartDataVal(){
-	ValMap = *modelsval.NewValoracionMap()
-	val := new(modelsval.Valoracion)
-	val2 := new(modelsval.Valoracion)
-	val.Valoracion = 2
-	val2.Valoracion = 3
-	ValMap.Valoraciones["AAA"] = []modelsval.Valoracion{*val, *val2}
-	ValRepo = *modelsval.NewValoracionsRepositorio(&ValMap)
+	ValMapMock2.On("ObtenerValoraciones", "AAA").Return([]modelsval.Valoracion{ modelsval.Valoracion{2}, modelsval.Valoracion{3} })
+	ValMapMock2.On("AsignaturaRegistrada", "AAA").Return(true)
+	ValMapMock2.On("AsignaturaRegistrada", "BBB").Return(false)
+	ValMapMock2.On("AsignaturaRegistrada", "AA").Return(false)
+	ValMapMock2.On("CrearAsignatura", mock.Anything)
+	ValMapMock2.On("GuardarValoracion", mock.Anything, mock.Anything)
+	ValMapMock2.On("ObtenerAsignaturas").Return([]string{"AAA"})
+	
+	ValRepo = *modelsval.NewValoracionsRepositorio(&ValMapMock2)
 }
 
 /*Singleton of Truth RESEÑAS*/
