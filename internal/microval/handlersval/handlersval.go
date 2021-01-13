@@ -15,8 +15,10 @@ func CrearAsignatura(repo modelsval.ValoracionRepositorio) gin.HandlerFunc {
 
 		if err != nil{
 			c.JSON(http.StatusBadRequest, gin.H{"error": err })
+			return
 		} else {
 			c.JSON(http.StatusCreated, gin.H{"Location": "valoraciones/asignatura/"+asig})
+			return
 		} 
 	}
 }
@@ -30,8 +32,10 @@ func GetValoraciones(repo modelsval.ValoracionRepositorio) gin.HandlerFunc {
 		if err != nil{
 			if err.Error() == "Algo salió mal en la valoración:  la asignatura no está registrada"{
 				c.JSON(http.StatusNotFound, gin.H{"error": err })
+				return
 			}
 			c.JSON(http.StatusBadRequest, gin.H{"error": err })
+			return
 
 		} else {
 			var valoracionesNum []int
@@ -60,13 +64,15 @@ func Valorar(repo modelsval.ValoracionRepositorio) gin.HandlerFunc {
 		if err != nil{
 			if err.Error() == "Algo salió mal en la valoración:  la asignatura no está registrada"{
 				c.JSON(http.StatusNotFound, gin.H{"error": err })
+				return
 			}
 			c.JSON(http.StatusBadRequest, gin.H{"error": err })
+			return
 
 		}
 		
 		c.JSON(http.StatusCreated, gin.H{"Mensaje": "creada correctamente"}) 
-		
+		return
 	}
 }
 
@@ -94,8 +100,10 @@ func GetMedia(repo modelsval.ValoracionRepositorio) gin.HandlerFunc {
 		if err != nil{
 			if err.Error() == "Algo salió mal en la valoración:  la asignatura no está registrada"{
 				c.JSON(http.StatusNotFound, gin.H{"error": err })
+				return
 			}
 			c.JSON(http.StatusBadRequest, gin.H{"error": err })
+			return
 
 		} else {
 

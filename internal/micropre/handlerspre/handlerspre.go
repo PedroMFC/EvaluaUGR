@@ -16,8 +16,10 @@ func CrearAsignatura(repo modelspre.PreguntasRepositorio) gin.HandlerFunc {
 
 		if err != nil{
 			c.JSON(http.StatusBadRequest, gin.H{"error": err })
+			return
 		} else {
 			c.JSON(http.StatusCreated, gin.H{"Location": "preguntas/asignatura/"+asig})
+			return
 		} 
 	}
 }
