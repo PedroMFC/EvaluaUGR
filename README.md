@@ -39,12 +39,23 @@ El diseño general de la API se puede ver en el archivo [routes.go](cmd/server/r
 
 Para la configuración distribuida se ha usado la herramienta `etcd`. Para ello, usamos el [cliente](https://github.com/etcd-io/etcd/tree/master/client/v3) específico para nuestro lenguaje de programación. Un uso básico del mismo lo hemos utilizado anteriormente en [este ejercicio de autoevaluación](https://github.com/PedroMFC/Autoevaluacion-CC/blob/main/semana%208-10/Ejercicio%201.md) donde también se usa [godotenv](https://github.com/joho/godotenv) para obtener variables de entorno del archivo `.env` (ignorado en el `.gitignore`). Su uso se puede ver en la función `Start()` del archivo [routes.go](cmd/server/routes.go). Esta función sería la que arrancaría el servicio en un futuro. Notamos que por ahora no hacemos uso de la misma, ya que no tenemos una "aplicación" lanzable del microservicio. La estructura del proceso de almacenamiento es la que hemos visto en clase. Si le pasamos un puerto directamente se lanzaría en ese puerto. De lo contrario miraría si hay un archivo `.env` disponible y miraría si tenemos definida la variable. Si las dos opciones anteriores fallan tomaría un valor por defecto. En los tres casos se almacenaría en `etcd` el puerto en el que se ha lanzado la aplicación.
 
+Para los logs, está la opción de utilizar la biblioteca [log](https://golang.org/pkg/log/) que es la que viene por defecto en el lenguaje, [logrus](https://github.com/sirupsen/logrus) que permite logs estructurados o [logo](https://github.com/mbndr/logo) entre [otros muchos](https://github.com/avelino/awesome-go#logging). En nuestro caso, hemos optado por usar `logrus`. Una de las razones de su uso es que gracias a [gin-logrus](https://github.com/toorop/gin-logrus), podemos este logger  como el sistema de logs que utiliza el *framework* `Gin` por defecto para las rutas (realmente usamos una leve modificación en [customlog.go](internal/customlog/customlog.go) para hacer más clara la salida). Además, `Gin` ya realiza el log para cada una de las peticiones realizadas. La información que incluimos en los logs es la petición realizada, el path y el resultado entre otros. Indicamos el uso de este log en la función `NewAppGin()` del archivo [routes.go](cmd/server/routes.go). 
+ 
 ## Tests
 
 Para llevar a cabo los tests de la API se ha utilizado la herramienta [apitest](https://github.com/steinfletcher/apitest). Los tests escritos para las rutas se encuentran en el archivo [api_test.go](tests/api_test.go). Para ello, indicamos el *handler* que contiene las rutas a la biblioteca anterior, que se encarga de comprobar que funcionan como se espera. En cuanto al acceso a datos, se ha decidido mockear el mismo mediante las funciones `StartDataVal()`, `StartDataRes()` y `StartDataPre()` del archivo [routes.go](cmd/server/routes.go) donde se indica en cada caso el comportamiento que queremos que tenga. 
 
 ## Avances
+Dadas la nuevos requerimientos del proyecto, se ha trabajo en nuevas historias de usuario:
+* [HU12][hu12]: crear una asignatura para valorar.
+* [HU13][hu13]: crear una asignatura para reseñar.
+* [HU14][hu14]: ver una reseña de una asignatura mediante su identificador (hasta ahora solo se podían obtener todas las reseñas a la vez).
+* [HU15][hu15]: crear una asignatura para enviar preguntas.
+* [HU16][hu16]: ver una pregunta de una asignatura mediante su identificador (como las reseñas, solo se podían obtener todas las preguntas asociadas)
 
+Esta nuevas historias, han hecho que sea necesario incluir nuevas comprobaciones como la de comprobar que una asignatura está registrada y que se recoge en [este issue][i76]. 
+
+También se ha configurado el gestor de tareas para `build` e `install`. En `Go` tenemos las órdenes `go build` y `go install`. Para conocer el funcionamiento se ha consultado el enlace [Cómo crear e instalar programas de Go](https://www.digitalocean.com/community/tutorials/how-to-build-and-install-go-programs-es). Básicamente, `go build` crea los binarios ejecutables de la aplicación mientras que `go install`, en vez de dejar el ejecutable en el directorio actual, también lo mueve directamente al directorio `$GOPATH/bin`. Por ello, en la construcción no se va a llevar a cabo ninguna acción ya que podemos hacer lo mismo usando directamente `install`. Estas nuevas tareas se encuentran en el archivo [Taskfile.yml](Taskfile.yml).
 
 ## Documentación
 Puede consultar más información acerca del proyecto en los siguientes enlace:
@@ -159,3 +170,5 @@ Puede consultar más información acerca del proyecto en los siguientes enlace:
 [i70]: https://github.com/PedroMFC/EvaluaUGR/issues/70
 [i71]: https://github.com/PedroMFC/EvaluaUGR/issues/71
 [i72]: https://github.com/PedroMFC/EvaluaUGR/issues/72
+
+[i76]: https://github.com/PedroMFC/EvaluaUGR/issues/76
