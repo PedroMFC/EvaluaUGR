@@ -108,6 +108,7 @@ func TestPeorValoradaVacio(t *testing.T){
 	ValMapMock = mocks.IValSaver{} 
 
 	ValMapMock.On("ObtenerAsignaturas").Return([]string{})
+	ValMapMock.On("AsignaturaRegistrada", mock.Anything).Return(true)
 
 	menosValoradas := ValRepo.GetPeorValorada()
 	assert.Equal(t, 0, len(menosValoradas), "El array de valoraciones tiene que estar vacío")
