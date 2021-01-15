@@ -181,7 +181,7 @@ func NewAppGin() *applicationGin {
 
 	//Aquí definimos las rutas
 	//Valoraciones
-	router.PUT("valoraciones/asignatura/:asig", handlersval.CrearAsignatura(ValRepo))
+	router.PUT("/valoraciones/asignatura/:asig", handlersval.CrearAsignatura(ValRepo))
 	router.GET("/valoraciones/asignatura/:asig", handlersval.GetValoraciones(ValRepo))
 	router.POST("/valoraciones/asignatura/:asig/:val", handlersval.Valorar(ValRepo))
 	router.GET("/valoraciones/peor", handlersval.GetPeor(ValRepo))
@@ -189,7 +189,7 @@ func NewAppGin() *applicationGin {
 	router.GET("/valoraciones/asignatura/:asig/media", handlersval.GetMedia(ValRepo))
 
 	//Reseñas
-	router.PUT("resenias/asignatura/:asig", handlersres.CrearAsignatura(ResRepo))
+	router.PUT("/resenias/asignatura/:asig", handlersres.CrearAsignatura(ResRepo))
 	router.GET("/resenias/asignatura/:asig", handlersres.GetResenias(ResRepo))
 	router.GET("/resenias/asignatura/:asig/:id", handlersres.GetResenia(ResRepo))
 	router.POST("/resenias/asignatura/:asig", handlersres.Opinar(ResRepo))
@@ -197,7 +197,7 @@ func NewAppGin() *applicationGin {
 	router.POST("/resenias/asignatura/:asig/:id/nogusta", handlersres.NoGustaResenia(ResRepo))
 
 	//Preguntas
-	router.PUT("preguntas/asignatura/:asig", handlerspre.CrearAsignatura(PreRepo))
+	router.PUT("/preguntas/asignatura/:asig", handlerspre.CrearAsignatura(PreRepo))
 	router.GET("/preguntas/asignatura/:asig", handlerspre.GetPreguntas(PreRepo))
 	router.GET("/preguntas/asignatura/:asig/:id", handlerspre.GetPregunta(PreRepo))
 	router.POST("/preguntas/asignatura/:asig", handlerspre.Preguntar(PreRepo))
