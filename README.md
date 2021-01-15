@@ -33,7 +33,7 @@ Vemos que el más lento es `Gorilla/Mux` mientras que los otros dos, presentan u
 
 ## Diseño general de la API
 
-El diseño general de la API se puede ver en el archivo [routes.go](cmd/server/routes.go), más concretamente en la función `NewAppGin()`. La explicación de las mismas así como su relación de las historias de usuario se encuentra en el archivo [rutas.md](docs/rutas.md) de la documentación. En cuento a las funciones que se ejecutan en cada una de las rutas se encuentran en los archivos [handlersval.go](internal/microval/handlersval/handlersval.go) para las valoraciones, [handlersres.go](internal/microres/handlersres/handlersres.go) para las reseñas y [handlerspre.go](internal/micropre/handlerspre/handlerspre.go) para las preguntas. Se han intentado seguir las buenas prácticas en los códigos devueltos en las mismas: 201 (Created) cuando se crean las asignaturas o se envían valoraciones o reseñas por ejemplo, 404 (NotFound) si no existe el recurso, 400 (BadRequest) cuando la petición es incorrecta o 200 (StatusOk) cuando se obtienen correctamente los datos. Los tipos devueltos son tipo JSON. Para el caso de crear una asignatura, una valoración o indicar que una reseña ha gustado se usa directamente el path. Para enviar reseñas o preguntas que son datos de mayor longitud se usa el cuerpo de la petición.
+El diseño general de la API se puede ver en el archivo [routes.go](cmd/server/routes.go), más concretamente en la función `NewAppGin()`. La **explicación** de las mismas así como su relación de las historias de usuario se encuentra en el archivo [rutas.md][rutas] de la documentación. En cuento a las funciones que se ejecutan en cada una de las rutas se encuentran en los archivos [handlersval.go](internal/microval/handlersval/handlersval.go) para las valoraciones, [handlersres.go](internal/microres/handlersres/handlersres.go) para las reseñas y [handlerspre.go](internal/micropre/handlerspre/handlerspre.go) para las preguntas. Se han intentado seguir las buenas prácticas en los códigos devueltos en las mismas: 201 (Created) cuando se crean las asignaturas o se envían valoraciones o reseñas por ejemplo, 404 (NotFound) si no existe el recurso, 400 (BadRequest) cuando la petición es incorrecta o 200 (StatusOk) cuando se obtienen correctamente los datos. Los tipos devueltos son tipo JSON. En el caso de crear un recurso, por ejemplo una asignatura, se devuelve la cabecera Location con URI a la misma. Para el caso de crear una asignatura, una valoración o indicar que una reseña ha gustado se usa directamente el path. Para enviar reseñas o preguntas que son datos de mayor longitud se usa el cuerpo de la petición.
 
 ## Configuración distribuida y logs
 
@@ -79,6 +79,7 @@ Puede consultar más información acerca del proyecto en los siguientes enlace:
 [tests]: https://pedromfc.github.io/EvaluaUGR/docs/tests
 [dockerR]: https://pedromfc.github.io/EvaluaUGR/docs/docker_README
 [CI]: https://pedromfc.github.io/EvaluaUGR/docs/CI
+[rutas]: https://pedromfc.github.io/EvaluaUGR/docs/rutas
 
 [mAuxiliar]: https://github.com/PedroMFC/EvaluaUGR/milestone/2
 [mPreguntas]: https://github.com/PedroMFC/EvaluaUGR/milestone/5
