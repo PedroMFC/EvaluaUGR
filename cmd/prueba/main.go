@@ -25,7 +25,7 @@ import (
 
 
 
-/*Singleton of Truth*/
+/*Single Source of Truth*/
 var ValRepo modelsval.ValoracionRepositorio
 var ValMap  modelsval.ValoracionMap
 func StartData(){

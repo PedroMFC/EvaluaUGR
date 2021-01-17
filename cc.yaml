@@ -6,8 +6,7 @@ entidad:
   - internal/micropre/modelspre/pregunta.go
   - internal/micropre/modelspre/preguntasrepositorio.go
   - internal/micropre/modelspre/respuesta.go
-fichero_tareas: 
-  - Taskfile.yml
+fichero_tareas: Taskfile.yml
 lenguaje: go
 test: 
   - tests/preguntas_test.go
