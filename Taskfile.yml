@@ -57,4 +57,4 @@ tasks:
       Mediante esta orden instalamos el programa. Construye los ejecutables y los mueve directamente al
       directrio $GOPATH/bin
     cmds: 
-      - go install ./cmd
+      - go install ./...
