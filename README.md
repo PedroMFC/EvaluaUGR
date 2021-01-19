@@ -43,7 +43,7 @@ Para los logs, está la opción de utilizar la biblioteca [log](https://golang.o
  
 ## Tests
 
-Para llevar a cabo los tests de la API se ha utilizado la herramienta [apitest](https://github.com/steinfletcher/apitest). Los tests escritos para las rutas se encuentran en el archivo [api_test.go](tests/api_test.go). Para ello, indicamos el *handler* que contiene las rutas a la biblioteca anterior, que se encarga de comprobar que funcionan como se espera. En cuanto al acceso a datos, se ha decidido mockear el mismo mediante las funciones `StartDataVal()`, `StartDataRes()` y `StartDataPre()` del archivo [routes.go](cmd/server/routes.go) donde se indica en cada caso el comportamiento que queremos que tenga. 
+Para llevar a cabo los tests de la API se ha utilizado la herramienta [apitest](https://github.com/steinfletcher/apitest). Los tests escritos para las rutas se encuentran en el archivo [api_test.go](tests/api_test.go). Para ello, indicamos el *handler* que contiene las rutas a la biblioteca anterior, que se encarga de comprobar que funcionan como se espera. En cuanto al acceso a datos, se ha decidido mockear el mismo en archivo [mock_test.go](tests/mock_test.go) donde se indica en cada caso el comportamiento que queremos que tenga. 
 
 ## Avances
 Dadas la nuevos requerimientos del proyecto, se ha trabajo en nuevas historias de usuario:

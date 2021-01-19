@@ -13,7 +13,7 @@ VALORACIONES
 */
 func TestApiCrearAsigValoraciones(t *testing.T) {
 
-	server.StartDataVal()
+	StartDataVal(&server.ValRepo)
 
 	handler := server.NewAppGin().Router 
 	apitest.New().
@@ -32,7 +32,7 @@ func TestApiCrearAsigValoraciones(t *testing.T) {
 }
 
 func TestApiGetValoraciones(t *testing.T) {
-	server.StartDataVal()
+	StartDataVal(&server.ValRepo)
 	handler := server.NewAppGin().Router 
 
 	// Es correcta
@@ -61,7 +61,7 @@ func TestApiGetValoraciones(t *testing.T) {
 }
 
 func TestApiPostValoraciones(t *testing.T) {
-	server.StartDataVal()
+	StartDataVal(&server.ValRepo)
 	handler := server.NewAppGin().Router 
 
 	// Es correcta
@@ -98,7 +98,7 @@ func TestApiPostValoraciones(t *testing.T) {
 }
 
 func TestApiPeorValoraciones(t *testing.T) {
-	server.StartDataVal()
+	StartDataVal(&server.ValRepo)
 	handler := server.NewAppGin().Router 
 
 	// Accede a la peor
@@ -113,7 +113,7 @@ func TestApiPeorValoraciones(t *testing.T) {
 }
 
 func TestApiMejorValoraciones(t *testing.T) {
-	server.StartDataVal()
+	StartDataVal(&server.ValRepo)
 	handler := server.NewAppGin().Router 
 
 	// Accede a la mejor
@@ -128,7 +128,7 @@ func TestApiMejorValoraciones(t *testing.T) {
 }
 
 func TestApiGetMediaValoraciones(t *testing.T) {
-	server.StartDataVal()
+	StartDataVal(&server.ValRepo)
 	handler := server.NewAppGin().Router 
 
 	// Es correcta
@@ -160,7 +160,7 @@ func TestApiGetMediaValoraciones(t *testing.T) {
 RESEÑAS
 */
 func TestApiCrearAsigResenias(t *testing.T) {
-	server.StartDataRes()
+	StartDataRes(&server.ResRepo)
 	handler := server.NewAppGin().Router 
 
 	apitest.New().
@@ -179,7 +179,7 @@ func TestApiCrearAsigResenias(t *testing.T) {
 }
 
 func TestApiGetResenias(t *testing.T) {
-	server.StartDataRes()
+	StartDataRes(&server.ResRepo)
 	handler := server.NewAppGin().Router 
 
 	// Es correcta
@@ -208,7 +208,7 @@ func TestApiGetResenias(t *testing.T) {
 }
 
 func TestApiGetResenia(t *testing.T) {
-	server.StartDataRes()
+	StartDataRes(&server.ResRepo)
 	handler := server.NewAppGin().Router 
 
 	// Es correcta
@@ -255,7 +255,7 @@ func TestApiGetResenia(t *testing.T) {
 }
 
 func TestApiOpinarResenias(t *testing.T) {
-	server.StartDataRes()
+	StartDataRes(&server.ResRepo)
 	handler := server.NewAppGin().Router 
 
 	// Es correcta
@@ -296,7 +296,7 @@ func TestApiOpinarResenias(t *testing.T) {
 }
 
 func TestApiGustaResenias(t *testing.T) {
-	server.StartDataRes()
+	StartDataRes(&server.ResRepo)
 	handler := server.NewAppGin().Router 
 
 	// Es correcta
@@ -334,7 +334,7 @@ func TestApiGustaResenias(t *testing.T) {
 PREGUNTAS
 **/
 func TestApiCrearAsigPreguntas(t *testing.T) {
-	server.StartDataPre()
+	StartDataPre(&server.PreRepo)
 	handler := server.NewAppGin().Router 
 
 	apitest.New().
@@ -353,7 +353,7 @@ func TestApiCrearAsigPreguntas(t *testing.T) {
 }
 
 func TestApiGetPreguntas(t *testing.T) {
-	server.StartDataPre()
+	StartDataPre(&server.PreRepo)
 	handler := server.NewAppGin().Router
 
 	// Es correcta
@@ -382,7 +382,7 @@ func TestApiGetPreguntas(t *testing.T) {
 }
 
 func TestApiGetPregunta(t *testing.T) {
-	server.StartDataPre()
+	StartDataPre(&server.PreRepo)
 	handler := server.NewAppGin().Router
 
 	// Es correcta
@@ -429,7 +429,7 @@ func TestApiGetPregunta(t *testing.T) {
 }
 
 func TestApiPreguntarPreguntas(t *testing.T) {
-	server.StartDataPre()
+	StartDataPre(&server.PreRepo)
 	handler := server.NewAppGin().Router
 
 	// Es correcta
@@ -470,7 +470,7 @@ func TestApiPreguntarPreguntas(t *testing.T) {
 }
 
 func TestApiResponderPreguntas(t *testing.T) {
-	server.StartDataPre()
+	StartDataPre(&server.PreRepo)
 	handler := server.NewAppGin().Router 
 
 	// Es correcta
