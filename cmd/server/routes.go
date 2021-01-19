@@ -35,8 +35,9 @@ type applicationGin struct {
 // NO usamos esta función por ahora
 // La definimos con la configuración distribuida etcd
 // pero no llegamos a arrancar el microservicio
-func (a *applicationGin) Start(port string) {
+func (a *applicationGin) Start() {
 	const PortVarName = "PUERTO"
+	port := ""
 
 	// Conectamos con el cliente de etcd
 	cli, err := clientv3.New(clientv3.Config{
@@ -49,56 +50,45 @@ func (a *applicationGin) Start(port string) {
 		log.Fatal("No se ha podido conectar con el cliente", err)
 	}
 
-	// Si hemos introducido un puerto directamente empezamos a trabajar en ese puerto
+	//Cargamos el archivo .env
+	err = godotenv.Load()
+
+	if err != nil {
+		log.Info("No hay archivo .env")
+	}
+
+	// Si hay una entrada en el .env 
 	// Almacenamos en etcd
-	if port!= ""{
+	port = os.Getenv(PortVarName); 
+	log.WithFields(log.Fields{
+		"Puerto": port,
+	}).Info("Puerto leído desde .env ")
+
+	if port != ""{
+		log.Info("Usamos la configuración del .env")
 		ctx, _ := context.WithTimeout(context.Background(), 5 * time.Second)
-		_, err := cli.Put(ctx, PortVarName, port) 
+		_, err := cli.Put(ctx, PortVarName, port)
 
 		if err != nil{
 			log.Fatal("No se ha podido escribir la clave", err)
 		}
-	// Si no, leemos desde el archivo .env si existe
-	} else{ 
-		err := godotenv.Load()
+	// Si falla con el .env, usamos un puerto por defecto
+	//Almacenamos en etcd
+	} else{
+		log.Info("Usamos la configuración por defecto")
+		port = "8080"
+		ctx, _ := context.WithTimeout(context.Background(), 5 * time.Second)
+		_, err := cli.Put(ctx, PortVarName, port)
 
-		if err != nil {
-			log.Info("No hay archivo .env")
+		if err != nil{
+			log.Fatal("No se ha podido escribir la clave", err)
 		}
-
-		// Si hay una entrada en el .env
-		//Almacenamos en etcd
-		port = os.Getenv(PortVarName); 
-		log.WithFields(log.Fields{
-			"Puerto": port,
-		}).Info("Puerto leído desde .env")
-
-		if port != ""{
-			log.Info("Usamos la configuración del .env")
-			ctx, _ := context.WithTimeout(context.Background(), 5 * time.Second)
-			_, err := cli.Put(ctx, PortVarName, port)
-
-			if err != nil{
-				log.Fatal("No se ha podido escribir la clave", err)
-			}
-		// Si las anteriores han fallado, usamos un puerto por defecto
-		//Almacenamos en etcd
-		} else{
-			log.Info("Usamos la configuración por defecto")
-			port = "8080"
-			ctx, _ := context.WithTimeout(context.Background(), 5 * time.Second)
-			_, err := cli.Put(ctx, PortVarName, port)
-
-			if err != nil{
-				log.Fatal("No se ha podido escribir la clave", err)
-			}
-		}
-
 	}
+
 
 	log.WithFields(log.Fields{
 		"Puerto": port,
-	}).Info("GIN se ha conectado a un puerto")
+	}).Info("GIN se ha conectado a un puerto: ")
 	log.Fatal(http.ListenAndServe("localhost:" + port, a.Router))
 }
 
