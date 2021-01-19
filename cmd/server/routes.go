@@ -37,7 +37,9 @@ type applicationGin struct {
 // pero no llegamos a arrancar el microservicio
 func (a *applicationGin) Start() {
 	const PortVarName = "PUERTO"
+	const AddVarName = "ADDRESS"
 	port := ""
+	add := ""
 
 	// Conectamos con el cliente de etcd
 	cli, err := clientv3.New(clientv3.Config{
@@ -56,6 +58,8 @@ func (a *applicationGin) Start() {
 	if err != nil {
 		log.Info("No hay archivo .env")
 	}
+
+	/* PUERTO */
 
 	// Si hay una entrada en el .env 
 	// Almacenamos en etcd
@@ -85,11 +89,41 @@ func (a *applicationGin) Start() {
 		}
 	}
 
+	/* DIRECCIÓN */
+	// Si hay una entrada en el .env 
+	// Almacenamos en etcd
+	add = os.Getenv(AddVarName); 
+	log.WithFields(log.Fields{
+		"Dirección": add,
+	}).Info("Dirección leída desde .env ")
+
+	if add != ""{
+		log.Info("Usamos la dirección del .env")
+		ctx, _ := context.WithTimeout(context.Background(), 5 * time.Second)
+		_, err := cli.Put(ctx, AddVarName, add)
+
+		if err != nil{
+			log.Fatal("No se ha podido escribir la clave", err)
+		}
+	// Si falla con el .env, usamos un puerto por defecto
+	//Almacenamos en etcd
+	} else{
+		log.Info("Usamos la configuración para la dirección por defecto")
+		add = "localhost"
+		ctx, _ := context.WithTimeout(context.Background(), 5 * time.Second)
+		_, err := cli.Put(ctx, AddVarName, add)
+
+		if err != nil{
+			log.Fatal("No se ha podido escribir la clave", err)
+		}
+	}
+
 
 	log.WithFields(log.Fields{
 		"Puerto": port,
-	}).Info("GIN se ha conectado a un puerto: ")
-	log.Fatal(http.ListenAndServe("localhost:" + port, a.Router))
+		"Dirección": add,
+	}).Info("GIN se ha conectado a un puerto y una dirección: ")
+	log.Fatal(http.ListenAndServe(add + ":" + port, a.Router))
 }
 
 
