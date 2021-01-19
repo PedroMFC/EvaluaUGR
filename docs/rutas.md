@@ -40,6 +40,7 @@ Estamos en la misma situación que en el caso anterior pero para obtener la asig
 | ORDEN | RUTA | HU | DESCRIPCIÓN | FUNCIÓN | 
 | -- | -- | -- | -- | -- |
 | GET | /valoraciones/asignatura/:asig/media | [HU3][hu3] | Obtener valoración media de una asignatura | `GetMedia` |
+
 Finalmente, mediante esta ruta se obtiene con `GET` la valoración media de una asignatura, y por ello partimos del URI de la misma. Si no ha habido ningún problema se devuelve dicha nota media junto con el código 200. Si no existe la asignatura se informa con un 404 mientras que si la asignatura no tiene el formato correcto es un 400. 
 
 
