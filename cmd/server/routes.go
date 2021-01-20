@@ -35,9 +35,13 @@ type applicationGin struct {
 // NO usamos esta función por ahora
 // La definimos con la configuración distribuida etcd
 // pero no llegamos a arrancar el microservicio
+const PortVarName = "PUERTO"
+const AddVarName = "ADDRESS"
+const PortDefault = "8080"
+const AddDefault = "localhost"
+
 func (a *applicationGin) Start() {
-	const PortVarName = "PUERTO"
-	const AddVarName = "ADDRESS"
+	
 	port := ""
 	add := ""
 
@@ -80,7 +84,7 @@ func (a *applicationGin) Start() {
 	//Almacenamos en etcd
 	} else{
 		log.Info("Usamos la configuración por defecto")
-		port = "8080"
+		port = PortDefault
 		ctx, _ := context.WithTimeout(context.Background(), 5 * time.Second)
 		_, err := cli.Put(ctx, PortVarName, port)
 
@@ -109,7 +113,7 @@ func (a *applicationGin) Start() {
 	//Almacenamos en etcd
 	} else{
 		log.Info("Usamos la configuración para la dirección por defecto")
-		add = "localhost"
+		add = AddDefault
 		ctx, _ := context.WithTimeout(context.Background(), 5 * time.Second)
 		_, err := cli.Put(ctx, AddVarName, add)
 
