@@ -36,6 +36,14 @@ ENV PATH=$PATH:/go/bin:/usr/local/go/bin \
     GOOS=linux \
     GOARCH=amd64
 
+# Exponemos puertos
+EXPOSE 8080
+
+# Añadir docker-compose-wait tool 
+ENV WAIT_VERSION 2.7.2
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/$WAIT_VERSION/wait /wait
+RUN chmod +x /wait
+
 # Cambiamos al nuevo usuario e incluimos el directorio de trabajo donde vamos a empezar
 USER evaluaugr
 WORKDIR /app/test
