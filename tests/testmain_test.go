@@ -21,6 +21,7 @@ var ResMapMock mocks.IResSaver
 
 var PreRepo modelspre.PreguntasRepositorio
 var PreMap  modelspre.PreguntasMap
+var PreDB modelspre.PreguntasDB
 var PreMapMock mocks.IPreSaver
 
 func TestMain(m *testing.M) {
@@ -110,6 +111,31 @@ func createResDBTest(){
 	
 	sqlStatement = `INSERT INTO res_table VALUES ('AAA', 'Me gusta', 0, 0, 0);`
 	_,err = ResDB.DB.Exec(sqlStatement)
+
+	if err != nil {
+		panic(err)
+	}
+}
+
+func createPreDBTest(){
+	PreDB = *modelspre.NewPreguntasDB()
+
+	sqlStatement := `INSERT INTO asig_pre_table VALUES ('AAA');`
+	_,err := PreDB.DB.Exec(sqlStatement)
+
+	if err != nil {
+		panic(err)
+	}
+	
+	sqlStatement = `INSERT INTO pre_table VALUES ('AAA', 'Esto es una pregunta', 0);`
+	_,err = PreDB.DB.Exec(sqlStatement)
+
+	if err != nil {
+		panic(err)
+	}
+
+	sqlStatement = `INSERT INTO res_pre_table VALUES ('AAA', 0, 'Esto es una respuesta');`
+	_,err = PreDB.DB.Exec(sqlStatement)
 
 	if err != nil {
 		panic(err)
