@@ -16,6 +16,7 @@ var ValMapMock mocks.IValSaver
 
 var ResRepo modelsres.ReseniasRepositorio
 var ResMap  modelsres.ReseniasMap
+var ResDB modelsres.ReseniasDB
 var ResMapMock mocks.IResSaver
 
 var PreRepo modelspre.PreguntasRepositorio
@@ -90,6 +91,25 @@ func createValDBTest(){
 
 	sqlStatement := `INSERT INTO val_table VALUES ('AAA','{1,2}');`
 	_,err := ValDB.DB.Exec(sqlStatement)
+
+	if err != nil {
+		panic(err)
+	}
+}
+
+
+func createResDBTest(){
+	ResDB = *modelsres.NewReseniasDB()
+
+	sqlStatement := `INSERT INTO asig_res_table VALUES ('AAA');`
+	_,err := ResDB.DB.Exec(sqlStatement)
+
+	if err != nil {
+		panic(err)
+	}
+	
+	sqlStatement = `INSERT INTO res_table VALUES ('AAA', 'Me gusta', 0, 0, 0);`
+	_,err = ResDB.DB.Exec(sqlStatement)
 
 	if err != nil {
 		panic(err)

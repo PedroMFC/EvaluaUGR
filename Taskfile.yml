@@ -58,7 +58,7 @@ tasks:
       Levanta el clúster para poder testear toda la aplicación. Devolvemos el código del servicio para saber
       si los tests se han ejecutado correctamente
     cmds: 
-      - docker-compose -f docker-compose-test.yml up --abort-on-container-exit --exit-code-from app --build
+      - docker-compose -f docker-compose-test.yml up --abort-on-container-exit --exit-code-from app 
 
   build:
     desc: generar ejecutables
