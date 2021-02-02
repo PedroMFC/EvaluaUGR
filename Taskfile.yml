@@ -20,11 +20,22 @@ tasks:
       - gofmt -w . 
 
   test:
-    desc: ejecutar tests
+    desc: ejecutar tests (salvo conexión a BD)
     summary: |
       Tests
 
-      Automatización de la ejecución de los tests
+      Automatización de la ejecución de los tests. Utilizamos short para no ejecutar los test de la base de datos ya que 
+      debemos asegurarnos que esta está arrancada
+    cmds:
+      - go test -short ./tests/ -v
+
+  test-complete:
+    desc: ejecutar tests includidos conexión a base de datos
+    summary: |
+      Tests
+
+      Automatización de la ejecución de los tests. NOTA: debe estar disponible la base de datos postgresql en el puerto 5432.
+      Se recomienda usar las orden 'docker-compose-test' para ejecutar estos tests
     cmds:
       - go test ./tests/ -v
 
@@ -38,6 +49,16 @@ tasks:
       con la orden --rm
     cmds: 
       - docker run --rm -t -v `pwd`:/app/test pedromfc/evaluaugr
+
+  docker-compose-test:
+    desc: ejecutar docker-compose para tests en local
+    summary: |
+      Ejecución de docker-compose
+
+      Levanta el clúster para poder testear toda la aplicación. Devolvemos el código del servicio para saber
+      si los tests se han ejecutado correctamente
+    cmds: 
+      - docker-compose -f docker-compose-test.yml up --abort-on-container-exit --exit-code-from app --build
 
   build:
     desc: generar ejecutables
