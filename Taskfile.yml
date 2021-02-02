@@ -79,3 +79,15 @@ tasks:
       directrio $GOPATH/bin
     cmds: 
       - go install ./...
+
+  run:
+    deps: [install]
+    desc: arrancar el servicio
+    summary: |
+      Comenzar el microservico
+
+      Mediante esta orden, lo que hacemos es iniciar el servicio. NOTA: se recomienda usar la orden 'docker-compose-deploy' 
+      para arrancar el servicio
+
+    cmds:
+      - go run ./cmd/main/main.go
