@@ -2,7 +2,7 @@ language: minimal
 
 env:
   global:
-    - DOCKER_COMPOSE_VERSION=1.28
+    - DOCKER_COMPOSE_VERSION=1.27.4
     - POSTGRES_USER=postgres     # Base de datos
     - POSTGRES_PASSWORD=postgres
     - POSTGRES_DB=postgres
