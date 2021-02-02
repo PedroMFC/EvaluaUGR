@@ -36,7 +36,7 @@ services:
       - mynet
 
     command: ["sh","-c","/wait"]
-    command: ["task", "test-complete"]
+    #command: ["task", "test-complete"]
   
     
 # Networks to be created to facilitate communication between containers
