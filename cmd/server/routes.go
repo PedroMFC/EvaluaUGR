@@ -23,9 +23,22 @@ import (
 
 
 var ValRepo modelsval.ValoracionRepositorio
+var ValDB  modelsval.ValoracionDB
 var ResRepo modelsres.ReseniasRepositorio
+var ResDB modelsres.ReseniasDB
 var PreRepo modelspre.PreguntasRepositorio
+var PreDB modelspre.PreguntasDB
 
+func StartData(){
+	ValDB = *modelsval.NewValoracionDB()
+	ValRepo = *modelsval.NewValoracionsRepositorio(&ValDB)
+
+	ResDB = *modelsres.NewReseniasDB()
+	ResRepo = *modelsres.NewReseniasRepositorio(&ResDB)
+	
+	PreDB = *modelspre.NewPreguntasDB()
+	PreRepo = *modelspre.NewPreguntasRepositorio(&PreDB)
+}
 
 type applicationGin struct {
 	Router *gin.Engine
