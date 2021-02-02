@@ -59,14 +59,16 @@ func (a *applicationGin) Start() {
 	add := ""
 
 	// Conectamos con el cliente de etcd
+	etcdHost := os.Getenv("ETCD_HOST") 
+	etcdPort := os.Getenv("ETCD_PORT") 
 	cli, err := clientv3.New(clientv3.Config{
-		Endpoints:   []string{"localhost:2379", "localhost:22379", "localhost:32379"},
-		DialTimeout: 5 * time.Second,
+		Endpoints:   []string{etcdHost + ":" + etcdPort},
+		DialTimeout: 20 * time.Second,
 	})
 
 	// Vemos que hayamos podido hacerlo
 	if err != nil{
-		log.Fatal("No se ha podido conectar con el cliente", err)
+		log.Println("No se ha podido conectar con el cliente", err)
 	}
 
 	//Cargamos el archivo .env
