@@ -1,44 +1,12 @@
 language: minimal  
 
-env:
-  global:
-    - DOCKER_COMPOSE_VERSION=1.27.4
-    - POSTGRES_USER=postgres     # Base de datos
-    - POSTGRES_PASSWORD=postgres
-    - POSTGRES_DB=postgres
-    - DATABASE_HOST=postgres
-    - GIN_MODE=debug  # Aplicación
-    - DB_USER=postgres 
-    - DB_PASSWORD=postgres
-    - DB_PORT=5432
-    - DB_NAME=postgres
-    - DB_HOST=postgres
-    - WAIT_HOSTS=postgres:5432
-    - WAIT_HOSTS_TIMEOUT=300
-    - WAIT_SLEEP_INTERVAL=30
-    - WAIT_HOST_CONNECT_TIMEOUT=30
-
 # Necesitamos los servicios de Docker
 services:
   - docker
 
-before_install:
-  - sudo rm /usr/local/bin/docker-compose
-  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-  - chmod +x docker-compose
-  - sudo mv docker-compose /usr/local/bin
-  - docker-compose --version
-
 install:
   # Descargamos el contenedor que hemos creado para ejecutar los tests
   - docker pull pedromfc/evaluaugr
-  - docker pull postgres:alpine
-
-before_script:
-  - docker-compose -f docker-compose-test.yml up
 
 script:
-  - docker-compose exec app task test-complete
-
-after_script:
-  - docker-compose down
+  - docker run -t -v $TRAVIS_BUILD_DIR:/app/test pedromfc/evaluaugr
