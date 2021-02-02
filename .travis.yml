@@ -1,25 +1,26 @@
 language: minimal  
 
+env:
+  global:
+    - DOCKER_COMPOSE_VERSION=3.0
+    - POSTGRES_USER=postgres     # Base de datos
+    - POSTGRES_PASSWORD=postgres
+    - POSTGRES_DB=postgres
+    - DATABASE_HOST=postgres
+    - GIN_MODE=debug  # Aplicación
+    - DB_USER=postgres 
+    - DB_PASSWORD=postgres
+    - DB_PORT=5432
+    - DB_NAME=postgres
+    - DB_HOST=postgres
+    - WAIT_HOSTS=postgres:5432
+    - WAIT_HOSTS_TIMEOUT=300
+    - WAIT_SLEEP_INTERVAL=30
+    - WAIT_HOST_CONNECT_TIMEOUT=30
+
 # Necesitamos los servicios de Docker
 services:
   - docker
-
-env:
-  - DOCKER_COMPOSE_VERSION=3.0
-  - POSTGRES_USER=postgres     # Base de datos
-  - POSTGRES_PASSWORD=postgres
-  - POSTGRES_DB=postgres
-  - DATABASE_HOST=postgres
-  - GIN_MODE=debug
-  - DB_USER=postgres 
-  - DB_PASSWORD=postgres
-  - DB_PORT=5432
-  - DB_NAME=postgres
-  - DB_HOST=postgres
-  - WAIT_HOSTS=postgres:5432
-  - WAIT_HOSTS_TIMEOUT=300
-  - WAIT_SLEEP_INTERVAL=30
-  - WAIT_HOST_CONNECT_TIMEOUT=30
 
 before_install:
   - sudo rm /usr/local/bin/docker-compose
