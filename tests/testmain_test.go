@@ -11,6 +11,7 @@ import (
 
 var ValRepo modelsval.ValoracionRepositorio
 var ValMap  modelsval.ValoracionMap
+var ValDB modelsval.ValoracionDB
 var ValMapMock mocks.IValSaver
 
 var ResRepo modelsres.ReseniasRepositorio
@@ -78,6 +79,19 @@ func setup() {
 func teardown() {
 	ValRepo = modelsval.ValoracionRepositorio{} //Eliniminamos la estructura
 	ResRepo = modelsres.ReseniasRepositorio{}
+	PreRepo = modelspre.PreguntasRepositorio{}
+
 	fmt.Printf("\033[1;36m%s\033[0m", "> Teardown completed")
 	fmt.Printf("\n")
+}
+
+func createValDBTest(){
+	ValDB = *modelsval.NewValoracionDB()
+
+	sqlStatement := `INSERT INTO val_table VALUES ('AAA','{1,2}');`
+	_,err := ValDB.DB.Exec(sqlStatement)
+
+	if err != nil {
+		panic(err)
+	}
 }

@@ -8,6 +8,7 @@ require (
 	github.com/gorilla/mux v1.8.0
 	github.com/joho/godotenv v1.3.0
 	github.com/labstack/echo/v4 v4.1.17
+	github.com/lib/pq v1.9.0
 	github.com/pytimer/mux-logrus v0.0.0-20200505085744-ce5a5e748151
 	github.com/rivo/uniseg v0.1.0
 	github.com/sirupsen/logrus v1.7.0
