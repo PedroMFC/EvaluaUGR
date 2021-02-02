@@ -16,7 +16,7 @@ import (
 
 	"go.etcd.io/etcd/clientv3"
 	"golang.org/x/net/context"
-	"github.com/joho/godotenv"
+	//"github.com/joho/godotenv"
 	"os"
 	"time"
 )
@@ -71,13 +71,6 @@ func (a *applicationGin) Start() {
 		log.Println("No se ha podido conectar con el cliente", err)
 	}
 
-	//Cargamos el archivo .env
-	err = godotenv.Load()
-
-	if err != nil {
-		log.Info("No hay archivo .env")
-	}
-
 	/* PUERTO */
 
 	// Si hay una entrada en el .env 
@@ -93,7 +86,7 @@ func (a *applicationGin) Start() {
 		_, err := cli.Put(ctx, PortVarName, port)
 
 		if err != nil{
-			log.Fatal("No se ha podido escribir la clave", err)
+			log.Println("No se ha podido escribir la clave", err)
 		}
 	// Si falla con el .env, usamos un puerto por defecto
 	//Almacenamos en etcd
@@ -104,7 +97,7 @@ func (a *applicationGin) Start() {
 		_, err := cli.Put(ctx, PortVarName, port)
 
 		if err != nil{
-			log.Fatal("No se ha podido escribir la clave", err)
+			log.Println("No se ha podido escribir la clave", err)
 		}
 	}
 
@@ -122,7 +115,7 @@ func (a *applicationGin) Start() {
 		_, err := cli.Put(ctx, AddVarName, add)
 
 		if err != nil{
-			log.Fatal("No se ha podido escribir la clave", err)
+			log.Println("No se ha podido escribir la clave", err)
 		}
 	// Si falla con el .env, usamos un puerto por defecto
 	//Almacenamos en etcd
@@ -133,7 +126,7 @@ func (a *applicationGin) Start() {
 		_, err := cli.Put(ctx, AddVarName, add)
 
 		if err != nil{
-			log.Fatal("No se ha podido escribir la clave", err)
+			log.Println("No se ha podido escribir la clave", err)
 		}
 	}
 
