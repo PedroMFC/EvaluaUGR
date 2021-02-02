@@ -60,6 +60,15 @@ tasks:
     cmds: 
       - docker-compose -f docker-compose-test.yml up --abort-on-container-exit --exit-code-from app 
 
+  docker-compose:
+    desc: ejecutar docker-compose para arrancar el servicio
+    summary: |
+      Ejecución de docker-compose
+
+      Levanta el clúster para poder ejecutar toda la aplicación.
+    cmds: 
+      - docker-compose up 
+
   build:
     desc: generar ejecutables
     summary: |
