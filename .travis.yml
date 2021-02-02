@@ -2,7 +2,7 @@ language: minimal
 
 env:
   global:
-    - DOCKER_COMPOSE_VERSION=3.0
+    - DOCKER_COMPOSE_VERSION=3.1
     - POSTGRES_USER=postgres     # Base de datos
     - POSTGRES_PASSWORD=postgres
     - POSTGRES_DB=postgres
@@ -34,4 +34,4 @@ install:
   - docker pull postgres:alpine
 
 script:
-  - docker-compose -f docker-compose-test.yml up --abort-on-container-exit --exit-code-from app --build
+  - docker-compose -f docker-compose-test.yml up --abort-on-container-exit --exit-code-from app 
