@@ -9,7 +9,15 @@
 # EvaluaUGR
 Proyecto para la asignatura de Cloud Computing del Máster en Ingeniería Informática.
 
+## Clúster
 
+## Configuración de los contenedores
+
+## Ficheros de composición
+
+## Testeo
+
+## Tests de velocidad y avances
 
 ## Documentación
 Puede consultar más información acerca del proyecto en los siguientes enlace:
@@ -22,7 +30,7 @@ Puede consultar más información acerca del proyecto en los siguientes enlace:
 * [Test][tests].
 * [Docker][dockerR].
 * [Integración continua][CI].
-* [Microservicio][Micro].
+* [Microservicio][micro].
 
 [configGitHub]: https://pedromfc.github.io/EvaluaUGR/docs/configuracion_github
 [herramientas]: https://pedromfc.github.io/EvaluaUGR/docs/seleccion_herramientas
