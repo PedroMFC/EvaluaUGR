@@ -2,8 +2,10 @@ package server
 
 import (
 	log "github.com/sirupsen/logrus"
+	"github.com/bshuster-repo/logrus-logstash-hook"
 	"github.com/PedroMFC/EvaluaUGR/internal/customlog"
 	"net/http"
+	"net"
 
 	"github.com/gin-gonic/gin"
 
@@ -152,6 +154,18 @@ func NewAppGin() *applicationGin {
 		TimestampFormat : "2006-01-02 15:04:05",
 	})
 	logger.Formatter = &log.TextFormatter{}
+
+	// Incluimos logstash
+	logstashHost := os.Getenv("LOG_HOST") 
+	logstassPort := os.Getenv("LOG_PORT") 
+	conn, err := net.Dial("tcp", logstashHost + ":" + logstassPort)
+    if err != nil {
+        log.Println(err)
+	} else {
+		hook := logrustash.New(conn, logrustash.DefaultFormatter(log.Fields{"type": "EvaluaUGR"}))
+		logger.AddHook(hook)
+		log.AddHook(hook)
+	}
 
 	router.Use(customlog.Logger(logger), gin.Recovery())
 

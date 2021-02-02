@@ -3,6 +3,7 @@ module github.com/PedroMFC/EvaluaUGR
 go 1.15
 
 require (
+	github.com/bshuster-repo/logrus-logstash-hook v1.0.0
 	github.com/gin-gonic/gin v1.6.3
 	github.com/golang/protobuf v1.4.2 // indirect
 	github.com/gorilla/mux v1.8.0
