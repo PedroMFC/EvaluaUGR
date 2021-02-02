@@ -1,0 +1,45 @@
+version: '3'
+
+services: 
+  postgres:
+    image: postgres:alpine
+    container_name: db_postgres
+    environment:
+      - POSTGRES_USER=${DB_USER}  
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - DATABASE_HOST=${DB_HOST} 
+    ports:
+      - '5432:5432'
+    networks:
+      - mynet
+      
+  app:
+    image: pedromfc/evaluaugr
+    container_name: aplicacion
+    depends_on:
+      - postgres
+    environment: 
+      - GIN_MODE=${GIN_MODE}
+      - DB_USER=${DB_USER}  
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      - DB_HOST=${DB_HOST} 
+      - WAIT_HOSTS=${DB_HOST}:${DB_PORT}
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=5
+      - WAIT_HOST_CONNECT_TIMEOUT=5
+    volumes:
+      - $PWD:/app/test
+    networks:
+      - mynet
+
+    command: ["sh","-c","/wait"]
+    command: ["task", "test-complete"]
+  
+    
+# Networks to be created to facilitate communication between containers
+networks:
+  mynet:
+    driver: bridge
