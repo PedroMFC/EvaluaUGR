@@ -32,7 +32,7 @@ before_install:
 install:
   # Descargamos el contenedor que hemos creado para ejecutar los tests
   - docker pull pedromfc/evaluaugr
-  - docker pull postgres:alpine
+  - docker pull postgres:9.6-alpine
 
 script:
   - docker-compose -f docker-compose.travis.yml up --abort-on-container-exit --exit-code-from app
