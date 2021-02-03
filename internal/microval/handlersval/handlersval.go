@@ -95,7 +95,7 @@ func GetMejor(repo modelsval.ValoracionRepositorio) gin.HandlerFunc {
 func GetMedia(repo modelsval.ValoracionRepositorio) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		asig := c.Param("asig")
-		media, err := repo.GetValoraciones(asig)
+		media, err := repo.GetMedia(asig)
 
 		if err != nil{
 			if err.Error() == "Algo salió mal en la valoración:  la asignatura no está registrada"{
