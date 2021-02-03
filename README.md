@@ -40,15 +40,18 @@ El archivo [docker-compose.yml](docker-compose.yml) está más pensado para el d
 
 En cuanto a los test, ya teníamos tests de unidad para las clases que usaban la tabla hash (y ahora incluimos para la base de datos) y tests de integración mockeados. Posteriormente, veremos tests de velocidad. Por ello, ahora vamos a ver mediante tests funcionales si la aplicación se comporta como esperamos. Para ello, lanzamos el docker-compose con la aplicación mediante la orden `task docker-compose-up` (si quisiéramos lanar los tests usaríamos `task docker-compose-test`). En principio, se pensó usar algún ORM com [Gorm](https://gorm.io/docs/index.html) para hacer este proceso más fácil. Sin embargo, no funcionaba correctamente el almacenamiento en la base de datos por lo que se ha usado directamente mediante órdenes, aunque sea algo más complejo. De todos modos, lso ORM tienen ciertas desventajas, como por ejemplo [ralentizar la aplicación](https://www.calhoun.io/subtle-issues-with-orms-and-how-to-avoid-them/). 
 
-.....
-
-Log
-
-.....
 
 ## Tests de velocidad y avances
-Para los tests de velocidad......
+Para los tests de velocidad, ya se hicieron unas pequeñas pruebas para comparar los *frameworks*. Ahora, se van a hacer algunos tests para comprobar la velocidad del servicio arrancado de manera local. Seguimos usando el paquete de *benchmarking* que viene con el lenguaje. Sin embargo, se va a usar de manera complementaria con [hrtesting](https://medium.com/@egonelbre/benchmarking-with-details-1cf3e61d459d) que nos da una mayor cantidad de información. Para ello, se han llevado a cabo operaciones de `PUT`, `GET` y `POST` como se observa en el archivo [benchmark_test.go](tests/benchmark_test.go). Los resultados han sido.
 
+| ORDEN | OPERACIONES | ns/op | ns/p50 | ns/p90 | B/op |
+| -- | -- | -- | -- | -- | -- |
+| PUT | 50| 24204518 | 22221130 | 33406516 | 15126 |
+| POST | 39 | 37553121 | 33441512 | 55592635 | 17012 |
+| GET | 634 | 1697939 | 1525714 | 1932750 | 15594 |
+
+Vemos que la operación más rápida es `GET` seguida de `PUT` y luego `POST`. De cada una de ellas, el tiempo medio por operación ha sido  1.69 ms, 37.55ms y 24.20 ms.
+ 
 En cuanto a los avances del proyecto, como se ha comentado ahora tenemos conexión a base de datos. Por ello, ha sido neceario crear las clases [Valoraciondb](internal/microval/modelsval/valoraciondb.go), [ReseniasDB](internal/microres/modelsres/reseniasdb.go) y [PreguntasDB](internal/micropre/modelspre/preguntasdb.go). Estas clases tienen sus correspondientes archivos de test: [valdbsaver_test.go](tests/valdbsaver_test.go), [resdbsaver_test.go](tests/resdbsaver_test.go) y [predbsaver_test.go](tests/predbsaver_test.go). Para su implementación se han usado los tutoriales [Using PostgreSQL with Go](https://www.calhoun.io/using-postgresql-with-go/). También se ha creado una nueva clase [Config](internal/config.go) que contiene información acerca de la configuración de la aplicación para tener la misma en un único lugar. También se han considerado las propuestas acerca de los URIs hechas en correcciones anteriores. Tras pensarlo detenidamente, se [ha decidido cambiarlo][i95] y se puede ver claramente en el archivo modifidicado de [rutas](docs/rutas.md).
 
 ## Documentación
