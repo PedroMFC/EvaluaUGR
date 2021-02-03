@@ -49,7 +49,7 @@ Log
 ## Tests de velocidad y avances
 Para los tests de velocidad......
 
-En cuanto a los avances del proyecto, como se ha comentado ahora tenemos conexión a base de datos. Por ello, ha sido neceario crear las clases [Valoraciondb](internal/microval/modelsval/valoraciondb.go), [ReseniasDB](internal/microres/modelsres/reseniasdb.go) y [PreguntasDB](internal/micropre/modelspre/preguntasdb.go). Estas clases tienen sus correspondientes archivos de test: [valdbsaver_test.go](tests/valdbsaver_test.go), [resdbsaver_test.go](tests/resdbsaver_test.go) y [predbsaver_test.go](tests/predbsaver_test.go). Para su implementación se han usado los tutoriales [Using PostgreSQL with Go](https://www.calhoun.io/using-postgresql-with-go/). 
+En cuanto a los avances del proyecto, como se ha comentado ahora tenemos conexión a base de datos. Por ello, ha sido neceario crear las clases [Valoraciondb](internal/microval/modelsval/valoraciondb.go), [ReseniasDB](internal/microres/modelsres/reseniasdb.go) y [PreguntasDB](internal/micropre/modelspre/preguntasdb.go). Estas clases tienen sus correspondientes archivos de test: [valdbsaver_test.go](tests/valdbsaver_test.go), [resdbsaver_test.go](tests/resdbsaver_test.go) y [predbsaver_test.go](tests/predbsaver_test.go). Para su implementación se han usado los tutoriales [Using PostgreSQL with Go](https://www.calhoun.io/using-postgresql-with-go/). También se ha creado una nueva clase [Config](internal/config.go) que contiene información acerca de la configuración de la aplicación para tener la misma en un único lugar. También se han considerado las propuestas acerca de los URIs hechas en correcciones anteriores. Tras pensarlo detenidamente, se [ha decidido cambiarlo][i95] y se puede ver claramente en el archivo modifidicado de [rutas](docs/rutas.md).
 
 ## Documentación
 Puede consultar más información acerca del proyecto en los siguientes enlace:
@@ -169,3 +169,5 @@ Puede consultar más información acerca del proyecto en los siguientes enlace:
 [i72]: https://github.com/PedroMFC/EvaluaUGR/issues/72
 
 [i76]: https://github.com/PedroMFC/EvaluaUGR/issues/76
+
+[i95]: https://github.com/PedroMFC/EvaluaUGR/issues/95
