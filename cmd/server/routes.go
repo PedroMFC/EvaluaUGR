@@ -15,6 +15,7 @@ import (
 	"github.com/PedroMFC/EvaluaUGR/internal/microres/handlersres"
 	"github.com/PedroMFC/EvaluaUGR/internal/micropre/modelspre"
 	"github.com/PedroMFC/EvaluaUGR/internal/micropre/handlerspre"
+	"github.com/PedroMFC/EvaluaUGR/internal"
 
 	"go.etcd.io/etcd/clientv3"
 	"golang.org/x/net/context"
@@ -50,19 +51,16 @@ type applicationGin struct {
 // NO usamos esta función por ahora
 // La definimos con la configuración distribuida etcd
 // pero no llegamos a arrancar el microservicio
-const PortVarName = "PUERTO"
-const AddVarName = "ADDRESS"
-const PortDefault = "8080"
-const AddDefault = "localhost"
 
 func (a *applicationGin) Start() {
 	
+	config := internal.GetConfig()
 	port := ""
 	add := ""
 
 	// Conectamos con el cliente de etcd
-	etcdHost := os.Getenv("ETCD_HOST") 
-	etcdPort := os.Getenv("ETCD_PORT") 
+	etcdHost := os.Getenv(config.EtcdHost) 
+	etcdPort := os.Getenv(config.EtcdPort) 
 	cli, err := clientv3.New(clientv3.Config{
 		Endpoints:   []string{etcdHost + ":" + etcdPort},
 		DialTimeout: 20 * time.Second,
@@ -77,7 +75,7 @@ func (a *applicationGin) Start() {
 
 	// Si hay una entrada en el .env 
 	// Almacenamos en etcd
-	port = os.Getenv(PortVarName); 
+	port = os.Getenv(config.PortVarName); 
 	log.WithFields(log.Fields{
 		"Puerto": port,
 	}).Info("Puerto leído desde .env ")
@@ -85,7 +83,7 @@ func (a *applicationGin) Start() {
 	if port != ""{
 		log.Info("Usamos la configuración del .env")
 		ctx, _ := context.WithTimeout(context.Background(), 5 * time.Second)
-		_, err := cli.Put(ctx, PortVarName, port)
+		_, err := cli.Put(ctx, config.PortVarName, port)
 
 		if err != nil{
 			log.Println("No se ha podido escribir la clave", err)
@@ -94,9 +92,9 @@ func (a *applicationGin) Start() {
 	//Almacenamos en etcd
 	} else{
 		log.Info("Usamos la configuración por defecto")
-		port = PortDefault
+		port = config.PortDefault
 		ctx, _ := context.WithTimeout(context.Background(), 5 * time.Second)
-		_, err := cli.Put(ctx, PortVarName, port)
+		_, err := cli.Put(ctx, config.PortVarName, port)
 
 		if err != nil{
 			log.Println("No se ha podido escribir la clave", err)
@@ -106,7 +104,7 @@ func (a *applicationGin) Start() {
 	/* DIRECCIÓN */
 	// Si hay una entrada en el .env 
 	// Almacenamos en etcd
-	add = os.Getenv(AddVarName); 
+	add = os.Getenv(config.AddVarName); 
 	log.WithFields(log.Fields{
 		"Dirección": add,
 	}).Info("Dirección leída desde .env ")
@@ -114,7 +112,7 @@ func (a *applicationGin) Start() {
 	if add != ""{
 		log.Info("Usamos la dirección del .env")
 		ctx, _ := context.WithTimeout(context.Background(), 5 * time.Second)
-		_, err := cli.Put(ctx, AddVarName, add)
+		_, err := cli.Put(ctx, config.AddVarName, add)
 
 		if err != nil{
 			log.Println("No se ha podido escribir la clave", err)
@@ -123,9 +121,9 @@ func (a *applicationGin) Start() {
 	//Almacenamos en etcd
 	} else{
 		log.Info("Usamos la configuración para la dirección por defecto")
-		add = AddDefault
+		add = config.AddDefault
 		ctx, _ := context.WithTimeout(context.Background(), 5 * time.Second)
-		_, err := cli.Put(ctx, AddVarName, add)
+		_, err := cli.Put(ctx, config.AddVarName, add)
 
 		if err != nil{
 			log.Println("No se ha podido escribir la clave", err)
@@ -142,6 +140,7 @@ func (a *applicationGin) Start() {
 
 
 func NewAppGin() *applicationGin {
+	config := internal.GetConfig()
 	//router := gin.Default()
 	router := gin.New()
 
@@ -156,8 +155,8 @@ func NewAppGin() *applicationGin {
 	logger.Formatter = &log.TextFormatter{}
 
 	// Incluimos logstash
-	logstashHost := os.Getenv("LOG_HOST") 
-	logstassPort := os.Getenv("LOG_PORT") 
+	logstashHost := os.Getenv(config.LogHost) 
+	logstassPort := os.Getenv(config.LogPort) 
 	conn, err := net.Dial("tcp", logstashHost + ":" + logstassPort)
     if err != nil {
         log.Println(err)

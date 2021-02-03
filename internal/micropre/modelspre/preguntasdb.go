@@ -10,6 +10,7 @@ import (
 	"github.com/PedroMFC/EvaluaUGR/internal/micropre/errorspre"
 
 	"database/sql"
+	"github.com/PedroMFC/EvaluaUGR/internal"
 )
 
 func ConnectPreguntas( DbUser, DbPassword, DbPort, DbHost, DbName string) *sql.DB{
@@ -64,7 +65,8 @@ type PreguntasDB struct {
 }
 
 func NewPreguntasDB() *PreguntasDB {
-	db := ConnectPreguntas(os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PORT"), os.Getenv("DB_HOST"), os.Getenv("DB_NAME"))
+	config := internal.GetConfig()
+	db := ConnectPreguntas(os.Getenv(config.DBUser), os.Getenv(config.DBPassword), os.Getenv(config.DBPort), os.Getenv(config.DBHost), os.Getenv(config.DBName))
 	return &PreguntasDB{DB:db}
 }
 

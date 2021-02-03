@@ -7,6 +7,7 @@ import(
 	"strconv"
 	"database/sql"
 	"github.com/lib/pq"
+	"github.com/PedroMFC/EvaluaUGR/internal"
 )
 
 func ConnectValoracion( DbUser, DbPassword, DbPort, DbHost, DbName string) *sql.DB{
@@ -38,7 +39,8 @@ type ValoracionDB struct {
 
 //NewValoracionMap devuevle un ValoracionMap
 func NewValoracionDB() *ValoracionDB {
-	db := ConnectValoracion(os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PORT"), os.Getenv("DB_HOST"), os.Getenv("DB_NAME"))
+	config := internal.GetConfig()
+	db := ConnectValoracion(os.Getenv(config.DBUser), os.Getenv(config.DBPassword), os.Getenv(config.DBPort), os.Getenv(config.DBHost), os.Getenv(config.DBName))
 	return &ValoracionDB{DB:db}
 }
 
