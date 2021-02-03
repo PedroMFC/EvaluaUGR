@@ -36,19 +36,28 @@ Tanto los contenedores usados como la configuración de los mimos ya se han expl
 
 ## Testeo
 
-El archivo [docker-compose.yml](docker-compose.yml) está más pensado para el despliegue de la aplicación ya que como se puede observar en el mismo, al final lo que hacemos es arrancar el servicio. Sin embargo, para el testeo no necesitamos, ni `etcd` ni `logstash`. Por ello, para hacer más rápido el proceso de test se ha creado un archivo "simplificado" [docker-compose.travis.yml](docker-compose.travis.yml) que parte del anterior pero manteniendo solamente nuestra aplicación y el almacenamiento de datos que son los necesarios para lanzar los tests. Como explicaremos en el apartado avances, para los nuevos tests de conexión de la base de datos, es necesario asegurarse tener el servicio `postgresql`. Por ello, la tarea `test` del archivo de tareas [Taskfile.yml](Taskfile.yml) se limita a lanzar los tests que no requieren base datos y la nueva orden `test-complete` lanza todos. Así, en Travis al tener disponible el almacenamiento de datos lanzamos el conjunto de tests completo como vemos en [.travis.yml](.travis.yml) y [docker-compose.travis.yml](docker-compose.travis.yml). Para la configuración de travis se ha usado la información disponible en el material de la asignatura.
+El archivo [docker-compose.yml](docker-compose.yml) está más pensado para el despliegue de la aplicación, ya que como se puede observar en el mismo, al final lo que hacemos es arrancar el servicio. Sin embargo, para el testeo no necesitamos, ni `etcd` ni `logstash`. Por ello, para hacer más rápido el proceso de test se ha creado un archivo "simplificado" [docker-compose.travis.yml](docker-compose.travis.yml) que parte del anterior pero manteniendo solamente nuestra aplicación y el almacenamiento de datos que son los necesarios para lanzar los tests. Como explicaremos en el apartado avances, para los nuevos tests de conexión de la base de datos, es necesario asegurarse tener el servicio `postgresql`. Por ello, la tarea `test` del archivo de tareas [Taskfile.yml](Taskfile.yml) se limita a lanzar los tests que no requieren base datos y la nueva orden `test-complete` lanza todos. Así, en Travis al tener disponible el almacenamiento de datos lanzamos el conjunto de tests completo como vemos en [.travis.yml](.travis.yml) y [docker-compose.travis.yml](docker-compose.travis.yml). Para la configuración de travis se ha usado la información disponible en el material de la asignatura.
 
-En cuanto a los test, ya teníamos tests de unidad para las clases que usaban la tabla hash (y ahora incluimos para la base de datos) y tests de integración mockeados. Posteriormente, veremos tests de velocidad. Por ello, ahora vamos a ver mediante tests funcionales si la aplicación se comporta como esperamos. Para ello, lanzamos el docker-compose con la aplicación mediante la orden `task docker-compose-up` (si quisiéramos lanar los tests usaríamos `task docker-compose-test`). En principio, se pensó usar algún ORM com [Gorm](https://gorm.io/docs/index.html) para hacer este proceso más fácil. Sin embargo, no funcionaba correctamente el almacenamiento en la base de datos por lo que se ha usado directamente mediante órdenes, aunque sea algo más complejo. De todos modos, lso ORM tienen ciertas desventajas, como por ejemplo [ralentizar la aplicación](https://www.calhoun.io/subtle-issues-with-orms-and-how-to-avoid-them/). Veamos ahora ejemplos reales del uso de la aplicación:
+En cuanto a los test, ya teníamos tests de unidad para las clases que usaban la tabla hash (y ahora incluimos para la base de datos) y tests de integración mockeados. Posteriormente, veremos tests de velocidad. Por ello, ahora vamos a ver mediante tests funcionales si la aplicación se comporta como esperamos.En principio, se pensó usar algún ORM com [Gorm](https://gorm.io/docs/index.html) para hacer este proceso más fácil. Sin embargo, no funcionaba correctamente el almacenamiento en la base de datos por lo que se ha usado directamente mediante órdenes, aunque sea algo más complejo. De todos modos, lso ORM tienen ciertas desventajas, como por ejemplo [ralentizar la aplicación](https://www.calhoun.io/subtle-issues-with-orms-and-how-to-avoid-them/). Veamos ahora ejemplos reales del uso de la aplicación. Para ello, arrancamos mediante:
+
+```
+ > task docker-compose-up
+```
 
 ![](docs/imgs/pruebas/02.png)
 ![](docs/imgs/pruebas/03.png)
 ![](docs/imgs/pruebas/04.png)
-![](docs/imgs/pruebas/0.png)
+![](docs/imgs/pruebas/05.png)
 
 
 Y también un ejemplo de cómo ser vería un log con `logstash`:
 ![](docs/imgs/pruebas/01.png)
 
+NOTA: para lanzar los tests completos usamos
+
+```
+ > task docker-compose-test
+```
 
 ## Tests de velocidad y avances
 Para los tests de velocidad, ya se hicieron unas pequeñas pruebas para comparar los *frameworks*. Ahora, se van a hacer algunos tests para comprobar la velocidad del servicio arrancado de manera local. Seguimos usando el paquete de *benchmarking* que viene con el lenguaje. Sin embargo, se va a usar de manera complementaria con [hrtesting](https://medium.com/@egonelbre/benchmarking-with-details-1cf3e61d459d) que nos da una mayor cantidad de información. Para ello, se han llevado a cabo operaciones de `PUT`, `GET` y `POST` como se observa en el archivo [benchmark_test.go](tests/benchmark_test.go). Los resultados han sido.
