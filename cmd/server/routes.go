@@ -78,10 +78,10 @@ func (a *applicationGin) Start() {
 	port = os.Getenv(config.PortVarName); 
 	log.WithFields(log.Fields{
 		"Puerto": port,
-	}).Info("Puerto leído desde .env ")
+	}).Info("Puerto leído desde entorno")
 
 	if port != ""{
-		log.Info("Usamos la configuración del .env")
+		log.Info("Usamos la configuración del entorno")
 		ctx, _ := context.WithTimeout(context.Background(), 5 * time.Second)
 		_, err := cli.Put(ctx, config.PortVarName, port)
 
@@ -107,10 +107,10 @@ func (a *applicationGin) Start() {
 	add = os.Getenv(config.AddVarName); 
 	log.WithFields(log.Fields{
 		"Dirección": add,
-	}).Info("Dirección leída desde .env ")
+	}).Info("Dirección leída desde entorno")
 
 	if add != ""{
-		log.Info("Usamos la dirección del .env")
+		log.Info("Usamos la dirección del entorno")
 		ctx, _ := context.WithTimeout(context.Background(), 5 * time.Second)
 		_, err := cli.Put(ctx, config.AddVarName, add)
 
