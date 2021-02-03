@@ -95,7 +95,7 @@ tasks:
     summary: |
       Comenzar el microservico
 
-      Mediante esta orden, lo que hacemos es iniciar el servicio. NOTA: se recomienda usar la orden 'docker-compose-deploy' 
+      Mediante esta orden, lo que hacemos es iniciar el servicio. NOTA: se recomienda usar la orden 'docker-compose-up' 
       para arrancar el servicio
 
     cmds:

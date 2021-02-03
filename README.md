@@ -11,13 +11,45 @@ Proyecto para la asignatura de Cloud Computing del Máster en Ingeniería Inform
 
 ## Clúster
 
+El clúster se pude observar en el archivo [docker-compose.yml](docker-compose.yml). En él vemos que utilizamos cuatro contenedores.
+
+* postgres: este contenedor es el encargado del almacenamiento de datos.
+* etcd: es el servicio `etcd` que guarda las claves para la configuración distribuida.
+* logstash: es el contenedor donde se envían los logs.
+* app: es el servicio que nosotros hemos construido.
+
+Vemos, que la estructura del clúster corresponde básicamente a la de la aplicación que queremos construir. Tenemos un servicio que que ofrece cierta funcionalidad mediante un API REST. Este servicio necesita por un lado un almacenamiento de datos y por otro configuración distribuida para almacenar su propia información y poder ver la de los demás si fuera necesario. También se ha decidido incluir el contenedor de logs ya que es muy importante ir almacenando dicha información y disponer de ella posteriormente para detectar posibles problemas y/o conocer su comportamiento.
+
 ## Configuración de los contenedores
+
+Ahora, explicaremos un poco más en profundidad cada uno de los contenedores que componen nuestro clúster.
+
+* postgres: utilizamos la [imagen oficial](https://hub.docker.com/_/postgres) y además en su versión `9.6-alpine` ya que tiene menor tamaño que la versión `latest` (37.2MB y 159MB respectivamente) por lo que obtenemos una gran ventaja. En cuanto al uso de `postgresql` como base de datos, se ha decido que sea así ya que al ser una base de datos relacional, su sintaxis es parecida a MySQL con la que se está más familiarizado. Sin embargo, *a priori* el problema no presenta ninguna restricción para poder usar bases de datos no relacionales como MongoDB. En cuanto a su configuración, nos hemos ayudado de [esta guía](https://levelup.gitconnected.com/dockerized-crud-restful-api-with-go-gorm-jwt-postgresql-mysql-and-testing-61d731430bd8) para saber su uso con docker-compose. A rasgos generales, le tenemos que indicar mediante variables de entorno el usuario, contraseña, etc. y mapeamos los puertos manteniendo el 5432 que el que su usa normalmente en postgresql.
+* etcd: el contendor que usamos es el de [bitnami](https://hub.docker.com/r/bitnami/etcd/) que ya vimos en clase y que además es de los más populares y se actualiza con frecuencia. Para configurarlo, hemos usado la especificación que viene explicada en su [repositorio de GitHib](https://github.com/bitnami/bitnami-docker-etcd#using-docker-compose). 
+* logstash: es una de las herramientas de la pila ELK que también comentamos en clase. Esta en específico es un recolector de logs. Para usarla en docker-compose se han usado los tutoriales [ELK stack deployment through docker-compose](https://medium.com/@harisshafiq08/elk-stack-deployment-through-docker-compose-98ce40ff2fb6) y [How to integrate your Go Service with ELK](https://pmihaylov.com/go-service-with-elk/) que explican cómo usar todas la herramientas ELK. Destacamos tanto el mapeo de puertos como el archivo de configuración [logstash.con](./config/logstash.conf). En este archivo indicamos el puerto y el codec de entrada `json`. Para la salida, en principio la mostramos por pantalla aunque se podría enviar sin ningún problema a `elasticsearch` modificando el archivo.
+* app: este es el servicio que nosotros hemos construido. Ya se ha explicado anteriormente cómo está construido. Notamos las modificaciones que se han hecho en el [Dockerfile](Dockerfile). Primero, exponemos el puerto 8080 para poder recibir peticiones en el mismo. En segundo lugar, se ha incluido incluido la herramienta `docker-compose-wait`. Este se debe a que la orden `depends_on` solo espera  a que el contenedor esté arrancado no a que esté listo para recibir peticiones, como se indica en la [documentación](https://docs.docker.com/compose/startup-order/). En el enlace anterior se muestran gran cantidad de mecanismos para solucionarlo pero la herramienta que se ha usado y se explica [aquí](https://www.datanovia.com/en/lessons/docker-compose-wait-for-container-using-wait-tool/#:~:text=The%20docker-compose-wait%20tool%20is%20a%20small%20command%20line,open%20on%20a%20target%20image.) nos ha dado buenos resultados. Aparte de incluir en el `Dockerfile`, en el `docker-compose` indicamos a los hosts a los que queremos esperar (entre otros) y luego mediante `command: ["sh","-c","/wait"]` esperamos a que estén listos. De todos modos, si hubiera un problema, se volvería arrancar el servicio mediante `restart`.
 
 ## Ficheros de composición
 
+Tanto los contenedores usados como la configuración de los mimos ya se han explicado *grosso modo* en las secciones anteriores. Notamos sin embargo, que se ha intentado usar la configuración como código haciendo que los nombres, puertos, etc. no están ya explícitos si no que se puedan modificar mediante variables de entorno. También usamos otros mecanismos como [$PWD](https://gist.github.com/shaiguitar/627d52ebc0c03af488477b5d636a8909) para montar el directorio actual correctamente a nuestro servicio independientemente de dónde se lance. En cuanto a la versión del `docker-compose`, se ha utilizado la 3 por usar la última versión aunque en principio no impide que se use con la versión 2. Finalmente, la red que se ha creado utiliza el driver `bridge`, que es que viene [por defecto](https://docs.docker.com/network/) y que cumple con nuestras necesidades.
+
+
 ## Testeo
 
+El archivo [docker-compose.yml](docker-compose.yml) está más pensado para el despliegue de la aplicación ya que como se puede observar en el mismo, al final lo que hacemos es arrancar el servicio. Sin embargo, para el testeo no necesitamos, ni `etcd` ni `logstash`. Por ello, para hacer más rápido el proceso de test se ha creado un archivo "simplificado" [docker-compose.travis.yml](docker-compose.travis.yml) que parte del anterior pero manteniendo solamente nuestra aplicación y el almacenamiento de datos que son los necesarios para lanzar los tests. Como explicaremos en el apartado avances, para los nuevos tests de conexión de la base de datos, es necesario asegurarse tener el servicio `postgresql`. Por ello, la tarea `test` del archivo de tareas [Taskfile.yml](Taskfile.yml) se limita a lanzar los tests que no requieren base datos y la nueva orden `test-complete` lanza todos. Así, en Travis al tener disponible el almacenamiento de datos lanzamos el conjunto de tests completo como vemos en [.travis.yml](.travis.yml) y [docker-compose.travis.yml](docker-compose.travis.yml). Para la configuración de travis se ha usado la información disponible en el material de la asignatura.
+
+En cuanto a los test, ya teníamos tests de unidad para las clases que usaban la tabla hash (y ahora incluimos para la base de datos) y tests de integración mockeados. Posteriormente, veremos tests de velocidad. Por ello, ahora vamos a ver mediante tests funcionales si la aplicación se comporta como esperamos. Para ello, lanzamos el docker-compose con la aplicación mediante la orden `task docker-compose-up` (si quisiéramos lanar los tests usaríamos `task docker-compose-test`). En principio, se pensó usar algún ORM com [Gorm](https://gorm.io/docs/index.html) para hacer este proceso más fácil. Sin embargo, no funcionaba correctamente el almacenamiento en la base de datos por lo que se ha usado directamente mediante órdenes, aunque sea algo más complejo. De todos modos, lso ORM tienen ciertas desventajas, como por ejemplo [ralentizar la aplicación](https://www.calhoun.io/subtle-issues-with-orms-and-how-to-avoid-them/). 
+
+.....
+
+Log
+
+.....
+
 ## Tests de velocidad y avances
+Para los tests de velocidad......
+
+En cuanto a los avances del proyecto, como se ha comentado ahora tenemos conexión a base de datos. Por ello, ha sido neceario crear las clases [Valoraciondb](internal/microval/modelsval/valoraciondb.go), [ReseniasDB](internal/microres/modelsres/reseniasdb.go) y [PreguntasDB](internal/micropre/modelspre/preguntasdb.go). Estas clases tienen sus correspondientes archivos de test: [valdbsaver_test.go](tests/valdbsaver_test.go), [resdbsaver_test.go](tests/resdbsaver_test.go) y [predbsaver_test.go](tests/predbsaver_test.go). Para su implementación se han usado los tutoriales [Using PostgreSQL with Go](https://www.calhoun.io/using-postgresql-with-go/). 
 
 ## Documentación
 Puede consultar más información acerca del proyecto en los siguientes enlace:
