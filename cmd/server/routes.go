@@ -170,27 +170,27 @@ func NewAppGin() *applicationGin {
 
 	//Aquí definimos las rutas
 	//Valoraciones
-	router.PUT("/valoraciones/asignatura/:asig", handlersval.CrearAsignatura(ValRepo))
-	router.GET("/valoraciones/asignatura/:asig", handlersval.GetValoraciones(ValRepo))
-	router.POST("/valoraciones/asignatura/:asig/:val", handlersval.Valorar(ValRepo))
-	router.GET("/valoraciones/peor", handlersval.GetPeor(ValRepo))
-	router.GET("/valoraciones/mejor", handlersval.GetMejor(ValRepo))
-	router.GET("/valoraciones/asignatura/:asig/media", handlersval.GetMedia(ValRepo))
+	router.PUT("/asignaturas/:asig/valoraciones", handlersval.CrearAsignatura(ValRepo))
+	router.GET("/asignaturas/:asig/valoraciones", handlersval.GetValoraciones(ValRepo))
+	router.POST("/asignaturas/:asig/valoraciones/:val", handlersval.Valorar(ValRepo))
+	router.GET("/asignaturaspeorvalorada", handlersval.GetPeor(ValRepo))
+	router.GET("/asignaturasmejorvalorada", handlersval.GetMejor(ValRepo))
+	router.GET("/asignaturas/:asig/valoraciones/media", handlersval.GetMedia(ValRepo))
 
 	//Reseñas
-	router.PUT("/resenias/asignatura/:asig", handlersres.CrearAsignatura(ResRepo))
-	router.GET("/resenias/asignatura/:asig", handlersres.GetResenias(ResRepo))
-	router.GET("/resenias/asignatura/:asig/:id", handlersres.GetResenia(ResRepo))
-	router.POST("/resenias/asignatura/:asig", handlersres.Opinar(ResRepo))
-	router.POST("/resenias/asignatura/:asig/:id/gusta", handlersres.GustaResenia(ResRepo))
-	router.POST("/resenias/asignatura/:asig/:id/nogusta", handlersres.NoGustaResenia(ResRepo))
+	router.PUT("/asignaturas/:asig/resenias", handlersres.CrearAsignatura(ResRepo))
+	router.GET("/asignaturas/:asig/resenias", handlersres.GetResenias(ResRepo))
+	router.GET("/asignaturas/:asig/resenias/:id", handlersres.GetResenia(ResRepo))
+	router.POST("/asignaturas/:asig/resenias", handlersres.Opinar(ResRepo))
+	router.POST("/asignaturas/:asig/resenias/:id/gusta", handlersres.GustaResenia(ResRepo))
+	router.POST("/asignaturas/:asig/resenias/:id/nogusta", handlersres.NoGustaResenia(ResRepo))
 
 	//Preguntas
-	router.PUT("/preguntas/asignatura/:asig", handlerspre.CrearAsignatura(PreRepo))
-	router.GET("/preguntas/asignatura/:asig", handlerspre.GetPreguntas(PreRepo))
-	router.GET("/preguntas/asignatura/:asig/:id", handlerspre.GetPregunta(PreRepo))
-	router.POST("/preguntas/asignatura/:asig", handlerspre.Preguntar(PreRepo))
-	router.POST("/preguntas/asignatura/:asig/:id", handlerspre.Responder(PreRepo))
+	router.PUT("/asignaturas/:asig/preguntas", handlerspre.CrearAsignatura(PreRepo))
+	router.GET("/asignaturas/:asig/preguntas", handlerspre.GetPreguntas(PreRepo))
+	router.GET("/asignaturas/:asig/preguntas/:id", handlerspre.GetPregunta(PreRepo))
+	router.POST("/asignaturas/:asig/preguntas", handlerspre.Preguntar(PreRepo))
+	router.POST("/asignaturas/:asig/preguntas/:id", handlerspre.Responder(PreRepo))
 
 	return &applicationGin{Router: router}
 }
