@@ -18,14 +18,14 @@ func TestApiCrearAsigValoraciones(t *testing.T) {
 	handler := server.NewAppGin().Router 
 	apitest.New().
 		Handler(handler).
-		Put("/valoraciones/asignatura/AAA").
+		Put("/asignaturas/AAA/valoraciones").
 		Expect(t).
 		Status(http.StatusCreated).
 		End()
 
 	apitest.New().
 		Handler(handler).
-		Put("/valoraciones/asignatura/AAAAAA").
+		Put("/asignaturas/AAAAAA/valoraciones").
 		Expect(t).
 		Status(http.StatusBadRequest).
 		End()
@@ -38,7 +38,7 @@ func TestApiGetValoraciones(t *testing.T) {
 	// Es correcta
 	apitest.New().
 		Handler(handler).
-		Get("/valoraciones/asignatura/AAA").
+		Get("/asignaturas/AAA/valoraciones").
 		Expect(t).
 		Status(http.StatusOK).
 		End()
@@ -46,7 +46,7 @@ func TestApiGetValoraciones(t *testing.T) {
 	// Es correcta pero no tiene registro
 	apitest.New().
 		Handler(handler).
-		Get("/valoraciones/asignatura/AA").
+		Get("/asignaturas/AA/valoraciones").
 		Expect(t).
 		Status(http.StatusNotFound).
 		End()
@@ -54,7 +54,7 @@ func TestApiGetValoraciones(t *testing.T) {
 	// Es incorrecta
 	apitest.New().
 		Handler(handler).
-		Get("/valoraciones/asignatura/AAAAAAA").
+		Get("/asignaturas/AAAAAAA/valoraciones").
 		Expect(t).
 		Status(http.StatusBadRequest).
 		End()
@@ -67,7 +67,7 @@ func TestApiPostValoraciones(t *testing.T) {
 	// Es correcta
 	apitest.New().
 		Handler(handler).
-		Post("/valoraciones/asignatura/AAA/5").
+		Post("/asignaturas/AAA/valoraciones/5").
 		Expect(t).
 		Status(http.StatusCreated).
 		End()
@@ -75,7 +75,7 @@ func TestApiPostValoraciones(t *testing.T) {
 	// No existe 
 	apitest.New().
 		Handler(handler).
-		Post("/valoraciones/asignatura/BBB/5").
+		Post("/asignaturas/BBB/valoraciones/5").
 		Expect(t).
 		Status(http.StatusNotFound).
 		End()
@@ -83,7 +83,7 @@ func TestApiPostValoraciones(t *testing.T) {
 	// La valoración no es correcta
 	apitest.New().
 		Handler(handler).
-		Post("/valoraciones/asignatura/AAA/55").
+		Post("/asignaturas/AAA/valoraciones/55").
 		Expect(t).
 		Status(http.StatusBadRequest).
 		End()
@@ -91,7 +91,7 @@ func TestApiPostValoraciones(t *testing.T) {
 	// La asignatura no es correcta
 	apitest.New().
 		Handler(handler).
-		Post("/valoraciones/asignatura/AAAAAAA/55").
+		Post("/asignaturas/AAAAAAA/valoraciones/55").
 		Expect(t).
 		Status(http.StatusBadRequest).
 		End()
@@ -104,7 +104,7 @@ func TestApiPeorValoraciones(t *testing.T) {
 	// Accede a la peor
 	apitest.New().
 		Handler(handler).
-		Get("/valoraciones/peor").
+		Get("/asignaturaspeorvalorada").
 		Expect(t).
 		Body(`{"Peores valoradas":["AAA"]}`).
 		Status(http.StatusOK).
@@ -119,7 +119,7 @@ func TestApiMejorValoraciones(t *testing.T) {
 	// Accede a la mejor
 	apitest.New().
 		Handler(handler).
-		Get("/valoraciones/mejor").
+		Get("/asignaturasmejorvalorada").
 		Expect(t).
 		Body(`{"Mejores valoradas":["AAA"]}`).
 		Status(http.StatusOK).
@@ -134,7 +134,7 @@ func TestApiGetMediaValoraciones(t *testing.T) {
 	// Es correcta
 	apitest.New().
 		Handler(handler).
-		Get("/valoraciones/asignatura/AAA/media").
+		Get("/asignaturas/AAA/valoraciones/media").
 		Expect(t).
 		Status(http.StatusOK).
 		End()
@@ -142,7 +142,7 @@ func TestApiGetMediaValoraciones(t *testing.T) {
 	// Es correcta pero no tiene registro
 	apitest.New().
 		Handler(handler).
-		Get("/valoraciones/asignatura/AA/media").
+		Get("/asignaturas/AA/valoraciones/media").
 		Expect(t).
 		Status(http.StatusNotFound).
 		End()
@@ -150,7 +150,7 @@ func TestApiGetMediaValoraciones(t *testing.T) {
 	// Es incorrecta
 	apitest.New().
 		Handler(handler).
-		Get("/valoraciones/asignatura/AAAAAAA/media").
+		Get("/asignaturas/AAAAAAA/valoraciones/media").
 		Expect(t).
 		Status(http.StatusBadRequest).
 		End()
@@ -165,14 +165,14 @@ func TestApiCrearAsigResenias(t *testing.T) {
 
 	apitest.New().
 		Handler(handler).
-		Put("/resenias/asignatura/AAA").
+		Put("/asignaturas/AAA/resenias").
 		Expect(t).
 		Status(http.StatusCreated).
 		End()
 
 	apitest.New().
 		Handler(handler).
-		Put("/resenias/asignatura/AAAAAA").
+		Put("/asignaturas/AAAAAA/resenias").
 		Expect(t).
 		Status(http.StatusBadRequest).
 		End()
@@ -185,7 +185,7 @@ func TestApiGetResenias(t *testing.T) {
 	// Es correcta
 	apitest.New().
 		Handler(handler).
-		Get("/resenias/asignatura/BBB").
+		Get("/asignaturas/BBB/resenias").
 		Expect(t).
 		Status(http.StatusOK).
 		End()
@@ -193,7 +193,7 @@ func TestApiGetResenias(t *testing.T) {
 	// Es correcta pero no tiene registro
 	apitest.New().
 		Handler(handler).
-		Get("/resenias/asignatura/ABB").
+		Get("/asignaturas/ABB/resenias").
 		Expect(t).
 		Status(http.StatusNotFound).
 		End()
@@ -201,7 +201,7 @@ func TestApiGetResenias(t *testing.T) {
 	// No es correcta
 	apitest.New().
 		Handler(handler).
-		Get("/resenias/asignatura/BBBBBBB").
+		Get("/asignaturas/BBBBBBB/resenias").
 		Expect(t).
 		Status(http.StatusBadRequest).
 		End()
@@ -214,7 +214,7 @@ func TestApiGetResenia(t *testing.T) {
 	// Es correcta
 	apitest.New().
 		Handler(handler).
-		Get("/resenias/asignatura/BBB/0").
+		Get("/asignaturas/BBB/resenias/0").
 		Expect(t).
 		Status(http.StatusOK).
 		End()
@@ -222,7 +222,7 @@ func TestApiGetResenia(t *testing.T) {
 	// No tiene registro
 	apitest.New().
 		Handler(handler).
-		Get("/resenias/asignatura/BBB/5").
+		Get("/asignaturas/BBB/resenias/5").
 		Expect(t).
 		Status(http.StatusNotFound).
 		End()
@@ -230,7 +230,7 @@ func TestApiGetResenia(t *testing.T) {
 	// Es correcta pero no tiene registro
 	apitest.New().
 		Handler(handler).
-		Get("/resenias/asignatura/ABB/0").
+		Get("/asignaturas/ABB/resenias/0").
 		Expect(t).
 		Status(http.StatusNotFound).
 		End()
@@ -238,7 +238,7 @@ func TestApiGetResenia(t *testing.T) {
 	// No es correcta
 	apitest.New().
 		Handler(handler).
-		Get("/resenias/asignatura/BBBBBBB/0").
+		Get("/asignaturas/BBBBBBB/resenias/0").
 		Expect(t).
 		Status(http.StatusBadRequest).
 		End()
@@ -246,7 +246,7 @@ func TestApiGetResenia(t *testing.T) {
 	// No es correcta
 	apitest.New().
 		Handler(handler).
-		Get("/resenias/asignatura/BBB/sdfsfd").
+		Get("/asignaturas/BBB/resenias/sdfsfd").
 		Expect(t).
 		Status(http.StatusBadRequest).
 		End()
@@ -261,7 +261,7 @@ func TestApiOpinarResenias(t *testing.T) {
 	// Es correcta
 	apitest.New().
 		Handler(handler).
-		Post("/resenias/asignatura/BBB").
+		Post("/asignaturas/BBB/resenias").
 		Body("{ \"opinion\": \"Muy bonita\" }").
 		Expect(t).
 		Status(http.StatusCreated).
@@ -270,7 +270,7 @@ func TestApiOpinarResenias(t *testing.T) {
 	// Asignatura no registrada
 	apitest.New().
 		Handler(handler).
-		Post("/resenias/asignatura/TDA").
+		Post("/asignaturas/TDA/resenias").
 		Body("{ \"opinion\": \"Muy bonita\" }").
 		Expect(t).
 		Status(http.StatusNotFound).
@@ -279,7 +279,7 @@ func TestApiOpinarResenias(t *testing.T) {
 	// Petición incorrecta
 	apitest.New().
 		Handler(handler).
-		Post("/resenias/asignatura/BBB").
+		Post("/asignaturas/BBB/resenias").
 		Body("{\"opion\": \"Muy bonita\" }").
 		Expect(t).
 		Status(http.StatusBadRequest).
@@ -288,7 +288,7 @@ func TestApiOpinarResenias(t *testing.T) {
 	// Asignatura no válida
 	apitest.New().
 		Handler(handler).
-		Post("/resenias/asignatura/BBBBBB").
+		Post("/asignaturas/BBBBBB/resenias").
 		Body("{ \"opinion\": \"Muy bonita\" }").
 		Expect(t).
 		Status(http.StatusBadRequest).
@@ -302,14 +302,14 @@ func TestApiGustaResenias(t *testing.T) {
 	// Es correcta
 	apitest.New().
 		Handler(handler).
-		Post("/resenias/asignatura/BBB/0/gusta").
+		Post("/asignaturas/BBB/resenias/0/gusta").
 		Expect(t).
 		Status(http.StatusCreated).
 		End()
 
 	apitest.New().
 		Handler(handler).
-		Post("/resenias/asignatura/BBB/0/nogusta").
+		Post("/asignaturas/BBB/resenias/0/nogusta").
 		Expect(t).
 		Status(http.StatusCreated).
 		End()
@@ -317,14 +317,14 @@ func TestApiGustaResenias(t *testing.T) {
 	// Petición incorrecta
 	apitest.New().
 		Handler(handler).
-		Post("/resenias/asignatura/BBB/7/nogusta").
+		Post("/asignaturas/BBB/resenias/7/nogusta").
 		Expect(t).
 		Status(http.StatusNotFound).
 		End()
 
 	apitest.New().
 		Handler(handler).
-		Post("/resenias/asignatura/BBBBBBBB/0/nogusta").
+		Post("/asignaturas/BBBBBBBB/resenias/0/nogusta").
 		Expect(t).
 		Status(http.StatusBadRequest).
 		End()
@@ -339,14 +339,14 @@ func TestApiCrearAsigPreguntas(t *testing.T) {
 
 	apitest.New().
 		Handler(handler).
-		Put("/preguntas/asignatura/AAA").
+		Put("/asignaturas/AAA/preguntas").
 		Expect(t).
 		Status(http.StatusCreated).
 		End()
 
 	apitest.New().
 		Handler(handler).
-		Put("/preguntas/asignatura/AAAAAA").
+		Put("/asignaturas/AAAAAA/preguntas").
 		Expect(t).
 		Status(http.StatusBadRequest).
 		End()
@@ -359,7 +359,7 @@ func TestApiGetPreguntas(t *testing.T) {
 	// Es correcta
 	apitest.New().
 		Handler(handler).
-		Get("/preguntas/asignatura/CCC").
+		Get("/asignaturas/CCC/preguntas").
 		Expect(t).
 		Status(http.StatusOK).
 		End()
@@ -367,7 +367,7 @@ func TestApiGetPreguntas(t *testing.T) {
 	// Es correcta pero no tiene registro
 	apitest.New().
 		Handler(handler).
-		Get("/preguntas/asignatura/ABB").
+		Get("/asignaturas/ABB/preguntas").
 		Expect(t).
 		Status(http.StatusNotFound).
 		End()
@@ -375,7 +375,7 @@ func TestApiGetPreguntas(t *testing.T) {
 	// No es correcta
 	apitest.New().
 		Handler(handler).
-		Get("/preguntas/asignatura/BBBBBBB").
+		Get("/asignaturas/BBBBBBB/preguntas").
 		Expect(t).
 		Status(http.StatusBadRequest).
 		End()
@@ -388,7 +388,7 @@ func TestApiGetPregunta(t *testing.T) {
 	// Es correcta
 	apitest.New().
 		Handler(handler).
-		Get("/preguntas/asignatura/CCC/0").
+		Get("/asignaturas/CCC/preguntas/0").
 		Expect(t).
 		Status(http.StatusOK).
 		End()
@@ -396,7 +396,7 @@ func TestApiGetPregunta(t *testing.T) {
 	// No tiene registro
 	apitest.New().
 		Handler(handler).
-		Get("/preguntas/asignatura/CCC/5").
+		Get("/asignaturas/CCC/preguntas/5").
 		Expect(t).
 		Status(http.StatusNotFound).
 		End()
@@ -404,7 +404,7 @@ func TestApiGetPregunta(t *testing.T) {
 	// Es correcta pero no tiene registro
 	apitest.New().
 		Handler(handler).
-		Get("/preguntas/asignatura/ABB/0").
+		Get("/asignaturas/ABB/preguntas/0").
 		Expect(t).
 		Status(http.StatusNotFound).
 		End()
@@ -412,7 +412,7 @@ func TestApiGetPregunta(t *testing.T) {
 	// No es correcta
 	apitest.New().
 		Handler(handler).
-		Get("/preguntas/asignatura/BBBBBBB/0").
+		Get("/asignaturas/BBBBBBB/preguntas/0").
 		Expect(t).
 		Status(http.StatusBadRequest).
 		End()
@@ -420,7 +420,7 @@ func TestApiGetPregunta(t *testing.T) {
 	// No es correcta
 	apitest.New().
 		Handler(handler).
-		Get("/preguntas/asignatura/BBB/sdfsfd").
+		Get("/asignaturas/BBB/preguntas/sdfsfd").
 		Expect(t).
 		Status(http.StatusBadRequest).
 		End()
@@ -435,7 +435,7 @@ func TestApiPreguntarPreguntas(t *testing.T) {
 	// Es correcta
 	apitest.New().
 		Handler(handler).
-		Post("/preguntas/asignatura/CCC").
+		Post("/asignaturas/CCC/preguntas").
 		Body("{ \"pregunta\": \"Me recomiendan la asignatura\" }").
 		Expect(t).
 		Status(http.StatusCreated).
@@ -444,7 +444,7 @@ func TestApiPreguntarPreguntas(t *testing.T) {
 	// Petición asignatura no registrada
 	apitest.New().
 		Handler(handler).
-		Post("/preguntas/asignatura/AAA").
+		Post("/asignaturas/AAA/preguntas").
 		Body("{\"pregunta\": \"Me recomiendan la asignatura\" }").
 		Expect(t).
 		Status(http.StatusNotFound).
@@ -453,7 +453,7 @@ func TestApiPreguntarPreguntas(t *testing.T) {
 	// Asignatura no válida
 	apitest.New().
 		Handler(handler).
-		Post("/preguntas/asignatura/AAAAAAAA").
+		Post("/asignaturas/AAAAAAAA/preguntas").
 		Body("{\"pregunta\": \"Me recomiendan la asignatura\" }").
 		Expect(t).
 		Status(http.StatusBadRequest).
@@ -462,7 +462,7 @@ func TestApiPreguntarPreguntas(t *testing.T) {
 	// Petición incorrecta
 	apitest.New().
 		Handler(handler).
-		Post("/preguntas/asignatura/AAAAAAAA").
+		Post("/asignaturas/AAAAAAAA/preguntas").
 		Body("{\"pnta\": \"Me recomiendan la asignatura\" }").
 		Expect(t).
 		Status(http.StatusBadRequest).
@@ -476,7 +476,7 @@ func TestApiResponderPreguntas(t *testing.T) {
 	// Es correcta
 	apitest.New().
 		Handler(handler).
-		Post("/preguntas/asignatura/CCC/0").
+		Post("/asignaturas/CCC/preguntas/0").
 		Body("{ \"respuesta\": \"Es una respuesta\"}").
 		Expect(t).
 		Status(http.StatusCreated).
@@ -485,7 +485,7 @@ func TestApiResponderPreguntas(t *testing.T) {
 	// Pregunta no registrada
 	apitest.New().
 		Handler(handler).
-		Post("/preguntas/asignatura/CCC/5").
+		Post("/asignaturas/CCC/preguntas/5").
 		Body("{ \"respuesta\": \"Es una respuesta\"}").
 		Expect(t).
 		Status(http.StatusNotFound).
@@ -494,7 +494,7 @@ func TestApiResponderPreguntas(t *testing.T) {
 	// Asignatura no registrada
 	apitest.New().
 		Handler(handler).
-		Post("/preguntas/asignatura/AAA/0").
+		Post("/asignaturas/AAA/preguntas/0").
 		Body("{ \"respuesta\": \"Es una respuesta\"}").
 		Expect(t).
 		Status(http.StatusNotFound).
@@ -504,7 +504,7 @@ func TestApiResponderPreguntas(t *testing.T) {
 	// Asignatura no válida
 	apitest.New().
 		Handler(handler).
-		Post("/preguntas/asignatura/CCCCCCC/0").
+		Post("/asignaturas/CCCCCCC/preguntas/0").
 		Body("{\"respuesta\": \"Es una respuesta\"}").
 		Expect(t).
 		Status(http.StatusBadRequest).
@@ -513,7 +513,7 @@ func TestApiResponderPreguntas(t *testing.T) {
 	// petición incorrecta
 	apitest.New().
 		Handler(handler).
-		Post("/preguntas/asignatura/CCC/0").
+		Post("/asignaturas/CCC/preguntas/0").
 		Body("{\"resua\": \"Es una respuesta\"}").
 		Expect(t).
 		Status(http.StatusBadRequest).
@@ -522,7 +522,7 @@ func TestApiResponderPreguntas(t *testing.T) {
 	// petición incorrecta
 	apitest.New().
 		Handler(handler).
-		Post("/preguntas/asignatura/CCC/sdfsdf").
+		Post("/asignaturas/CCC/preguntas/sdfsdf").
 		Body("{\"respuesta\": \"Es una respuesta\"}").
 		Expect(t).
 		Status(http.StatusBadRequest).
